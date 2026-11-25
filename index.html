@@ -126,7 +126,11 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 /* goblins */
 .gobs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,260px);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:thin}
 .gob{scroll-snap-align:start;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:10px}
-.gob svg{width:100%;aspect-ratio:1;border-radius:16px}
+.gob svg{width:100%;aspect-ratio:1;border-radius:16px;display:block}
+.mug{position:relative;border-radius:16px;overflow:hidden}
+.mug::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 15px,rgba(255,255,255,.14) 15px 16px);pointer-events:none}
+.plate{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);background:#111;color:#fff;font:400 12px Bungee,sans-serif;padding:3px 10px;border-radius:4px;letter-spacing:.06em;z-index:1}
+.motto{font-family:Bungee;font-size:clamp(14px,1.8vw,18px);color:var(--mint);margin:8px 0 0;min-height:1.3em;transition:opacity .4s}
 .gob b{font-family:Bungee;font-size:17px;color:var(--sun);line-height:1.15}
 .gob span{color:var(--mute);font-size:14px}
 .snapbtns{display:flex;gap:8px;margin-top:6px}
@@ -239,7 +243,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 <a class="skip" href="#streams">Skip to the schedule</a>
 <nav class="top"><div class="wrap">
   <a class="brand" href="#top">Donuts Department</a>
-  <div class="links"><a href="#streams">Streams</a><a href="#crew">Streamers</a><a class="opt" href="#goblins">Goblins</a><a href="#arcade">Arcade</a><a class="opt" href="#drops">Brands</a><a href="#join">Join</a><a class="opt" href="#cop">How to cop</a></div>
+  <div class="links"><a href="#streams">Streams</a><a href="#crew">Streamers</a><a class="opt" href="#goblins">Suspects</a><a href="#arcade">Arcade</a><a class="opt" href="#drops">Brands</a><a href="#join">Join</a><a class="opt" href="#cop">How to cop</a></div>
   <button class="radio" id="radio" aria-pressed="false" aria-label="Play Donuts Department radio"><span class="eq"><i></i><i></i><i></i></span><span id="radioTxt">Play music</span></button>
 </div></nav>
 
@@ -248,8 +252,9 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
     <div class="open">● OPEN LATE</div>
     <h1 class="sign" aria-label="Donuts Department"><span class="flk">Do</span>nuts<br>Department</h1>
     <p class="sub">Supreme · Strangelove · FTP · $1 starts</p>
+    <p class="motto" id="motto">To protect and sprinkle.</p>
     <div class="next" id="nextCard" aria-live="polite">
-      <div class="lbl" id="nextLbl">Next stream</div>
+      <div class="lbl" id="nextLbl">Next shift</div>
       <div class="nexthead"><img id="nextPoster" alt="" hidden><div><h3 id="nextTitle">Loading the glaze…</h3>
       <div id="nextWhen" class="lbl"></div>
       <div class="feedchip" id="heroFeed"></div></div></div>
@@ -284,10 +289,10 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   </div>
 </div></header>
 
-<div class="ticker" aria-hidden="true"><div><span>DO A GIVEAWAY!</span><span>START A BOX LOGO AT A DOLLAR!</span><span>COME ON! WHERE IS HE AT!</span><span>BUYER'S GIVEAWAY EVERY SHOW</span><span>GIVY GOBLINS ARE WAITING</span><span>DONUTS · STRANGELOVE · SUPREME</span></div></div>
+<div class="ticker" aria-hidden="true"><div><span>TO PROTECT AND SPRINKLE</span><span>GLAZE AND ORDER</span><span>YOU HAVE THE RIGHT TO REMAIN GLAZED</span><span>BOOK 'EM, DANISH</span><span>COPS &amp; CRULLERS</span><span>ALL POINTS BOSTON CREAM</span><span>DONUT RESIST</span><span>SQUAD CARBS</span></div></div>
 
 <section class="band" id="streams"><div class="wrap">
-  <h2>On the menu</h2>
+  <h2>On the beat</h2>
   <p class="lede">Upcoming donutsforcops streams. Times are in your time zone. Tap a show to set a reminder on Whatnot.</p>
   <ul class="menu" id="menu"></ul>
   <p style="margin-top:18px"><button class="btn ghost" id="more">Show the full schedule</button></p>
@@ -295,32 +300,32 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 </div></section>
 
 <section class="band" id="crew" style="background:var(--bg2)"><div class="wrap">
-  <h2>Recommended streamers</h2>
-  <p class="lede">Friends of the Department. Go show them some love when donutsforcops isn't live.</p>
+  <h2>Partners in crumb</h2>
+  <p class="lede">Our recommended streamers. Go show them some love when donutsforcops isn't live.</p>
   <div class="crew" id="crewList"></div>
 </div></section>
 
 <section class="band" id="goblins"><div class="wrap">
-  <h2>Meet the Givy Goblins</h2>
-  <p class="lede">They're watching from everywhere, phone in hand, waiting for the show to start. They want one thing.</p>
+  <h2>The usual suspects</h2>
+  <p class="lede">Known Givy Goblins, last seen in chat with their phones out, waiting on the show. Approach with sprinkles.</p>
   <div class="gobs" id="gobs"></div>
   <div class="snapbtns"><button id="gPrev" aria-label="Previous goblin">‹</button><button id="gNext" aria-label="Next goblin">›</button></div>
 </div></section>
 
 <section class="band" id="arcade" style="background:var(--bg2)"><div class="wrap">
-  <h2>The arcade corner</h2>
-  <p class="lede">Kill time before the show starts. Every game runs right here in your phone's browser, no download, no sign-in.</p>
+  <h2>The break room</h2>
+  <p class="lede">Every officer needs a break. Kill time before the show starts. Every game runs right here in your phone's browser, no download, no sign-in.</p>
   <div class="arcade" id="cabs"></div>
 </div></section>
 
 <section class="band" id="drops"><div class="wrap">
-  <h2>The brands behind the counter</h2>
+  <h2>The evidence locker</h2>
   <p class="lede">Where the heat comes from. Check the droplist, then catch it at a dollar on stream.</p>
   <div class="brands">
     <article class="drop dfc">
       <h3>donutsforcops</h3>
       <p>The Donuts Department's own Whatnot shop.</p>
-      <ul><li>Supreme, Strangelove and FTP streetwear</li><li>$1 start auctions and sticker runs</li><li>Givy Goblin giveaways and a buyer's giveaway every show</li></ul>
+      <ul><li>Supreme, Strangelove and FTP streetwear</li><li>$1 start auctions and sticker runs</li><li>Giveaways all show, plus a buyer's giveaway</li></ul>
       <div class="row"><a class="btn" href="https://www.whatnot.com/user/donutsforcops">Follow on Whatnot</a></div>
     </article>
     <article class="drop sup">
@@ -343,7 +348,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   <div class="joinbox">
     <div class="joinart" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="46" fill="#ff4f9a"/><circle cx="60" cy="60" r="17" fill="#2a1220"/><g fill="#fff"><rect x="30" y="34" width="12" height="4" rx="2" transform="rotate(30 36 36)"/><rect x="76" y="38" width="12" height="4" rx="2" transform="rotate(-20 82 40)"/><rect x="80" y="74" width="12" height="4" rx="2" transform="rotate(50 86 76)"/><rect x="28" y="76" width="12" height="4" rx="2" transform="rotate(-40 34 78)"/></g><g fill="#5ef2c6"><rect x="54" y="20" width="12" height="4" rx="2"/><rect x="52" y="96" width="12" height="4" rx="2" transform="rotate(20 58 98)"/></g></svg></div>
     <div>
-      <h2>New to Whatnot? Get a head start.</h2>
+      <h2>New to Whatnot? Join the force.</h2>
       <p>Sign up with the Donuts Department invite link. You'll automatically follow donutsforcops, see our shows first in the app, and get credit applied to your first purchase.</p>
       <div class="row"><a class="btn big" href="https://www.whatnot.com/invite/donutsforcops">Join Whatnot with our link</a><a class="btn ghost" href="#cop">How it works</a></div>
       <p class="fine">Already on Whatnot? Just <a href="https://www.whatnot.com/user/donutsforcops">follow donutsforcops</a>. Credit amounts are set by Whatnot and can change.</p>
@@ -358,22 +363,22 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 </div></section>
 
 <section class="band" id="faq"><div class="wrap">
-  <h2>Questions at the counter</h2>
-  <p class="lede">Quick answers before you jump in.</p>
+  <h2>The interrogation room</h2>
+  <p class="lede">Quick answers. You have the right to remain curious.</p>
   <div class="faq" id="faqList"></div>
 </div></section>
 
 <section class="band"><div class="wrap">
   <div class="sharebox">
-    <div><h2 style="font-size:clamp(24px,4vw,36px)">Bring a friend to the Department</h2><p class="lede" style="margin-bottom:0">Send this page to anyone who should be at the next show. On iPhone, open it in Safari, tap Share, then Add to Home Screen to keep it like an app.</p></div>
+    <div><h2 style="font-size:clamp(24px,4vw,36px)">Call for backup</h2><p class="lede" style="margin-bottom:0">Send this page to anyone who should be at the next show. On iPhone, open it in Safari, tap Share, then Add to Home Screen to keep it like an app.</p></div>
     <button class="btn" id="share">Copy link</button>
   </div>
 </div></section>
 
 <footer class="band"><div class="wrap foot">
-  <div class="fbrand"><b><span class="flk">Do</span>nuts Department</b><span>Streetwear, skate and sugar from donutsforcops. Open late.</span></div>
+  <div class="fbrand"><b><span class="flk">Do</span>nuts Department</b><span>To protect and sprinkle. Streetwear, skate and sugar from donutsforcops.</span></div>
   <nav aria-label="Watch"><h4>Watch</h4><a href="#streams">Upcoming streams</a><a href="#crew">Recommended streamers</a><a href="https://www.whatnot.com/user/donutsforcops">donutsforcops on Whatnot</a></nav>
-  <nav aria-label="Play"><h4>Play</h4><a href="#arcade">Arcade</a><a href="#goblins">Givy Goblins</a><a href="#faq">Questions</a></nav>
+  <nav aria-label="Play"><h4>Play</h4><a href="#arcade">Arcade</a><a href="#goblins">Usual suspects</a><a href="#faq">Questions</a></nav>
   <nav aria-label="Shop"><h4>Shop</h4><a href="https://www.whatnot.com/invite/donutsforcops">Join Whatnot</a><a href="https://strangeloveskateboards.com">Strangelove</a><a href="https://www.supremecommunity.com">Supreme Community</a></nav>
   <p class="legal">© <span id="yr">2026</span> Donuts Department. Independent reseller, not affiliated with Supreme, Strangelove or FTP.</p>
 </div></footer>
@@ -394,7 +399,7 @@ const CONFIG={
   whatnot:'https://www.whatnot.com/user/donutsforcops',
   invite:'https://www.whatnot.com/invite/donutsforcops',   // referral link: new Whatnot sign-ups
   showLengthHrs:3,
-  notes:{dfc:'$1 starts, Givy Goblins giveaways, buyer\'s giveaway every show'},
+  notes:{dfc:'$1 starts, giveaways all show and a buyer\'s giveaway'},
   // Exact shows from Whatnot, Eastern time (YYYY-MM-DD HH:MM). Past shows hide themselves.
   streams:[
     {who:'dfc',at:'2026-11-24 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/16a7c55c-ee44-44e7-ae05-5ffe7f2eeda8'},
@@ -429,16 +434,16 @@ const CONFIG={
     {t:'Buyer\'s Giveaway Wheel',d:'The wheel from the show. Spin it and see what you\'d win.',u:'games/giveaway-wheel/',c:'#5ef2c6',art:'wheel'}
   ],
   goblins:[
-    {spot:'bathtub',line:'Do a giveaway!',tip:'Bubbles up, phone dry, refreshing the app.',bg:'#2b6f8f'},
-    {spot:'dinner table',line:'Start a box logo at a dollar!',tip:'Dinner is getting cold. Doesn\'t care.',bg:'#8f5a2b'},
-    {spot:'toilet',line:'Do a giveaway!',tip:'Been in there twenty minutes. Still waiting.',bg:'#5a6b7a'},
-    {spot:'car',line:'Start a box logo at a dollar!',tip:'Parked. Engine running. Notifications on.',bg:'#3a3f8f'},
-    {spot:'shop counter',line:'Do a giveaway!',tip:'On the clock, phone under the register.',bg:'#2b8f62'},
-    {spot:'bed',line:'Come on! Where is he at!',tip:'Should be asleep. Absolutely not asleep.',bg:'#6a2b8f'}
+    {spot:'bathtub',line:'I plead the frosted.',tip:'Caught in the tub, phone dry, refreshing the app.',bg:'#2b6f8f'},
+    {spot:'dinner table',line:'Am I being glazed?',tip:'Dinner is getting cold. Doesn\'t care.',bg:'#8f5a2b'},
+    {spot:'bathroom',line:'I\'m just here for the hole thing.',tip:'Been in there twenty minutes. Still waiting.',bg:'#5a6b7a'},
+    {spot:'car',line:'I know my rights. Right to remain glazed.',tip:'Parked. Engine running. Notifications on.',bg:'#3a3f8f'},
+    {spot:'shop counter',line:'You\'ll never take me unglazed.',tip:'On the clock, phone under the register.',bg:'#2b8f62'},
+    {spot:'bed',line:'I want my lawyer. And a cruller.',tip:'Should be asleep. Absolutely not asleep.',bg:'#6a2b8f'}
   ],
   steps:[
-    {t:'Join and follow',d:'New to Whatnot? Sign up with our invite link and you\'ll follow donutsforcops automatically. Turn on notifications to get pinged the second the show goes live.',i:'bell'},
-    {t:'Pull up early',d:'The Givy Goblins start yelling before the show. Early chat gets in on the first giveaways.',i:'clock'},
+    {t:'Report for duty',d:'New to Whatnot? Sign up with our invite link and you\'ll follow donutsforcops automatically. Turn on notifications to get pinged the second the show goes live.',i:'bell'},
+    {t:'Make roll call',d:'Get into chat before the show starts. Early viewers catch the first giveaways.',i:'clock'},
     {t:'Bid from a dollar',d:'Supreme, Strangelove and FTP start at $1. Tap to bid; the highest bid when the timer ends takes it.',i:'gavel'},
     {t:'Buy, get a shot',d:'Buyers are entered in the buyer\'s giveaway. Spend once, stay in the running all night.',i:'gift'},
     {t:'It ships to you',d:'Wins ship to the address on your Whatnot account. Stickers go out light as letter mail.',i:'box'}
@@ -447,7 +452,7 @@ const CONFIG={
     ['Do I need the Whatnot app?','Watching and bidding work best in the free Whatnot app on your phone. Sign up with our invite link (whatnot.com/invite/donutsforcops), add a card and address once, and you\'re ready to bid.'],
     ['What does a "$1 start" mean?','Every auction opens at one dollar. Where it ends is up to chat. Sometimes a box logo goes for a steal.'],
     ['What is a sudden death auction?','Some of our recommended streamers run these. The timer doesn\'t reset when someone bids, so whoever is highest when it hits zero wins. No last-second extensions.'],
-    ['How do the giveaways work?','Givy giveaways are free to enter during the show. The buyer\'s giveaway is only for people who bought something that show.'],
+    ['How do the giveaways work?','Giveaways are free to enter during the show. The buyer\'s giveaway is only for people who bought something that show.'],
     ['Are these official Supreme stores?','No. donutsforcops and the streamers we recommend are independent resellers, not affiliated with Supreme, Strangelove or FTP.'],
     ['When does my stuff ship?','donutsforcops ships fast after the show, and wins from the same show ship together. You\'ll get tracking in the Whatnot app.']
   ]
@@ -474,7 +479,7 @@ async function loadFeed(){if(busy)return;busy=true;lastCheck=Date.now();
     const j=await r.json();if(!j||!Array.isArray(j.shows))throw 0;
     const next=j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,thumb:/^https:\/\//.test(s.thumb||'')?s.thumb:'',note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
     const nsig=next.map(keyOf).join(';');
-    if(sig&&nsig!==sig){const old=new Set(sig.split(';'));changed=new Set(next.filter(o=>!old.has(keyOf(o))).map(o=>o.u));toast('Schedule updated from Whatnot');setTimeout(()=>{changed.clear();renderMenu()},9000)}
+    if(sig&&nsig!==sig){const old=new Set(sig.split(';'));changed=new Set(next.filter(o=>!old.has(keyOf(o))).map(o=>o.u));toast('Dispatch: the schedule just changed');setTimeout(()=>{changed.clear();renderMenu()},9000)}
     sig=nsig;SHOWS=next;feedState='live';feedAt=Date.parse(j.updated)||Date.now();
   }catch(e){feedState=feedState==='live'||feedState==='stale'?'stale':'backup'}
   busy=false;document.body.classList.remove('feed-loading');renderMenu();tickHero();status()}
@@ -508,7 +513,7 @@ function tickHero(){const now=Date.now();const n=upcoming(now)[0];
   const live=liveNow(n,now);$('#liveBar').classList.toggle('on',live);
   const sign=$('.open');sign.classList.toggle('live',live);sign.textContent=live?'● LIVE NOW':'● OPEN LATE';
   const pst=$('#nextPoster');if(n.thumb){if(pst.getAttribute('src')!==n.thumb)pst.src=n.thumb;pst.hidden=false}else pst.hidden=true;
-  $('#nextLbl').textContent=live?'Happening right now · '+who[n.who].n:'Next stream · '+who[n.who].n;
+  $('#nextLbl').textContent=live?'On duty right now · '+who[n.who].n:'Next shift · '+who[n.who].n;
   $('#nextTitle').textContent=n.title;
   $('#nextWhen').textContent=fmtDay(n.at)+' at '+fmtTime(n.at);
   $('#nextGo').textContent=live?'Join the show':'Open the show';$('#nextGo').href=n.u;
@@ -531,7 +536,7 @@ const gob=g=>`<svg viewBox="0 0 120 120"><rect width="120" height="120" fill="${
   <path d="M42 70q18 16 36 0" fill="#3a0f1a" stroke="#2a5a12" stroke-width="2"/><path d="M48 71l3 5 3-4 3 5 3-5 3 4 3-5" fill="#fff"/>
   <rect x="76" y="74" width="18" height="30" rx="4" fill="#111" transform="rotate(12 85 89)"/><rect x="79" y="78" width="12" height="20" rx="2" fill="#ff4f9a" transform="rotate(12 85 89)"/>
   <ellipse cx="82" cy="98" rx="9" ry="7" fill="#7fd13f"/></svg>`;
-$('#gobs').innerHTML=CONFIG.goblins.map(g=>`<div class="gob">${gob(g)}<b>"${esc(g.line)}"</b><span>The ${esc(g.spot)} goblin. ${esc(g.tip)}</span></div>`).join('');
+$('#gobs').innerHTML=CONFIG.goblins.map((g,i)=>`<div class="gob"><div class="mug">${gob(g)}<span class="plate">DFC-0${i+1}</span></div><b>"${esc(g.line)}"</b><span>Suspect #${i+1}, the ${esc(g.spot)} goblin. ${esc(g.tip)}</span></div>`).join('');
 const gs=$('#gobs');const step=d=>gs.scrollBy({left:d*(gs.firstElementChild.offsetWidth+14),behavior:'smooth'});
 $('#gPrev').addEventListener('click',()=>step(-1));$('#gNext').addEventListener('click',()=>step(1));
 gs.addEventListener('keydown',e=>{if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});gs.tabIndex=0;
@@ -615,6 +620,8 @@ document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidd
 }
 
 $('#yr').textContent=new Date().getFullYear();
+{const M=['To protect and sprinkle.','Glaze and order, every night.','You have the right to remain glazed.','Book \'em, Danish.','Donut resist a $1 start.','Serving and protecting since the first dozen.'];let i=0;const el=$('#motto');
+ if(!still)setInterval(()=>{el.style.opacity=0;setTimeout(()=>{i=(i+1)%M.length;el.textContent=M[i];el.style.opacity=1},400)},4500)}
 renderMenu();tickHero();status();loadFeed();
 setInterval(tickHero,1000);setInterval(()=>{renderMenu();status()},30e3);
 /* check Whatnot every minute while the page is on screen, and right away when someone comes back to it */
