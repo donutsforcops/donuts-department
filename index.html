@@ -313,6 +313,38 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 
+
+/* Donuts Department TV */
+.tv{position:absolute;right:0;bottom:3%;width:38%;max-width:240px;z-index:3;transform:rotate(-4deg);filter:drop-shadow(0 18px 24px #000a)}
+.tv .ant{position:absolute;left:50%;top:-26%;width:60%;height:30%;transform:translateX(-50%);pointer-events:none}
+.tv .ant i{position:absolute;bottom:0;left:50%;width:3px;height:100%;background:linear-gradient(#ddd,#888);border-radius:3px;transform-origin:bottom center;transition:transform .4s cubic-bezier(.3,1.8,.5,1)}
+.tv .ant i:first-child{transform:rotate(-32deg)}.tv .ant i:last-child{transform:rotate(28deg)}
+.tv .ant i::after{content:'';position:absolute;top:-4px;left:-2.5px;width:8px;height:8px;border-radius:50%;background:#ccc}
+.tv.wiggle .ant i:first-child{transform:rotate(-18deg)}.tv.wiggle .ant i:last-child{transform:rotate(40deg)}
+.tvset{position:relative;display:block;width:100%;padding:8% 8% 17%;border:0;border-radius:16% / 20%;background:linear-gradient(170deg,#efe3c8,#cbb791);box-shadow:inset 0 -7px 0 #a8946e,inset 0 3px 0 #fff8;cursor:pointer;-webkit-tap-highlight-color:transparent;font:inherit;color:inherit}
+.tvset:active{transform:scale(.98)}
+.tvset:focus-visible{outline:3px solid var(--sun);outline-offset:4px}
+.tv .scr{position:relative;display:block;aspect-ratio:4/3;border-radius:13% / 17%;overflow:hidden;background:#050505;box-shadow:0 0 0 4px #3b3327,0 0 0 6px #8c7a5a}
+.tv video,.tv .tvpage,.tv .tvstatic{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.tv video{filter:saturate(1.15) contrast(1.05)}
+.tv .tvstatic{image-rendering:pixelated;opacity:0;transition:opacity .08s}.tv .tvstatic.on{opacity:1}
+.tv .lines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,#0000 0 2px,#00000055 2px 3px);pointer-events:none}
+.tv .glare{position:absolute;inset:0;background:radial-gradient(110% 70% at 28% 8%,#ffffff38,transparent 45%),radial-gradient(140% 120% at 50% 50%,transparent 55%,#000a 100%);pointer-events:none}
+.tv .osd{position:absolute;top:7%;right:8%;left:8%;text-align:right;font:700 clamp(9px,2.4vw,15px)/1.15 ui-monospace,Menlo,Consolas,monospace;color:#6dff7a;text-shadow:0 0 6px #6dff7a,1px 1px 0 #000;letter-spacing:.06em;opacity:0;transition:opacity .3s}
+.tv .osd.on{opacity:1}.tv .osd small{display:block;font-size:.72em;opacity:.9}
+.tv .rec{position:absolute;left:8%;bottom:9%;font:700 clamp(8px,1.9vw,12px) ui-monospace,Menlo,monospace;color:#fff;text-shadow:1px 1px 0 #000;letter-spacing:.05em}
+.tv .rec::before{content:'● ';color:#ff3d3d}
+.tv .ctl{position:absolute;left:9%;right:9%;bottom:4%;height:9%;display:flex;align-items:center;gap:7%;justify-content:flex-end}
+.tv .ctl .k{width:12%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7a6a52,#3b3327);box-shadow:0 1px 0 #fff6}
+.tv .ctl .led{width:5%;aspect-ratio:1;border-radius:50%;background:#ff3d3d;box-shadow:0 0 6px #ff3d3d;margin-right:auto;order:-1}
+.tv .tvpage{display:flex;flex-direction:column;justify-content:center;gap:2%;padding:10% 9%;background:#05051a;color:#fff;font:700 clamp(7px,1.9vw,12px)/1.2 ui-monospace,Menlo,Consolas,monospace;text-align:left;text-transform:uppercase}.tv .tvpage .big{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tv .tvpage .bar{background:#1d3bd6;color:#ffd23f;padding:2px 4px;margin:-4% -4% 4%;display:flex;justify-content:space-between}
+.tv .tvpage .c{color:#5ef2c6}.tv .tvpage .y{color:#ffd23f}.tv .tvpage .big{font-size:1.35em;color:#fff}
+.tv .tvpage.breaking{background:#8a0012}.tv .tvpage.breaking .bar{background:#fff;color:#c1121f}
+.tv .tvpage .blink{animation:tvblink 1.6s steps(2,end) infinite}
+@keyframes tvblink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.tv .tvpage .blink{animation:none}.tv .ant i{transition:none}}
+@media(max-width:860px){.tv{width:40%;right:3%;bottom:6%}}
 /* goblin of the week */
 .booked{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;align-items:center;background:#1b0f16;border:2px dashed var(--sun);border-radius:22px;padding:16px;margin:0 0 20px;position:relative;overflow:hidden}
 .booked .mug{border-radius:14px}.booked svg{width:100%;aspect-ratio:1;display:block}
@@ -397,9 +429,9 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
       <a class="newbie" href="https://www.whatnot.com/invite/donutsforcops"><b>New to Whatnot?</b> Join with our invite link and get credit on your first order ›</a>
     </div>
   </div>
-  <div class="fig" id="fig" aria-hidden="true">
-    <canvas id="sprinkles"></canvas>
-    <svg viewBox="0 0 500 500">
+  <div class="fig" id="fig">
+    <canvas id="sprinkles" aria-hidden="true"></canvas>
+    <svg viewBox="0 0 500 500" aria-hidden="true">
       <defs>
         <radialGradient id="dough" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#f0b46a"/><stop offset="1" stop-color="#a5622a"/></radialGradient>
         <radialGradient id="icing" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#ff9cc7"/><stop offset=".7" stop-color="#ff4f9a"/><stop offset="1" stop-color="#c41f66"/></radialGradient>
@@ -427,6 +459,20 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
         <circle cx="0" cy="-16" r="5" fill="#ff4f9a"/>
       </g>
     </svg>
+    <div class="tv" id="tv">
+      <span class="ant" aria-hidden="true"><i></i><i></i></span>
+      <button class="tvset" id="tvBtn" type="button" aria-label="Donuts Department TV. Tap to change the channel.">
+        <span class="scr">
+          <video id="tvVid" muted playsinline preload="none" poster="tv/ch03.jpg" aria-hidden="true"></video>
+          <span class="tvpage" id="tvPage" hidden></span>
+          <canvas class="tvstatic" id="tvStatic" width="96" height="72" aria-hidden="true"></canvas>
+          <span class="osd" id="tvOsd" aria-hidden="true"></span>
+          <span class="rec" id="tvRec" hidden aria-hidden="true"></span>
+          <span class="lines" aria-hidden="true"></span><span class="glare" aria-hidden="true"></span>
+        </span>
+        <span class="ctl" aria-hidden="true"><i class="k"></i><i class="k"></i><i class="led"></i></span>
+      </button>
+    </div>
   </div>
 </div></header>
 <main id="main">
@@ -1065,6 +1111,48 @@ async function loadPast(){try{const j=await api('/api/past');const L=(j.shows||[
   try{const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()});if(!r.ok)throw 0;
     f.reset();$('#apbOk').hidden=false;b.textContent='Filed'}
   catch(err){b.disabled=false;b.textContent='File the report';const x=$('#apbErr');x.textContent='Dispatch didn\'t pick up. Try again in a minute, or message donutsforcops on Whatnot.';x.hidden=false}})}
+
+/* ===== Donuts Department TV: channel surfing beside the donut ===== */
+{const TVC=[{n:'03',t:'Glaze & Order',v:'tv/ch03'},{n:'07',t:'Donut Shopping Network',v:'tv/ch07'},{n:'12',t:'Goblin Cam',v:'tv/ch12',rec:1},{n:'22',t:'Skate Tape',v:'tv/ch22'},{n:'30',t:'Sprinkle Forecast',v:'tv/ch30'},{n:'64',t:'Pixel Patrol',v:'tv/ch64'},{n:'99',t:'Dispatch',page:1}];
+ const box=$('#tv'),btn=$('#tvBtn'),vid=$('#tvVid'),page=$('#tvPage'),osd=$('#tvOsd'),rec=$('#tvRec'),cv=$('#tvStatic'),g=cv.getContext('2d');
+ const lite=still||(navigator.connection&&navigator.connection.saveData);
+ let ch=0,on=false,vis=false,pageT=0,osdT=0,recT=0,liveShow=null,busy=false;
+ const noise=(ms,done)=>{if(still){done();return}busy=true;cv.classList.add('on');const t0=performance.now();const img=g.createImageData(96,72);
+   const f=now=>{const d=img.data;for(let i=0;i<d.length;i+=4){const v=Math.random()*255|0;d[i]=d[i+1]=d[i+2]=v;d[i+3]=255}g.putImageData(img,0,0);
+     const y=((now-t0)/ms*90)%72;g.fillStyle='#ffffff22';g.fillRect(0,y,96,8);
+     if(now-t0<ms)requestAnimationFrame(f);else{cv.classList.remove('on');busy=false;done()}};requestAnimationFrame(f)};
+ const showOsd=c=>{osd.innerHTML=`CH ${c.n}<small>${esc(c.t)}</small>`;osd.classList.add('on');clearTimeout(osdT);osdT=setTimeout(()=>osd.classList.remove('on'),2600)};
+ const pad2=n=>String(n).padStart(2,'0');
+ const dispatch=()=>{const n=upcoming(Date.now()).find(o=>!liveNow(o,Date.now()));
+   if(!n){page.innerHTML=`<span class="bar"><span>P99 DISPATCH</span><span>DD-TV</span></span><span class="c">NEXT SHIFT</span><span class="big">TO BE ANNOUNCED</span><span class="y">FOLLOW DONUTSFORCOPS</span>`;return}
+   const s=Math.max(0,Math.floor((n.at-Date.now())/1e3));
+   page.innerHTML=`<span class="bar"><span>P99 DISPATCH</span><span>DD-TV</span></span><span class="c">NEXT SHIFT</span><span class="big">${esc(n.title)}</span><span class="y">${esc(n.at.toLocaleString(undefined,{weekday:'short',hour:'numeric',minute:'2-digit'}))}</span><span>T-${s>=86400?Math.floor(s/86400)+'D ':''}${pad2(Math.floor(s%86400/3600))}:${pad2(Math.floor(s%3600/60))}:${pad2(s%60)}</span>`};
+ const breaking=()=>{page.className='tvpage breaking';page.innerHTML=`<span class="bar"><span>BREAKING</span><span>LIVE</span></span><span class="big">ON AIR NOW</span><span>${esc(liveShow.title)}</span><span class="y blink">TAP TO WATCH</span>`;page.hidden=false;vid.hidden=true;vid.pause();
+   btn.setAttribute('aria-label','Donuts Department TV: donutsforcops is live now. Tap to watch.')};
+ const tune=k=>{ch=(k+TVC.length)%TVC.length;const c=TVC[ch];clearInterval(pageT);clearInterval(recT);rec.hidden=true;
+   btn.setAttribute('aria-label',`Donuts Department TV, channel ${c.n}, ${c.t}. Tap to change the channel.`);
+   if(liveShow){breaking();return}
+   if(!c.page)showOsd(c);else osd.classList.remove('on');
+   if(c.page){page.className='tvpage';page.hidden=false;vid.hidden=true;vid.pause();dispatch();pageT=setInterval(()=>{dispatch()},1000);if(on&&!lite)setTimeout(()=>{if(TVC[ch]===c&&on)next()},6000);return}
+   page.hidden=true;vid.hidden=false;
+   if(c.rec){rec.hidden=false;const tick=()=>{const d=new Date();rec.textContent=`REC 03:${pad2(d.getMinutes())}:${pad2(d.getSeconds())} AM`};tick();recT=setInterval(tick,1000)}
+   vid.poster=c.v+'.jpg';
+   if(lite||!on){vid.removeAttribute('src');vid.load();return}
+   vid.src=c.v+'.mp4';const p=vid.play();if(p)p.catch(()=>{})};
+ const next=()=>{if(busy)return;noise(420,()=>tune(ch+1))};
+ vid.addEventListener('ended',()=>{if(on&&!liveShow)next()});
+ vid.addEventListener('error',()=>{if(on)setTimeout(next,1500)});
+ btn.addEventListener('click',()=>{if(liveShow){location.href=liveShow.u;return}
+   box.classList.add('wiggle');setTimeout(()=>box.classList.remove('wiggle'),400);next()});
+ const start=()=>{if(on)return;on=true;tune(0)};
+ const pause=()=>{if(!vid.paused)vid.pause()};
+ const resume=()=>{if(on&&vis&&!document.hidden&&!vid.hidden&&vid.src){const p=vid.play();if(p)p.catch(()=>{})}};
+ new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis){if(document.readyState==='complete')start();else addEventListener('load',start,{once:true});resume()}else pause()},{threshold:.2}).observe(box);
+ document.addEventListener('visibilitychange',()=>document.hidden?pause():resume());
+ /* live override: checked every 5 seconds against the schedule */
+ setInterval(()=>{const n=upcoming(Date.now())[0];const live=n&&liveNow(n,Date.now())&&n.live===true?n:null;
+   if(!!live!==!!liveShow||(live&&liveShow&&live.u!==liveShow.u)){liveShow=live;if(on)noise(300,()=>tune(ch))}},5000);
+ tune(0)}
 loadLineup();loadSold();loadPast();
 setInterval(()=>{if(!document.hidden){loadSold();loadLineup()}},120000);
 $('#yr').textContent=new Date().getFullYear();
