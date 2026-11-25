@@ -18,7 +18,7 @@
 <div class="antennas" aria-hidden="true"></div>
 <div class="set">
 <div class="glass">
-<video playsinline muted loop preload="none" aria-label="Skate Tape station preview"></video>
+<div id="screen"></div>
 <div id="card" hidden><b></b></div>
 <canvas width="160" height="120" hidden aria-hidden="true"></canvas>
 </div>
@@ -27,12 +27,15 @@
 <div class="vcr"><span class="slot">VIDEO CASSETTE RECORDER</span><output id="display" aria-live="polite">12:00</output></div>
 </section>
 <section class="remote" aria-label="Television controls">
-<button id="power" aria-pressed="false">Power</button>
-<button id="previous" aria-label="Previous channel">CH ▼</button>
-<button id="next" aria-label="Next channel">CH ▲</button>
+<button disabled id="power" aria-pressed="false">Power</button>
+<button id="previous" aria-label="Previous tape">◂ Tape</button>
+<button id="next" aria-label="Next tape">Tape ▸</button>
 <label>Tracking <input type="range" min="0" max="10" value="3"></label>
 </section>
-<p class="note">Station preview · CH 22 Skate Tape / CH 00 Test Pattern</p>
+<button id="skip" hidden>Skip commercial ▸</button>
+<p><a id="source" hidden target="_blank" rel="noopener">Watch this film on Vimeo ↗</a></p>
+<section aria-labelledby="shelf-heading"><h2 id="shelf-heading">Evidence shelf</h2><div id="shelf"></div></section>
+<p class="note">Films play through Vimeo. <a href="https://vimeo.com/terms">Terms</a> · <a href="https://vimeo.com/privacy">Privacy</a></p>
 </main>
 </body>
 </html>
