@@ -683,6 +683,7 @@
     const v = overScreen.querySelector('.verdict'); const clone = v.cloneNode(true); v.replaceWith(clone);
     overScreen.hidden = false;
     $('againBtn').focus();
+    window.DDScore && DDScore.offer('best-in-the-game', S.score);
   }
   function togglePause() {
     if (S.mode !== 'play') return;
@@ -744,4 +745,5 @@
 })();
 </script>
 
-<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;right:calc(6px + env(safe-area-inset-right,0px));top:calc(6px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a></body></html>
+<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;right:calc(6px + env(safe-area-inset-right,0px));top:calc(6px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a><script src="../score.js" defer></script>
+</body></html>

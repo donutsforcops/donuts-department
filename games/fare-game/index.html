@@ -2007,7 +2007,7 @@ function gameOver(){
   $('fin').textContent='$0';G.finShown=0;G.finDone=false;G.finT=0;
   const rank=G.cash<150?['Learner Permit','Pick up more fares next shift.']:G.cash<450?['Night-Shift Regular','You know where the bridges are.']:G.cash<900?['Hotshot Hack','Dispatch knows your name.']:['Legend of the Ring Road','They name streets after drivers like you.'];
   $('rank').innerHTML='';$('rank').append(document.createTextNode(rank[0]));const sm=document.createElement('small');sm.textContent=G.reason||rank[1];$('rank').append(sm);
-  const b=getBest();G.isBest=G.cash>b&&G.cash>0;$('newbest').hidden=true;$('rank').style.visibility='hidden';if(G.cash>b)setBest(G.cash);
+  const b=getBest();G.isBest=G.cash>b&&G.cash>0;window.DDScore&&setTimeout(()=>DDScore.offer('fare-game',Math.round(G.cash)),2200);$('newbest').hidden=true;$('rank').style.visibility='hidden';if(G.cash>b)setBest(G.cash);
   $('stats').innerHTML=`<span><b>${G.deliv}</b> delivered</span><span><b>${G.fails}</b> lost</span><span><b>${G.bestStreak}</b> best streak</span><span><b>${G.tricks}</b> stunts</span>`;
   const tb=$('rows');tb.innerHTML='';
   if(!G.log.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.textContent='No fares logged. Stop inside a colored ring to pick someone up.';tr.append(td);tb.append(tr)}
@@ -2157,4 +2157,5 @@ function boot(){
 boot();
 </script>
 
-<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;left:calc(10px + env(safe-area-inset-left,0px));top:calc(100px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a></body></html>
+<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;left:calc(10px + env(safe-area-inset-left,0px));top:calc(100px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a><script src="../score.js" defer></script>
+</body></html>

@@ -312,6 +312,61 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   .arcade{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cab{padding:8px}.cab h3{font-size:15px}.cab p{font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* goblin of the week */
+.booked{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;align-items:center;background:#1b0f16;border:2px dashed var(--sun);border-radius:22px;padding:16px;margin:0 0 20px;position:relative;overflow:hidden}
+.booked .mug{border-radius:14px}.booked svg{width:100%;aspect-ratio:1;display:block}
+.booked .k{font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--sun)}
+.booked h3{font-family:Bungee;font-weight:400;font-size:clamp(20px,3vw,26px);margin:6px 0 6px}
+.booked p{margin:0 0 6px;color:var(--mute)}.booked p b{color:var(--ink)}
+.booked .bk{position:absolute;right:14px;top:12px;border:3px solid #ff3d3d;color:#ff3d3d;font:400 14px Bungee;padding:2px 8px;transform:rotate(8deg);border-radius:4px;opacity:.85}
+.gob.isbooked .mug::before{content:'BOOKED';position:absolute;z-index:2;left:50%;top:14px;transform:translateX(-50%) rotate(-8deg);border:3px solid #ff3d3d;color:#ff3d3d;background:#0008;font:400 13px Bungee;padding:2px 8px;border-radius:4px}
+/* leaderboard */
+.board{margin-top:28px;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px}
+.board h3{font-family:Bungee;font-weight:400;font-size:22px;margin:0 0 4px}
+.board .tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0 12px;scrollbar-width:none}.board .tabs::-webkit-scrollbar{display:none}
+.board .tabs button{flex:none;min-height:40px;border-radius:999px;border:2px solid var(--line);background:var(--bg2);color:var(--ink);font:800 13px Rubik;padding:6px 12px;cursor:pointer}
+.board .tabs button[aria-selected=true]{background:var(--pink);border-color:var(--pink);color:#fff}
+.board ol{list-style:none;margin:0;padding:0;counter-reset:r}
+.board li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 4px;border-top:1px dashed var(--line);counter-increment:r}
+.board li::before{content:counter(r);font:400 16px Bungee;color:var(--mute);text-align:center}
+.board li:nth-child(1)::before{color:var(--sun)}.board li:nth-child(2)::before{color:#d9e2ec}.board li:nth-child(3)::before{color:#d9915b}
+.board li b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.board li span{font:400 16px Bungee;color:var(--mint)}
+.board .empty{color:var(--mute);padding:12px 0}
+/* evidence room */
+.bags{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px}
+.bag{position:relative;background:linear-gradient(180deg,#ffffff14,#ffffff06);border:2px solid #ffffff26;border-radius:10px 10px 16px 16px;padding:26px 10px 10px;box-shadow:inset 0 0 30px #ffffff0a}
+.bag::before{content:'';position:absolute;left:8px;right:8px;top:8px;height:8px;border-radius:4px;background:repeating-linear-gradient(90deg,#ff3d3d 0 10px,#c1121f 10px 12px)}
+.bag img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:block;filter:saturate(.95)}
+.bag .tagx{background:#f6ead2;color:#2a1a12;border-radius:4px;margin-top:10px;padding:8px 10px;font:600 13px/1.35 Rubik}
+.bag .tagx i{display:block;font:800 11px ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#8a5a3a;font-style:normal}
+/* just sold */
+.sold{margin-top:22px;border:2px solid var(--line);border-radius:16px;overflow:hidden;background:#0f070b}
+.sold .h{display:flex;align-items:center;gap:8px;padding:8px 14px;font:800 12px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--mint);border-bottom:1px solid var(--line)}
+.sold .h i{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.sold .rail{display:flex;gap:28px;white-space:nowrap;padding:10px 14px;animation:soldrun 40s linear infinite;width:max-content}
+.sold .rail span{font-weight:700}.sold .rail em{font-style:normal;color:var(--sun);margin-left:8px}
+@keyframes soldrun{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.sold .rail{animation:none;flex-wrap:wrap;white-space:normal;width:auto}}
+/* lineup preview */
+.lineup{margin-top:8px}.lineup summary{cursor:pointer;font-weight:800;color:var(--mint);min-height:36px;display:inline-flex;align-items:center;list-style:none}
+.lineup summary::-webkit-details-marker{display:none}.lineup summary::after{content:' ›';transition:transform .2s;display:inline-block;margin-left:4px}.lineup[open] summary::after{transform:rotate(90deg)}
+.lineup ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}
+.lineup li{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink);border:0;padding:0}
+.lineup li img{width:36px;height:36px;object-fit:cover;border-radius:8px;flex:none;background:var(--bg2)}
+/* APB */
+.apb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:28px;align-items:start}
+.apbcard{background:#f6ead2;color:#2a1a12;border-radius:8px;padding:20px;box-shadow:0 14px 40px #0008;position:relative}
+.apbcard h3{font-family:Bungee;font-weight:400;color:#7a1238;font-size:20px;margin:0 0 12px}
+.apbcard label{display:block;font:800 13px Rubik;margin:12px 0 4px}
+.apbcard input,.apbcard textarea,.apbcard select{width:100%;min-height:46px;border-radius:10px;border:2px solid #c9b48f;background:#fffaf0;color:#2a1a12;padding:10px 12px;font:400 16px Rubik}
+.apbcard textarea{min-height:96px;resize:vertical}
+.apbcard .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.apbcard .btn{margin-top:16px;width:100%}
+.apbcard .hp{position:absolute;left:-9999px}
+.apbcard .ok{font-weight:800;color:#1f6b4c;margin:12px 0 0}.apbcard .err{font-weight:800;color:#b0123f;margin:12px 0 0}
+@media(max-width:860px){.apb{grid-template-columns:1fr}}
+@media(max-width:700px){.bags{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bag{padding:20px 6px 6px}.bag .tagx{font-size:12px;padding:6px 8px}.booked{grid-template-columns:96px minmax(0,1fr);gap:12px;padding:12px}.booked .bk{display:none}.apbcard .row2{grid-template-columns:1fr}}
 </style>
 </head>
 <body class="feed-loading">
@@ -383,6 +438,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   <ul class="menu" id="menu"></ul>
   <p style="margin-top:18px"><button class="btn ghost" id="more">Show the full schedule</button></p>
   <p class="fine feedchip" id="feedNote"></p>
+  <div class="sold" id="sold" hidden aria-label="Recently sold"><div class="h"><i></i>RECENTLY CLEARED FROM EVIDENCE</div><div style="overflow:hidden"><div class="rail" id="soldRail"></div></div></div>
 </div></section>
 
 <section class="band records" id="records" hidden><div class="wrap">
@@ -390,6 +446,12 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   <p class="lede">Pulled straight from Whatnot's own records for every donutsforcops show. Dollar amounts withheld on advice of counsel.</p>
   <div class="stats" id="statGrid"></div>
   <p class="fine" id="statNote"></p>
+</div></section>
+
+<section class="band" id="evidence" hidden><div class="wrap">
+  <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 8h32v34a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4z" fill="#ffffff22" stroke="#fff4e6" stroke-width="2.5"/><rect x="8" y="8" width="32" height="6" fill="#ff3d3d"/><rect x="14" y="20" width="20" height="14" rx="2" fill="#ff4f9a"/><rect x="14" y="36" width="20" height="5" fill="#f6ead2"/></svg></span>The evidence room</h2>
+  <p class="lede">Every past shift gets bagged and logged. These are the most recent, straight from the Whatnot archive.</p>
+  <div class="bags" id="bags"></div>
 </div></section>
 
 <div class="tapewrap"><div class="tape tl" aria-hidden="true"><div>POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · </div></div></div>
@@ -419,6 +481,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 <section class="band" id="goblins"><div class="wrap">
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="20" cy="20" r="13" fill="#59b8ff33" stroke="#ffd23f" stroke-width="5"/><path d="M30 30l12 12" stroke="#ffd23f" stroke-width="7" stroke-linecap="round"/><circle cx="16" cy="16" r="3" fill="#fff"/></svg></span>The usual suspects</h2>
   <p class="lede">Six repeat offenders, all charged with loitering in chat before showtime. Every one of them claims they were just browsing.</p>
+  <div class="booked" id="booked"></div>
   <div class="gobs" id="gobs"></div>
   <div class="snapbtns"><button id="gPrev" aria-label="Previous goblin">‹</button><button id="gNext" aria-label="Next goblin">›</button></div>
 </div></section>
@@ -427,6 +490,8 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 18h24v14a10 10 0 0 1-10 10h-4A10 10 0 0 1 10 32z" fill="#fff4e6"/><rect x="10" y="22" width="24" height="7" fill="#ff4f9a"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="#fff4e6" stroke-width="4" fill="none"/><path d="M17 4q-3 4 0 8M24 2q-3 5 0 10" stroke="#d8bfcb" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span>The break room</h2>
   <p class="lede">Every precinct has one. Six games, no download, and nobody is timing your break.</p>
   <div class="arcade" id="cabs"></div>
+  <div class="board" id="board" hidden><h3>Most wanted</h3><p class="fine" style="margin:0">This week's top 10 in each game. Resets Monday. Honor system: cheaters get the paperwork.</p>
+    <div class="tabs" role="tablist" id="boardTabs"></div><ol id="boardList"></ol></div>
 </div></section>
 
 <div class="tapewrap"><div class="tape tl" aria-hidden="true"><div>EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · </div></div></div>
@@ -462,6 +527,31 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
       <div class="row"><a class="btn" href="https://strangeloveskateboards.com">strangeloveskateboards.com</a></div>
     </article>
   </div>
+</div></section>
+
+
+<section class="band" id="apb" style="background:var(--bg2)"><div class="wrap apb">
+  <div>
+    <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M6 30V18l26-10v32z" fill="#ff4f9a"/><rect x="2" y="18" width="8" height="12" rx="2" fill="#fff4e6"/><path d="M12 30l4 12h6l-3-12z" fill="#d8bfcb"/><path d="M38 16q4 8 0 16M42 12q7 12 0 24" stroke="#ffd23f" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span>Put out an APB</h2>
+    <p class="lede">Hunting for something specific? File a report. A piece, a size, a season, a sticker you've been chasing since 2014. The department reads every one, and if it turns up, it might just show up on a stream.</p>
+    <p class="fine">No promises, no holds, no reservations. Just a lead. Reports go only to donutsforcops.</p>
+  </div>
+  <form class="apbcard" id="apbForm" name="apb" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="apb">
+    <p class="hp"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <h3>All points bulletin</h3>
+    <label for="apbWhat">What are you after?</label>
+    <textarea id="apbWhat" name="wanted" required maxlength="400" placeholder="e.g. Supreme box logo hoodie, black, size L, any season"></textarea>
+    <div class="row2">
+      <div><label for="apbBrand">Brand</label><select id="apbBrand" name="brand"><option>Supreme</option><option>Strangelove</option><option>FTP</option><option>Stickers</option><option>Something else</option></select></div>
+      <div><label for="apbBudget">Budget</label><select id="apbBudget" name="budget"><option value="">Rather not say</option><option>Under $50</option><option>$50 to $150</option><option>$150 to $400</option><option>$400 and up</option></select></div>
+    </div>
+    <label for="apbWho">Your Whatnot handle</label>
+    <input id="apbWho" name="handle" maxlength="40" placeholder="So we can tag you if it comes in" autocomplete="nickname">
+    <button class="btn" type="submit">File the report</button>
+    <p class="ok" id="apbOk" hidden>Report filed. Units have been notified. Keep your notifications on.</p>
+    <p class="err" id="apbErr" hidden></p>
+  </form>
 </div></section>
 
 <section class="join band" id="join"><div class="wrap">
@@ -503,6 +593,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 0v12" stroke="#d8bfcb" stroke-width="3"/><path d="M10 26a14 14 0 0 1 28 0z" fill="#59b8ff"/><path d="M14 26l-8 18h36l-8-18z" fill="#ffd23f" opacity=".35"/><circle cx="24" cy="27" r="4" fill="#fff4e6"/></svg></span>The interrogation room</h2>
   <p class="lede">Normally we ask the questions around here. Go ahead, you get a few.</p>
   <div class="faq" id="faqList"></div>
+  <p style="margin-top:18px"><a class="btn ghost" href="custody/index.html">Chain of custody: shipping &amp; authenticity ›</a></p>
 </div></section>
 
 <section class="band"><div class="wrap">
@@ -514,8 +605,8 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 
 <footer class="band"><div class="wrap foot">
   <div class="fbrand"><svg class="dbox" viewBox="0 0 220 110" aria-hidden="true"><path d="M10 40h200l-12 64H22z" fill="#ff86bb"/><path d="M10 40L40 6h140l30 34z" fill="#ffd0e3"/><path d="M10 40h200" stroke="#c41f66" stroke-width="3"/><g id="boxDonuts"></g><text x="110" y="92" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="13" fill="#7a1a40">DONUTS DEPT · EST. TODAY</text></svg><b><span class="flk">Do</span>nuts Department</b><span>To protect and sprinkle. Streetwear, skate and sugar from donutsforcops.</span></div>
-  <nav aria-label="Watch"><h4>Watch</h4><a href="#streams">Upcoming streams</a><a href="#crew">Recommended streamers</a><a href="https://www.whatnot.com/user/donutsforcops">donutsforcops on Whatnot</a></nav>
-  <nav aria-label="Play"><h4>Play</h4><a href="#arcade">Arcade</a><a href="#goblins">Usual suspects</a><a href="#faq">Questions</a></nav>
+  <nav aria-label="Watch"><h4>Watch</h4><a href="#streams">Upcoming streams</a><a href="#apb">Put out an APB</a><a href="custody/index.html">Shipping &amp; authenticity</a><a href="#crew">Recommended streamers</a><a href="https://www.whatnot.com/user/donutsforcops">donutsforcops on Whatnot</a></nav>
+  <nav aria-label="Play"><h4>Play</h4><a href="#arcade">Arcade</a><a href="#goblins">Usual suspects</a><a href="#board">Leaderboard</a><a href="#faq">Questions</a></nav>
   <nav aria-label="Shop"><h4>Shop</h4><a href="https://www.whatnot.com/invite/donutsforcops">Join Whatnot</a><a href="https://strangeloveskateboards.com">Strangelove</a><a href="https://www.supremecommunity.com">Supreme Community</a></nav>
   <p class="legal">© <span id="yr">2026</span> Donuts Department. Independent reseller, not affiliated with Supreme, Strangelove or FTP.</p>
 </div></footer>
@@ -583,6 +674,7 @@ const CONFIG={
     {t:'Fare Game',d:'3D taxi chaos across an open city, with a car radio.',u:'games/fare-game/',c:'#ffd23f',art:'car'},
     {t:'Buyer\'s Giveaway Wheel',d:'The wheel from the show. Spin it and see what you\'d win.',u:'games/giveaway-wheel/',c:'#5ef2c6',art:'wheel'}
   ],
+  charges:['Bidding with frosting on his fingers. The screen has been bagged as evidence.','Typing "what size?" after the tag was held up to the camera. Twice.','Asking for a $1 start on an item already sitting at $1.','Saying "run it back" eleven times in one show.','Leaving the stream with 59 seconds left on the giveaway timer.','Impersonating a buyer. Has never bought anything.','Spamming the donut emoji, repeatedly, with intent.','Snoozing a show reminder three times, then reporting that he missed the show.','Outbidding himself on a sticker. Then doing it again.','Loitering in the chat of a show that ended an hour ago.','Asking whether the box logo is real while it was still in the Supreme bag.','Claiming "I was just about to bid" on six separate items.'],
   goblins:[
     {spot:'bathtub',line:'I was in the tub the whole time, officer. Phone? What phone?',tip:'Found with wet hands and a fully charged battery.',bg:'#2b6f8f'},
     {spot:'dinner table',line:'I can explain the cold lasagna. The show was about to start.',tip:'Family reports he said grace in under four seconds.',bg:'#8f5a2b'},
@@ -622,7 +714,7 @@ const upcoming=now=>SHOWS.filter(o=>o.live||o.at.getTime()+CONFIG.showLengthHrs*
 const liveNow=(o,now)=>o.live!==undefined?o.live:o.at<=now;
 /* ===== live schedule from Whatnot (/api/shows on the hosted site); the list above is only the backup ===== */
 let feedState='loading',feedAt=0,lastCheck=0,sig='',changed=new Set(),busy=false;
-const mapFeed=j=>j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,thumb:/^https:\/\//.test(s.thumb||'')?s.thumb:'',note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
+const mapFeed=j=>j.shows.filter(s=>s&&s.at&&s.title).map(s=>({id:String(s.id||''),who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,thumb:/^https:\/\//.test(s.thumb||'')?s.thumb:'',note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
 try{const c=JSON.parse(localStorage.getItem('dd-feed')||'null');if(c&&Array.isArray(c.shows)&&Date.now()-Date.parse(c.saved)<14*864e5){const m=mapFeed(c).map(o=>({...o,live:undefined}));if(m.length)SHOWS=m}}catch(e){}
 const keyOf=o=>o.u+'|'+o.at.getTime()+'|'+o.title+'|'+(o.live?1:0)+'|'+(o.thumb||'');
 async function loadFeed(){if(busy)return;busy=true;lastCheck=Date.now();
@@ -649,11 +741,14 @@ const gcal=o=>{const z=d=>d.toISOString().replace(/[-:]|\.\d+/g,'');const e=new 
   return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(o.title+' ('+who[o.who].n+')')+'&dates='+z(o.at)+'/'+z(e)+'&details='+encodeURIComponent(o.note+'\n'+o.u)};
 const rel=(d,now)=>{const h=(d-now)/36e5;if(h<0)return '';if(h<1)return 'Starts within the hour';const p=etParts(d),q=etParts(new Date(now));if(p.day===q.day&&p.month===q.month)return 'Tonight';if(h<48&&new Date(d).getDate()===new Date(now+864e5).getDate())return 'Tomorrow';return ''};
 
+let LINEUP={};
+const lineupHtml=o=>{const L=o.id&&LINEUP[o.id];if(!L||!L.length)return '';
+  return `<details class="lineup"><summary>On the docket: ${L.length} item${L.length===1?'':'s'}</summary><ul>${L.map(x=>`<li>${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy">`:''}<span>${esc(x.t)}</span></li>`).join('')}</ul></details>`};
 let filter='all',more=false;
 function renderMenu(){const now=Date.now();const all=upcoming(now).filter(o=>filter==='all'||o.who===filter);const list=more?all:all.slice(0,8);$('#more').hidden=more||all.length<=8;
   $('#menu').innerHTML=list.length?list.map(o=>{const isLive=liveNow(o,now);const r=isLive?'':rel(o.at,now);
     return `<li class="${changed.has(o.u)?'fresh':''}"><time>${isLive?'LIVE':esc(fmtDay(o.at))}<small>${esc(fmtTime(o.at))}</small>${r?`<span class="soon">${esc(r)}</span>`:''}</time>
-    <div>${o.thumb?`<img class="thumb" src="${esc(o.thumb)}" alt="" loading="lazy">`:''}<span class="tag ${o.who}">${esc(who[o.who].n)}</span>${changed.has(o.u)?'<span class="upd">Just updated</span>':''}<h3>${esc(o.title)}</h3><p>${esc(beatFor(o))}</p></div>
+    <div>${o.thumb?`<img class="thumb" src="${esc(o.thumb)}" alt="" loading="lazy">`:''}<span class="tag ${o.who}">${esc(who[o.who].n)}</span>${changed.has(o.u)?'<span class="upd">Just updated</span>':''}<h3>${esc(o.title)}</h3><p>${esc(beatFor(o))}</p>${lineupHtml(o)}</div>
     <div class="row"><a class="btn ${isLive?'':'ghost'}" href="${esc(o.u)}">${isLive?'Watch now':'Show page'}</a>${isLive?'':`<a class="btn ghost" href="${esc(gcal(o))}">+ Calendar</a>`}</div></li>`}).join('')
     :'<li class="empty">Nothing scheduled here right now. Follow on Whatnot to hear about new shows.</li>'}
 $('#more').addEventListener('click',()=>{more=true;renderMenu()});
@@ -938,6 +1033,38 @@ ui();
    const io2=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){run();io2.disconnect()}},{threshold:.25});io2.observe($('#statGrid'));
  }catch(e){}}
  loadStats()}
+
+/* ===== extras: lineup, just sold, evidence room, goblin of the week, leaderboard, APB ===== */
+const api=async(u,o)=>{const r=await fetch(u,Object.assign({cache:'no-store'},o||{}));if(!r.ok)throw r.status;return r.json()};
+async function loadLineup(){try{const j=await api('/api/lineup');if(j&&j.lineups){LINEUP=j.lineups;renderMenu()}}catch(e){}}
+async function loadSold(){try{const j=await api('/api/sold');const L=(j.sold||[]).filter(x=>x&&x.t);if(!L.length){$('#sold').hidden=true;return}
+  const money=(x)=>x.give?'Giveaway':x.p!=null?new Intl.NumberFormat(undefined,{style:'currency',currency:x.c||'USD',maximumFractionDigits:x.p%1?2:0}).format(x.p):'';
+  const one=L.map(x=>`<span>${esc(x.t)}<em>${esc(money(x))}</em></span>`).join('');$('#soldRail').innerHTML=one+one;$('#sold').hidden=false}catch(e){}}
+async function loadPast(){try{const j=await api('/api/past');const L=(j.shows||[]).filter(x=>x&&x.thumb);if(!L.length)return;
+  $('#bags').innerHTML=L.map((x,i)=>`<figure class="bag" style="margin:0"><img src="${esc(x.thumb)}" alt="${esc(x.title)}" loading="lazy"><figcaption class="tagx"><i>EXHIBIT ${String(L.length-i).padStart(3,'0')}${x.at?' · '+esc(new Date(x.at).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})):''}</i>${esc(x.title)}</figcaption></figure>`).join('');
+  $('#evidence').hidden=false}catch(e){}}
+{/* goblin of the week: changes every Monday (New York time) */
+ const p=etParts(new Date());const d=Date.UTC(+p.year,+p.month-1,+p.day);const mon=d-((DAYS.indexOf(p.weekday)+6)%7)*864e5;const wk=Math.floor((mon/864e5+3)/7);
+ const gi=wk%CONFIG.goblins.length,g=CONFIG.goblins[gi],ch=CONFIG.charges[wk%CONFIG.charges.length];
+ const sun=new Date(mon+6*864e5).toLocaleDateString(undefined,{timeZone:'UTC',weekday:'long',month:'short',day:'numeric'});
+ $('#booked').innerHTML=`<div class="mug">${gob(g)}<span class="plate">DFC-0${gi+1}</span></div><div><span class="k">BOOKED THIS WEEK · CASE ${String(wk).slice(-4)}</span><h3>The ${esc(g.spot)} goblin</h3><p><b>Charge:</b> ${esc(ch)}</p><p>Held until ${esc(sun)}. Bail set at one glazed. A new suspect gets booked every Monday.</p></div><span class="bk">Booked</span>`;
+ const cards=document.querySelectorAll('#gobs .gob:not(.wanted)');if(cards[gi])cards[gi].classList.add('isbooked')}
+{/* leaderboard */
+ const G=[['city-beat','City Beat',''],['donut-patrol','Donut Patrol',''],['best-in-the-game','Best In The Game',''],['road-rage-fighter','Road Rage Fighter',' drivers'],['fare-game','Fare Game','$']];
+ let B=null,cur=0;
+ const draw=()=>{$('#boardTabs').innerHTML=G.map((g,i)=>`<button role="tab" aria-selected="${i===cur}" data-i="${i}">${esc(g[1])}</button>`).join('');
+   const [id,,u]=G[cur];const L=(B&&B[id])||[];
+   $('#boardList').innerHTML=L.length?L.map(r=>`<li><b>${esc(r.n)}</b><span>${u==='$'?'$'+r.s.toLocaleString():r.s.toLocaleString()+u}</span></li>`).join(''):'<li class="empty" style="display:block">No one on the board yet this week. First name on the paperwork wins by default.</li>'};
+ $('#boardTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cur=+b.dataset.i;draw()});
+ (async()=>{try{const j=await api('/api/scores');B=j.boards||{};cur=Math.max(0,G.findIndex(g=>(B[g[0]]||[]).length));draw();$('#board').hidden=false}catch(e){}})()}
+{/* APB form: Netlify Forms */
+ const f=$('#apbForm');f.addEventListener('submit',async e=>{e.preventDefault();$('#apbErr').hidden=true;
+  const b=f.querySelector('button[type=submit]');b.disabled=true;b.textContent='Filing…';
+  try{const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()});if(!r.ok)throw 0;
+    f.reset();$('#apbOk').hidden=false;b.textContent='Filed'}
+  catch(err){b.disabled=false;b.textContent='File the report';const x=$('#apbErr');x.textContent='Dispatch didn\'t pick up. Try again in a minute, or message donutsforcops on Whatnot.';x.hidden=false}})}
+loadLineup();loadSold();loadPast();
+setInterval(()=>{if(!document.hidden){loadSold();loadLineup()}},120000);
 $('#yr').textContent=new Date().getFullYear();
 {const M=['To protect and sprinkle. Mostly sprinkle.','Anything you bid can and will be used against you in a court of glaze.','Open late. No warrant required.','Patrolling the streetwear beat since the first dozen.','Off duty on paper. Live on Whatnot.','Every steal gets a full investigation. Most of them start at a dollar.'];let i=0;const el=$('#motto');
  if(!still)setInterval(()=>{el.style.opacity=0;setTimeout(()=>{i=(i+1)%M.length;el.textContent=M[i];el.style.opacity=1},400)},4500)}

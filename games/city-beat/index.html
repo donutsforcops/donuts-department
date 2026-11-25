@@ -822,7 +822,7 @@ function screenHow(){show(`<h2 class="big">The bakery crew</h2>
 function screenPause(){show(`<h2 class="big">On break</h2><div class="menu"><button class="btn go" data-a="resume">Back on patrol</button>
  <div class="row"><button class="btn q" data-a="snd">Sound ${AU.on?'on':'off'}</button><button class="btn q" data-a="mus">Music ${AU.mus?'on':'off'}</button></div>
  <button class="btn q" data-a="quit">Quit to title</button></div>`,'dim')}
-function screenOver(){AU.play('title');const best=G.score>=G.best&&G.score>0;
+function screenOver(){AU.play('title');window.DDScore&&DDScore.offer('city-beat',G.score);const best=G.score>=G.best&&G.score>0;
  show(`<h2 class="big">Off duty</h2><canvas class="hero" id="hero" style="width:min(100%,300px)"></canvas><div class="final">${G.score.toLocaleString()}</div>
  <div class="best">${best?'New best score':'Best '+G.best.toLocaleString()}</div><p class="tag">You made it to level ${G.level}, ${G.theme.name}.</p>
  <div class="menu"><button class="btn go" data-a="start">Back on patrol</button><button class="btn q" data-a="title">Title screen</button></div>`);heroLoop(true)}
@@ -871,4 +871,5 @@ requestAnimationFrame(loop);
 })();
 </script>
 
-<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;left:calc(8px + env(safe-area-inset-left,0px));top:calc(58px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a></body></html>
+<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;left:calc(8px + env(safe-area-inset-left,0px));top:calc(58px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a><script src="../score.js" defer></script>
+</body></html>
