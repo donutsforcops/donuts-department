@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#170b12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Donuts Dept">
+<meta name="description" content="Donuts Department: live Supreme, Strangelove and FTP streams from donutsforcops, recommended streamers, an arcade, and the drop counter.">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Donuts Department</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: loud, sugary, late-night streetwear shop — hype without clutter
+   IDEA: a 24-hour donut shop at night: flickering neon sign, menu board of streams, arcade corner, jukebox
+   PICTURE: a giant glazed neon donut with falling sprinkles beside the live countdown
+   COLOUR/TYPE: chocolate-night ground, strawberry frosting pink, glaze cream, sprinkle accents; Bungee + Rubik
+   LAYOUT: phone first — sign, countdown, menu board, goblins, arcade, drops, FAQ; bottom tab bar on phones */
+:root{color-scheme:dark;--bg:#170b12;--bg2:#22111b;--card:#2c1623;--ink:#fff4e6;--mute:#d8bfcb;--pink:#ff4f9a;--glaze:#ffd9a8;--mint:#5ef2c6;--sky:#59b8ff;--sun:#ffd23f;--line:#4a2a3b;--safe-b:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Rubik,system-ui,sans-serif;overflow-x:clip;padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+a{color:inherit}
+h1,h2,h3{font-family:Bungee,Impact,sans-serif;font-weight:400;line-height:1.05;margin:0;text-wrap:balance}
+h2{font-size:clamp(28px,5vw,48px)}
+.band{padding:clamp(40px,6vw,80px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.lede{color:var(--mute);max-width:62ch;margin:10px 0 26px;font-size:17px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 18px;border-radius:999px;border:2px solid var(--pink);background:var(--pink);color:#fff;text-decoration:none;cursor:pointer;font:800 15px Rubik,sans-serif;-webkit-tap-highlight-color:transparent}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn:active{transform:scale(.97)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+/* top bar */
+nav.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)}
+.brand{font-family:Bungee;font-size:19px;text-decoration:none;color:var(--pink);white-space:nowrap}
+.links{display:flex;gap:2px;margin-left:auto}
+.links a{text-decoration:none;padding:10px 12px;border-radius:10px;font-weight:600;font-size:15px}
+.links a:hover{background:var(--card)}
+.radio{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:6px 14px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 14px Rubik;cursor:pointer;white-space:nowrap}
+.radio .eq{display:inline-flex;gap:2px;align-items:flex-end;height:14px}
+.radio .eq i{width:3px;height:4px;background:var(--mint);border-radius:2px}
+.radio.on{border-color:var(--mint)}
+.radio.on .eq i{animation:eq .8s infinite ease-in-out alternate}
+.radio.on .eq i:nth-child(2){animation-delay:.2s}.radio.on .eq i:nth-child(3){animation-delay:.45s}
+@keyframes eq{to{height:14px}}
+/* bottom tab bar (phones) */
+.tabbar{display:none}
+/* hero */
+.hero{background:radial-gradient(1200px 600px at 75% 40%,#5a1638 0%,transparent 60%),var(--bg);position:relative;overflow:hidden;padding-top:clamp(28px,5vw,72px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,4vw,56px);align-items:center}
+.open{display:inline-flex;gap:8px;align-items:center;font-family:Bungee;font-size:14px;color:var(--mint);border:2px solid var(--mint);border-radius:8px;padding:4px 10px;box-shadow:0 0 14px #5ef2c655;margin-bottom:14px}
+.sign{font-family:'Bungee Shade',Bungee;font-size:clamp(40px,7vw,88px);color:var(--pink);text-shadow:0 0 18px #ff4f9a99,0 0 42px #ff4f9a55;line-height:.95}
+.flk{animation:flicker 7s infinite steps(1,end)}
+@keyframes flicker{0%,100%{opacity:1}18%{opacity:.06;text-shadow:none}19%{opacity:1}20%{opacity:.06;text-shadow:none}21.5%{opacity:1}46%{opacity:.06;text-shadow:none}58%{opacity:1}59%{opacity:.06;text-shadow:none}60%{opacity:1}82%{opacity:.3;text-shadow:none}83%{opacity:1}}
+.sub{font-family:Bungee;font-size:clamp(15px,2vw,20px);color:var(--glaze);margin:14px 0 0}
+.next{margin-top:22px;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px}
+.next .lbl{font-weight:600;color:var(--mute);font-size:14px}
+.next h3{font-size:clamp(19px,2.6vw,26px);margin:6px 0 4px}
+.clock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:14px 0;max-width:380px}
+.clock div{background:var(--bg2);border-radius:14px;padding:10px 4px;text-align:center}
+.clock b{display:block;font-family:Bungee;font-size:clamp(24px,4vw,36px);line-height:1;font-variant-numeric:tabular-nums}
+.clock span{font-size:13px;color:var(--mute)}
+.live{display:none;align-items:center;gap:10px;background:#e0004d;color:#fff;border-radius:14px;padding:12px 16px;font-weight:800;margin:14px 0}
+.live.on{display:flex}.live i{width:12px;height:12px;border-radius:50%;background:#fff;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.fig{position:relative;min-height:440px}
+.fig canvas{position:absolute;inset:0;width:100%;height:100%}
+.fig svg{position:absolute;inset:6%;width:88%;height:88%;filter:drop-shadow(0 30px 40px #0008)}
+.donut{animation:spin 26s linear infinite;transform-origin:250px 250px}
+.playing .donut{animation-duration:6s}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* ticker */
+.ticker{background:var(--sun);color:#2a1220;overflow:hidden;white-space:nowrap;font-family:Bungee;font-size:17px;padding:11px 0;border-block:3px solid #2a1220}
+.ticker div{display:inline-block;animation:tick 40s linear infinite;padding-left:100%}
+.ticker span{margin:0 26px}
+@keyframes tick{to{transform:translateX(-100%)}}
+/* schedule */
+.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:4px;scrollbar-width:none}
+.tabs button{flex:none;min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid var(--line);background:transparent;color:var(--ink);font:600 15px Rubik;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.menu{list-style:none;margin:0;padding:0;border-top:2px dashed var(--line)}
+.menu li{display:grid;grid-template-columns:9.5em minmax(0,1fr) auto;gap:18px;align-items:center;padding:18px 0;border-bottom:2px dashed var(--line)}
+.menu time{font-family:Bungee;font-size:clamp(20px,2.4vw,28px);line-height:1.05;white-space:nowrap}
+.menu time small{display:block;font-family:Rubik;font-size:14px;color:var(--mute);font-weight:600;margin-top:4px}
+.menu time .soon{display:inline-block;font:800 12px Rubik;background:var(--mint);color:#10241d;border-radius:6px;padding:2px 6px;margin-top:6px}
+.menu h3{font-size:18px;font-family:Rubik;font-weight:800}
+.menu p{margin:4px 0 0;color:var(--mute);font-size:15px}
+.tag{display:inline-block;font-size:13px;font-weight:800;padding:3px 10px;border-radius:999px;margin-bottom:4px;color:#1a0b12}
+.tag.dfc{background:var(--pink);color:#fff}
+.tag.bitg{background:linear-gradient(90deg,#ff3d3d,#ffd23f,#3dff8b,#3dc5ff,#b04dff);animation:hue 6s linear infinite}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+.empty{padding:22px;border:2px dashed var(--line);border-radius:16px;color:var(--mute)}
+.fine{font-size:14px;color:var(--mute);margin-top:14px}
+/* crew: equal cards, shuffled each visit */
+{const list=CONFIG.crew.slice();for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}
+ $('#crewList').innerHTML=list.map(m=>`<article class="mate"><div class="av" style="background:linear-gradient(135deg,${esc(m.c[0])},${esc(m.c[1])})">${esc(m.name[0])}</div>
+  <h3>${esc(m.name)}</h3><div class="hd">@${esc(m.h)}</div><p>${esc(m.about)}</p><div class="chips">${m.tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
+  <a class="btn ghost" href="https://www.whatnot.com/user/${encodeURIComponent(m.h)}">Watch live</a></article>`).join('')}
+
+/* goblins */
+.gobs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,260px);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:thin}
+.gob{scroll-snap-align:start;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.gob svg{width:100%;aspect-ratio:1;border-radius:16px}
+.gob b{font-family:Bungee;font-size:17px;color:var(--sun);line-height:1.15}
+.gob span{color:var(--mute);font-size:14px}
+.snapbtns{display:flex;gap:8px;margin-top:6px}
+.snapbtns button{min-width:46px;min-height:46px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:800 18px Rubik;cursor:pointer}
+/* crew */
+.crew{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:16px}
+.mate{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.mate .av{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:Bungee;font-size:26px;color:#fff;text-shadow:0 2px 0 #0004;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--line)}
+.mate h3{font-size:20px}
+.mate .hd{font-size:14px;color:var(--mute);font-weight:600;margin-top:-6px}
+.mate p{margin:0;color:var(--mute);font-size:15px;flex:1}
+.mate .chips{display:flex;flex-wrap:wrap;gap:6px}
+.mate .chips span{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--bg2);color:var(--ink)}
+/* arcade */
+.arcade{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:16px}
+.cab{display:flex;flex-direction:column;text-decoration:none;background:linear-gradient(180deg,#3b1a2e,#1d0d17);border-radius:22px 22px 10px 10px;padding:12px;border:2px solid var(--line);transition:transform .2s}
+.cab:hover{transform:translateY(-6px)}
+.cab .scr{aspect-ratio:4/3;border-radius:14px;background:#08040a;display:grid;place-items:center;overflow:hidden;border:6px solid #000;box-shadow:inset 0 0 30px #000}
+.cab .scr svg{width:80%;height:80%}
+.cab h3{font-size:18px;margin:12px 4px 4px}
+.cab p{margin:0 4px 8px;font-size:14px;color:var(--mute);flex:1}
+.cab .play{font-weight:800;color:var(--mint);margin:0 4px 4px}
+/* brands */
+.brands{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.drop{border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px;min-height:250px;color:#fff}
+.drop h3{font-size:26px}
+.drop p{margin:0;opacity:.94}
+.drop ul{margin:0;padding-left:18px;flex:1}
+.drop li{margin:2px 0}
+.drop .btn{background:#fff;color:#111;border-color:#fff}
+.drop .btn.alt{background:transparent;color:inherit;border-color:currentColor}
+.drop.sup{background:#e10600}
+.drop.sl{background:linear-gradient(135deg,#1c1c1c,#3a2a5a);border:2px solid #7a5cff}
+.drop.dfc{background:linear-gradient(135deg,#ff4f9a,#c41f66)}
+.drop.bg{background:linear-gradient(90deg,#ff3d3d,#ff9f1c,#ffd23f,#3dff8b,#3dc5ff,#b04dff,#ff3d9a);background-size:300% 100%;animation:sweep 10s linear infinite;color:#111}
+.drop.bg h3{font-size:30px;text-shadow:2px 2px 0 #fff}
+.drop.bg .btn{background:#111;color:#fff;border-color:#111}.drop.bg .btn.alt{background:#fff8;color:#111;border-color:#111}
+@keyframes sweep{to{background-position:300% 0}}
+.drop small{font-weight:600;opacity:.9}
+.supclock{font-family:Bungee;font-size:22px;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips a{font-size:13px;font-weight:700;padding:6px 10px;border-radius:999px;background:#fff9;color:#111;text-decoration:none}
+/* how to cop */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px}
+.step{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:20px}
+.step svg{width:52px;height:52px;margin-bottom:10px}
+.step h3{font-size:19px;font-family:Rubik;font-weight:800;margin-bottom:6px}
+.step p{margin:0;color:var(--mute);font-size:15px}
+/* faq */
+.faq{display:grid;gap:10px;max-width:860px}
+.faq details{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:0 18px}
+.faq summary{cursor:pointer;font-weight:800;padding:16px 0;list-style:none;display:flex;justify-content:space-between;gap:12px;min-height:44px}
+.faq summary::after{content:'+';font-family:Bungee;color:var(--pink)}
+.faq details[open] summary::after{content:'–'}
+.faq p{margin:0 0 16px;color:var(--mute)}
+/* share */
+.sharebox{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:22px}
+footer{border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
+footer a{margin-right:10px}
+.toast{position:fixed;left:50%;bottom:calc(90px + var(--safe-b));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:50}
+.toast.on{opacity:1}
+@media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.fig{min-height:300px;order:-1;margin:-10px -10px -30px}}
+@media(max-width:700px){
+  .links{display:none}.radio{margin-left:auto}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 4px calc(6px + var(--safe-b))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;font-size:11px;font-weight:700;color:var(--mute);min-height:48px;justify-content:center;border-radius:12px}
+  .tabbar a.cur{color:var(--pink)}
+  .tabbar svg{width:22px;height:22px}
+  body{padding-bottom:calc(72px + var(--safe-b))}
+  .menu li{grid-template-columns:1fr;gap:8px;padding:16px 0}
+  .menu time{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:20px}
+  .menu time small{margin:0}.menu time .soon{margin:0}
+  .menu .row .btn{flex:1}
+  .sharebox{grid-template-columns:1fr}
+  .next .row .btn{flex:1 1 140px}
+  .ticker{font-size:15px}
+  .drop{min-height:0}
+  .crew{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mate{padding:14px}.mate .av{width:52px;height:52px;font-size:21px}.mate h3{font-size:17px}.mate p{font-size:14px}.mate .btn{padding:8px 10px;font-size:14px}
+  .arcade{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cab{padding:8px}.cab h3{font-size:15px}.cab p{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav class="top"><div class="wrap">
+  <a class="brand" href="#top">Donuts Department</a>
+  <div class="links"><a href="#streams">Streams</a><a href="#crew">Streamers</a><a href="#goblins">Goblins</a><a href="#arcade">Arcade</a><a href="#drops">Brands</a><a href="#cop">How to cop</a></div>
+  <button class="radio" id="radio" aria-pressed="false" aria-label="Play Donuts Department radio"><span class="eq"><i></i><i></i><i></i></span><span id="radioTxt">Play music</span></button>
+</div></nav>
+
+<header class="hero band" id="top"><div class="wrap">
+  <div>
+    <div class="open">● OPEN LATE</div>
+    <h1 class="sign" aria-label="Donuts Department"><span class="flk">Do</span>nuts<br>Department</h1>
+    <p class="sub">Supreme · Strangelove · FTP · $1 starts</p>
+    <div class="next" aria-live="polite">
+      <div class="lbl" id="nextLbl">Next stream</div>
+      <h3 id="nextTitle">Loading the glaze…</h3>
+      <div id="nextWhen" class="lbl"></div>
+      <div class="live" id="liveBar"><i></i><span>LIVE NOW on Whatnot</span></div>
+      <div class="clock" id="clock"></div>
+      <div class="row">
+        <a class="btn" id="nextGo" href="https://www.whatnot.com/user/donutsforcops">Open the show</a>
+        <a class="btn ghost" id="nextCal" href="#">Add to calendar</a>
+      </div>
+    </div>
+  </div>
+  <div class="fig" id="fig" aria-hidden="true">
+    <canvas id="sprinkles"></canvas>
+    <svg viewBox="0 0 500 500">
+      <defs>
+        <radialGradient id="dough" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#f0b46a"/><stop offset="1" stop-color="#a5622a"/></radialGradient>
+        <radialGradient id="icing" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#ff9cc7"/><stop offset=".7" stop-color="#ff4f9a"/><stop offset="1" stop-color="#c41f66"/></radialGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="6"/></filter>
+        <rect id="sp" x="-11" y="-3.5" width="22" height="7" rx="3.5"/>
+      </defs>
+      <circle cx="250" cy="250" r="218" fill="none" stroke="#ff4f9a" stroke-width="10" filter="url(#glow)" opacity=".9"/>
+      <circle cx="250" cy="250" r="218" fill="none" stroke="#ffd0e3" stroke-width="3"/>
+      <g class="donut">
+        <circle cx="250" cy="262" r="180" fill="#0006"/>
+        <path fill="url(#dough)" fill-rule="evenodd" d="M250 72a178 178 0 1 1 0 356a178 178 0 1 1 0-356zM250 192a58 58 0 1 0 0 116a58 58 0 1 0 0-116z"/>
+        <path fill="url(#icing)" fill-rule="evenodd" d="M250 88c62 0 104 18 132 50c22 26 38 54 34 84c8 22 10 40-2 58c-4 28-22 50-36 70c-10 20-38 24-50 40c-24 14-50 22-78 20c-30 4-56-8-78-22c-18-4-30-24-46-38c-14-18-30-38-34-64c-10-20-6-44 2-62c-2-30 14-56 34-78c32-36 74-58 122-58zM250 200a50 50 0 1 0 0 100a50 50 0 1 0 0-100z"/>
+        <path d="M170 140c30-24 70-34 112-28" stroke="#fff" stroke-opacity=".55" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <g id="sprk"></g>
+      </g>
+    </svg>
+  </div>
+</div></header>
+
+<div class="ticker" aria-hidden="true"><div><span>DO A GIVEAWAY!</span><span>START A BOX LOGO AT A DOLLAR!</span><span>COME ON! WHERE IS HE AT!</span><span>BUYER'S GIVEAWAY EVERY SHOW</span><span>GIVY GOBLINS ARE WAITING</span><span>DONUTS · STRANGELOVE · SUPREME</span></div></div>
+
+<section class="band" id="streams"><div class="wrap">
+  <h2>On the menu</h2>
+  <p class="lede">Upcoming donutsforcops streams. Times are in your time zone. Tap a show to set a reminder on Whatnot.</p>
+  <ul class="menu" id="menu"></ul>
+  <p style="margin-top:18px"><button class="btn ghost" id="more">Show the full schedule</button></p>
+  <p class="fine" id="feedNote">Whatnot always has the final word on show times.</p>
+</div></section>
+
+<section class="band" id="crew" style="background:var(--bg2)"><div class="wrap">
+  <h2>Recommended streamers</h2>
+  <p class="lede">Friends of the Department. Go show them some love when donutsforcops isn't live.</p>
+  <div class="crew" id="crewList"></div>
+</div></section>
+
+<section class="band" id="goblins"><div class="wrap">
+  <h2>Meet the Givy Goblins</h2>
+  <p class="lede">They're watching from everywhere, phone in hand, waiting for the show to start. They want one thing.</p>
+  <div class="gobs" id="gobs"></div>
+  <div class="snapbtns"><button id="gPrev" aria-label="Previous goblin">‹</button><button id="gNext" aria-label="Next goblin">›</button></div>
+</div></section>
+
+<section class="band" id="arcade" style="background:var(--bg2)"><div class="wrap">
+  <h2>The arcade corner</h2>
+  <p class="lede">Kill time before the show starts. Every game runs right here in your phone's browser, no download, no sign-in.</p>
+  <div class="arcade" id="cabs"></div>
+</div></section>
+
+<section class="band" id="drops"><div class="wrap">
+  <h2>The brands behind the counter</h2>
+  <p class="lede">Where the heat comes from. Check the droplist, then catch it at a dollar on stream.</p>
+  <div class="brands">
+    <article class="drop dfc">
+      <h3>donutsforcops</h3>
+      <p>The Donuts Department's own Whatnot shop.</p>
+      <ul><li>Supreme, Strangelove and FTP streetwear</li><li>$1 start auctions and sticker runs</li><li>Givy Goblin giveaways and a buyer's giveaway every show</li></ul>
+      <div class="row"><a class="btn" href="https://www.whatnot.com/user/donutsforcops">Follow on Whatnot</a></div>
+    </article>
+    <article class="drop sup">
+      <h3>Supreme drop</h3>
+      <p>Supreme Community has the weekly droplist, leaks and restocks, on the web and in the CMTY.ONE app.</p>
+      <small>Countdown to the next Thursday 11:00 AM ET drop window (in season)</small>
+      <div class="supclock" id="supClock">--</div>
+      <div class="row"><a class="btn" href="https://www.supremecommunity.com">Supreme Community</a><a class="btn alt" href="https://apps.apple.com/app/id1341148556">CMTY.ONE app</a></div>
+    </article>
+    <article class="drop sl">
+      <h3>Strangelove</h3>
+      <p>Sean Cliver's art-first skate brand.</p>
+      <ul><li>Boards, apparel, prints and extras</li><li>Sticker packs and limited graphics</li></ul>
+      <div class="row"><a class="btn" href="https://strangeloveskateboards.com">strangeloveskateboards.com</a></div>
+    </article>
+  </div>
+</div></section>
+
+<section class="band" id="cop" style="background:var(--bg2)"><div class="wrap">
+  <h2>The sweet info on getting your cops</h2>
+  <p class="lede">New to Whatnot? Here's how a show works, from follow to front door.</p>
+  <div class="steps" id="steps"></div>
+</div></section>
+
+<section class="band" id="faq"><div class="wrap">
+  <h2>Questions at the counter</h2>
+  <p class="lede">Quick answers before you jump in.</p>
+  <div class="faq" id="faqList"></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="sharebox">
+    <div><h2 style="font-size:clamp(24px,4vw,36px)">Bring a friend to the Department</h2><p class="lede" style="margin-bottom:0">Send this page to anyone who should be at the next show. On iPhone, open it in Safari, tap Share, then Add to Home Screen to keep it like an app.</p></div>
+    <button class="btn" id="share">Copy link</button>
+  </div>
+</div></section>
+
+<footer class="band"><div class="wrap">
+  <span>Donuts Department · donutsforcops · streetwear, skate and sugar. Not affiliated with Supreme or Strangelove.</span>
+  <span><a href="https://www.whatnot.com/user/donutsforcops">donutsforcops</a><a href="https://strangeloveskateboards.com">Strangelove</a><a href="https://www.supremecommunity.com">Supreme Community</a></span>
+</div></footer>
+
+<nav class="tabbar" aria-label="Sections">
+  <a href="#top" data-s="top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>Home</a>
+  <a href="#streams" data-s="streams"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Streams</a>
+  <a href="#arcade" data-s="arcade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="7" width="18" height="11" rx="4"/><path d="M8 11v4M6 13h4"/><circle cx="16" cy="12" r="1" fill="currentColor"/><circle cx="18" cy="14.5" r="1" fill="currentColor"/></svg>Arcade</a>
+  <a href="#crew" data-s="crew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M15 14.5c3 0 6 1.8 6 5"/></svg>Streamers</a>
+  <a href="#cop" data-s="cop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.5 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg>Cop</a>
+</nav>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+{
+/* ======== EDIT ME: everything the site shows lives here ======== */
+const CONFIG={
+  whatnot:'https://www.whatnot.com/user/donutsforcops',
+  showLengthHrs:3,
+  notes:{dfc:'$1 starts, Givy Goblins giveaways, buyer\'s giveaway every show'},
+  // Exact shows from Whatnot, Eastern time (YYYY-MM-DD HH:MM). Past shows hide themselves.
+  streams:[
+    {who:'dfc',at:'2026-11-24 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/16a7c55c-ee44-44e7-ae05-5ffe7f2eeda8'},
+    {who:'dfc',at:'2026-12-16 00:34',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/c04a23c9-081f-41a6-a7a6-1c118d45f8b8'},
+    {who:'dfc',at:'2027-01-20 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/f7b3266f-2186-4b0c-bea6-6a29316f6843'},
+    {who:'dfc',at:'2027-02-03 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/73a0f66d-d754-4871-b428-36820a251616'},
+    {who:'dfc',at:'2027-02-10 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/6ab4c3c1-e32c-4272-9197-30bfce899b64'},
+    {who:'dfc',at:'2027-02-17 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/57d61e1a-69cd-46de-a847-43f2c2e3bb6d'},
+    {who:'dfc',at:'2027-02-24 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/5aead3cb-f246-4d83-aec5-78da3b87a6f2'},
+    {who:'dfc',at:'2027-03-03 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/f2fe5140-b0c4-4410-a675-4056e6afefad'},
+    {who:'dfc',at:'2027-03-10 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/faadcf16-8c99-4b4c-bc40-452edd222839'},
+    {who:'dfc',at:'2027-03-17 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/35ddbeea-32ba-4540-b7bc-b2e791d619ac'},
+    {who:'dfc',at:'2027-03-24 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/77bbf53c-89cb-47db-8d5a-7186d7d51327'},
+    {who:'dfc',at:'2027-03-31 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/6cca7eab-4df8-4157-b8b7-0e669249b155'},
+    {who:'dfc',at:'2027-04-07 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/db1efbe3-2bfd-4f24-907c-447859391dff'},
+    {who:'dfc',at:'2027-04-14 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/879945e9-4ae4-42ac-8219-7bd2e74ff779'},
+    {who:'dfc',at:'2027-04-21 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/c8418cb4-c24c-4a5a-9f5b-100bc0faa936'},
+  ],
+  // Recommended streamers: every card gets the same space. Order shuffles on each visit.
+  crew:[
+    {name:'Best In The Game',h:'best_in_the_game',about:'Supreme sticker specialist. Box logos, minis and rare pulls.',tags:['Stickers','$1 starts','Sudden death'],c:['#ff3d3d','#3dc5ff']},
+    {name:'Katie',h:'katien9',about:'Supreme, Palace, Bearbricks, Drew House and PopMart.',tags:['Hoodies','$1 starts','Personal shopping'],c:['#ff8ac2','#b04dff']},
+    {name:'Select Steals',h:'selectsteals',about:'Supreme, Bape and streetwear accessories, clothing and posters at $1.',tags:['$1 starts','Posters','Weekends'],c:['#ffd23f','#ff6b3d']},
+    {name:'J Raww',h:'jraww_worldwide',about:'Stickers plus custom hand-drawn art, and cool stuff that catches his eye.',tags:['Stickers','Custom art','Giveaways'],c:['#5ef2c6','#2b8f62']},
+    {name:'Equals',h:'equals3wi',about:'Tons of deals on streetwear, plus Bape sticker runs.',tags:['Streetwear','$1 starts','Buyer giveaways'],c:['#59b8ff','#3a3f8f']}
+  ],
+  arcade:[
+    {t:'Donut Patrol',d:'Catch donuts, grab coffee and Goblin Specials, dodge the salad.',u:'games/donut-patrol/',c:'#ff4f9a',art:'donut'},
+    {t:'Best In The Game',d:'Pixel space shooter: hold off YAN and his sweet potato army.',u:'games/best-in-the-game/',c:'#3dc5ff',art:'ship'},
+    {t:'Road Rage Fighter',d:'Angel gets out of the car. Everyone\'s gonna have a bad day now.',u:'games/road-rage-fighter/',c:'#ff3d3d',art:'fist'},
+    {t:'Fare Game',d:'3D taxi chaos across an open city, with a car radio.',u:'games/fare-game/',c:'#ffd23f',art:'car'},
+    {t:'Buyer\'s Giveaway Wheel',d:'The wheel from the show. Spin it and see what you\'d win.',u:'games/giveaway-wheel/',c:'#5ef2c6',art:'wheel'}
+  ],
+  goblins:[
+    {spot:'bathtub',line:'Do a giveaway!',tip:'Bubbles up, phone dry, refreshing the app.',bg:'#2b6f8f'},
+    {spot:'dinner table',line:'Start a box logo at a dollar!',tip:'Dinner is getting cold. Doesn\'t care.',bg:'#8f5a2b'},
+    {spot:'toilet',line:'Do a giveaway!',tip:'Been in there twenty minutes. Still waiting.',bg:'#5a6b7a'},
+    {spot:'car',line:'Start a box logo at a dollar!',tip:'Parked. Engine running. Notifications on.',bg:'#3a3f8f'},
+    {spot:'shop counter',line:'Do a giveaway!',tip:'On the clock, phone under the register.',bg:'#2b8f62'},
+    {spot:'bed',line:'Come on! Where is he at!',tip:'Should be asleep. Absolutely not asleep.',bg:'#6a2b8f'}
+  ],
+  steps:[
+    {t:'Follow the shop',d:'Follow donutsforcops on Whatnot and turn on notifications so you get pinged the second the show goes live.',i:'bell'},
+    {t:'Pull up early',d:'The Givy Goblins start yelling before the show. Early chat gets in on the first giveaways.',i:'clock'},
+    {t:'Bid from a dollar',d:'Supreme, Strangelove and FTP start at $1. Tap to bid; the highest bid when the timer ends takes it.',i:'gavel'},
+    {t:'Buy, get a shot',d:'Buyers are entered in the buyer\'s giveaway. Spend once, stay in the running all night.',i:'gift'},
+    {t:'It ships to you',d:'Wins ship to the address on your Whatnot account. Stickers go out light as letter mail.',i:'box'}
+  ],
+  faq:[
+    ['Do I need the Whatnot app?','Watching and bidding work best in the free Whatnot app on your phone. Make an account, add a card and address once, and you\'re ready to bid.'],
+    ['What does a "$1 start" mean?','Every auction opens at one dollar. Where it ends is up to chat. Sometimes a box logo goes for a steal.'],
+    ['What is a sudden death auction?','Some of our recommended streamers run these. The timer doesn\'t reset when someone bids, so whoever is highest when it hits zero wins. No last-second extensions.'],
+    ['How do the giveaways work?','Givy giveaways are free to enter during the show. The buyer\'s giveaway is only for people who bought something that show.'],
+    ['Are these official Supreme stores?','No. donutsforcops and the streamers we recommend are independent resellers, not affiliated with Supreme, Strangelove or FTP.'],
+    ['When does my stuff ship?','donutsforcops ships fast after the show, and wins from the same show ship together. You\'ll get tracking in the Whatnot app.']
+  ]
+};
+/* =============================================================== */
+const $=s=>document.querySelector(s);
+const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)};
+const TZ='America/New_York';
+const etParts=d=>{const p={};new Intl.DateTimeFormat('en-US',{timeZone:TZ,hourCycle:'h23',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',weekday:'short'}).formatToParts(d).forEach(x=>p[x.type]=x.value);return p};
+function etDate(y,mo,d,h,mi){let g=Date.UTC(y,mo-1,d,h+5,mi);for(let i=0;i<2;i++){const p=etParts(new Date(g));const shown=Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute);g+=Date.UTC(y,mo-1,d,h,mi)-shown}return new Date(g)}
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function nextWeekly(w,from){const p=etParts(from);const base=Date.UTC(+p.year,+p.month-1,+p.day);const today=DAYS.indexOf(p.weekday);
+  for(let k=0;k<15;k++){const dt=new Date(base+k*864e5);if((today+k)%7!==w.day)continue;const t=etDate(dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate(),w.h,w.m);if(t>from)return t}}
+let SHOWS=CONFIG.streams.map(x=>{const [d,t]=x.at.split(' ');const [y,mo,da]=d.split('-').map(Number);const [h,mi]=t.split(':').map(Number);return {...x,note:CONFIG.notes[x.who],at:etDate(y,mo,da,h,mi)}}).sort((a,b)=>a.at-b.at);
+const upcoming=now=>SHOWS.filter(o=>o.live||o.at.getTime()+CONFIG.showLengthHrs*36e5>now);
+const liveNow=(o,now)=>o.live!==undefined?o.live:o.at<=now;
+/* live schedule from Whatnot (via /api/shows on the hosted site); the list above is the backup */
+async function loadFeed(){try{const r=await fetch('/api/shows',{cache:'no-store'});if(!r.ok)return;const j=await r.json();if(!j||!Array.isArray(j.shows))return;
+  SHOWS=j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
+  renderMenu();tickHero();const f=$('#feedNote');if(f)f.textContent='Live from Whatnot. Updated '+new Date(j.updated).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+'.'}catch(e){}}
+const fmtDay=d=>d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+const fmtTime=d=>d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+const who={dfc:{n:'donutsforcops',u:CONFIG.whatnot}};
+const gcal=o=>{const z=d=>d.toISOString().replace(/[-:]|\.\d+/g,'');const e=new Date(o.at.getTime()+CONFIG.showLengthHrs*36e5);
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(o.title+' ('+who[o.who].n+')')+'&dates='+z(o.at)+'/'+z(e)+'&details='+encodeURIComponent(o.note+'\n'+o.u)};
+const rel=(d,now)=>{const h=(d-now)/36e5;if(h<0)return '';if(h<1)return 'Starts within the hour';const p=etParts(d),q=etParts(new Date(now));if(p.day===q.day&&p.month===q.month)return 'Tonight';if(h<48&&new Date(d).getDate()===new Date(now+864e5).getDate())return 'Tomorrow';return ''};
+
+let filter='all',more=false;
+function renderMenu(){const now=Date.now();const all=upcoming(now).filter(o=>filter==='all'||o.who===filter);const list=more?all:all.slice(0,8);$('#more').hidden=more||all.length<=8;
+  $('#menu').innerHTML=list.length?list.map(o=>{const isLive=liveNow(o,now);const r=isLive?'':rel(o.at,now);
+    return `<li><time>${isLive?'LIVE':esc(fmtDay(o.at))}<small>${esc(fmtTime(o.at))}</small>${r?`<span class="soon">${esc(r)}</span>`:''}</time>
+    <div><span class="tag ${o.who}">${esc(who[o.who].n)}</span><h3>${esc(o.title)}</h3><p>${esc(o.note)}</p></div>
+    <div class="row"><a class="btn ${isLive?'':'ghost'}" href="${esc(o.u)}">${isLive?'Watch now':'Show page'}</a>${isLive?'':`<a class="btn ghost" href="${esc(gcal(o))}">+ Calendar</a>`}</div></li>`}).join('')
+    :'<li class="empty">Nothing scheduled here right now. Follow on Whatnot to hear about new shows.</li>'}
+$('#more').addEventListener('click',()=>{more=true;renderMenu()});
+
+const pad=n=>String(n).padStart(2,'0');
+function tickHero(){const now=Date.now();const n=upcoming(now)[0];
+  if(!n){$('#nextTitle').textContent='New shows coming soon';$('#clock').innerHTML='';return}
+  const live=liveNow(n,now);$('#liveBar').classList.toggle('on',live);
+  $('#nextLbl').textContent=live?'Happening right now · '+who[n.who].n:'Next stream · '+who[n.who].n;
+  $('#nextTitle').textContent=n.title;
+  $('#nextWhen').textContent=fmtDay(n.at)+' at '+fmtTime(n.at);
+  $('#nextGo').textContent=live?'Join the show':'Open the show';$('#nextGo').href=n.u;
+  const cal=$('#nextCal');cal.style.display=live?'none':'';cal.href=gcal(n);
+  const s=Math.max(0,Math.floor((n.at-now)/1e3));const v=[[Math.floor(s/86400),'days'],[Math.floor(s%86400/3600),'hrs'],[Math.floor(s%3600/60),'min'],[s%60,'sec']];
+  $('#clock').innerHTML=live?'':v.map(([a,b])=>`<div><b>${pad(a)}</b><span>${b}</span></div>`).join('');
+  const sup=nextWeekly({day:4,h:11,m:0},new Date(now));const t=Math.floor((sup-now)/1e3);
+  $('#supClock').textContent=`${Math.floor(t/86400)}d ${pad(Math.floor(t%86400/3600))}h ${pad(Math.floor(t%3600/60))}m ${pad(t%60)}s`}
+
+/* crew: equal cards, shuffled each visit */
+{const list=CONFIG.crew.slice();for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}
+ $('#crewList').innerHTML=list.map(m=>`<article class="mate"><div class="av" style="background:linear-gradient(135deg,${esc(m.c[0])},${esc(m.c[1])})">${esc(m.name[0])}</div>
+  <h3>${esc(m.name)}</h3><div class="hd">@${esc(m.h)}</div><p>${esc(m.about)}</p><div class="chips">${m.tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
+  <a class="btn ghost" href="https://www.whatnot.com/user/${encodeURIComponent(m.h)}">Watch live</a></article>`).join('')}
+
+/* goblins */
+const gob=g=>`<svg viewBox="0 0 120 120"><rect width="120" height="120" fill="${g.bg}"/><circle cx="96" cy="22" r="10" fill="#fff2"/><rect y="88" width="120" height="32" fill="#0003"/>
+  <path d="M30 52 8 38 32 44zM90 52 112 38 88 44z" fill="#6fbf3a"/><ellipse cx="60" cy="58" rx="32" ry="30" fill="#7fd13f"/><ellipse cx="60" cy="66" rx="26" ry="16" fill="#9be35f" opacity=".5"/>
+  <circle cx="48" cy="52" r="8" fill="#fff"/><circle cx="72" cy="52" r="8" fill="#fff"/><circle cx="50" cy="54" r="4" fill="#111"/><circle cx="74" cy="54" r="4" fill="#111"/>
+  <path d="M42 70q18 16 36 0" fill="#3a0f1a" stroke="#2a5a12" stroke-width="2"/><path d="M48 71l3 5 3-4 3 5 3-5 3 4 3-5" fill="#fff"/>
+  <rect x="76" y="74" width="18" height="30" rx="4" fill="#111" transform="rotate(12 85 89)"/><rect x="79" y="78" width="12" height="20" rx="2" fill="#ff4f9a" transform="rotate(12 85 89)"/>
+  <ellipse cx="82" cy="98" rx="9" ry="7" fill="#7fd13f"/></svg>`;
+$('#gobs').innerHTML=CONFIG.goblins.map(g=>`<div class="gob">${gob(g)}<b>"${esc(g.line)}"</b><span>The ${esc(g.spot)} goblin. ${esc(g.tip)}</span></div>`).join('');
+const gs=$('#gobs');const step=d=>gs.scrollBy({left:d*(gs.firstElementChild.offsetWidth+14),behavior:'smooth'});
+$('#gPrev').addEventListener('click',()=>step(-1));$('#gNext').addEventListener('click',()=>step(1));
+gs.addEventListener('keydown',e=>{if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});gs.tabIndex=0;
+
+/* arcade */
+const ART={
+  donut:c=>`<circle cx="50" cy="50" r="36" fill="${c}"/><circle cx="50" cy="50" r="13" fill="#08040a"/><g fill="#fff"><rect x="30" y="30" width="8" height="3" rx="1.5" transform="rotate(30 34 31)"/><rect x="62" y="34" width="8" height="3" rx="1.5"/><rect x="66" y="60" width="8" height="3" rx="1.5" transform="rotate(-40 70 61)"/><rect x="28" y="62" width="8" height="3" rx="1.5" transform="rotate(60 32 63)"/></g>`,
+  ship:c=>`<path d="M50 14 70 70 50 60 30 70z" fill="${c}"/><rect x="46" y="70" width="8" height="12" fill="#ffd23f"/><circle cx="20" cy="22" r="2" fill="#fff"/><circle cx="80" cy="34" r="2" fill="#fff"/><circle cx="72" cy="84" r="2" fill="#fff"/><ellipse cx="82" cy="12" rx="9" ry="6" fill="#d9772e"/>`,
+  fist:c=>`<rect x="26" y="30" width="48" height="34" rx="10" fill="${c}"/><rect x="26" y="30" width="48" height="10" rx="5" fill="#ff8a8a"/><rect x="34" y="64" width="30" height="20" rx="4" fill="${c}"/><path d="M78 20l8-8M84 34l10-2M70 12l2-10" stroke="#ffd23f" stroke-width="4" stroke-linecap="round"/>`,
+  car:c=>`<rect x="14" y="46" width="72" height="22" rx="8" fill="${c}"/><path d="M28 46l10-16h26l10 16z" fill="${c}"/><path d="M34 44l7-11h19l7 11z" fill="#08040a"/><circle cx="32" cy="70" r="8" fill="#222" stroke="#fff" stroke-width="3"/><circle cx="68" cy="70" r="8" fill="#222" stroke="#fff" stroke-width="3"/><rect x="40" y="22" width="20" height="7" rx="2" fill="#111" stroke="${c}" stroke-width="2"/>`,
+  wheel:c=>{let s='';const cols=[c,'#ff4f9a','#ffd23f','#3dc5ff','#b04dff','#ff3d3d'];for(let i=0;i<6;i++){const a=i*Math.PI/3,b=(i+1)*Math.PI/3;s+=`<path d="M50 52L${50+36*Math.cos(a)} ${52+36*Math.sin(a)}A36 36 0 0 1 ${50+36*Math.cos(b)} ${52+36*Math.sin(b)}z" fill="${cols[i]}"/>`}return s+`<circle cx="50" cy="52" r="6" fill="#fff"/><path d="M44 8h12L50 20z" fill="#fff"/>`}
+};
+$('#cabs').innerHTML=CONFIG.arcade.map(g=>`<a class="cab" href="${esc(g.u)}"><div class="scr"><svg viewBox="0 0 100 100">${ART[g.art](g.c)}</svg></div><h3>${esc(g.t)}</h3><p>${esc(g.d)}</p><span class="play">Insert coin ›</span></a>`).join('');
+
+const ICON={bell:'<path d="M27 8c-9 0-15 7-15 16v10l-5 7h40l-5-7V24c0-9-6-16-15-16z" fill="var(--pink)"/><circle cx="27" cy="46" r="5" fill="var(--glaze)"/>',
+  clock:'<circle cx="27" cy="27" r="22" fill="var(--sky)"/><path d="M27 13v15l10 6" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>',
+  gavel:'<rect x="10" y="12" width="26" height="12" rx="3" fill="var(--sun)" transform="rotate(-35 23 18)"/><rect x="24" y="22" width="6" height="28" rx="3" fill="var(--glaze)" transform="rotate(-35 27 36)"/><rect x="28" y="44" width="22" height="6" rx="3" fill="var(--mint)"/>',
+  gift:'<rect x="8" y="20" width="38" height="28" rx="4" fill="var(--pink)"/><rect x="6" y="14" width="42" height="10" rx="3" fill="#ff86bb"/><rect x="24" y="14" width="6" height="34" fill="var(--sun)"/>',
+  box:'<path d="M27 6l20 10v22L27 48 7 38V16z" fill="var(--glaze)"/><path d="M7 16l20 10 20-10M27 26v22" stroke="#7a4a1c" stroke-width="3" fill="none"/>'};
+$('#steps').innerHTML=CONFIG.steps.map(s=>`<div class="step"><svg viewBox="0 0 54 54">${ICON[s.i]}</svg><h3>${esc(s.t)}</h3><p>${esc(s.d)}</p></div>`).join('');
+$('#faqList').innerHTML=CONFIG.faq.map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('');
+
+/* share */
+$('#share').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href.split('#')[0]);toast('Link copied. Send it to the crew.')}catch(e){toast('Copy the address from your browser bar to share.')}});
+
+/* tab bar highlight */
+{const links=[...document.querySelectorAll('.tabbar a')];const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('cur',l.dataset.s===e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+ ['top','streams','crew','arcade','cop'].forEach(id=>io.observe(document.getElementById(id)))}
+
+/* sprinkles on the donut */
+{const cols=['#fff','#5ef2c6','#ffd23f','#59b8ff','#b04dff','#ff3d3d'];let h='';
+ for(let i=0;i<46;i++){const a=i*2.4,r=78+((i*37)%80);const x=250+r*Math.cos(a),y=250+r*Math.sin(a);h+=`<use href="#sp" fill="${cols[i%6]}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(i*53)%180})"/>`}
+ $('#sprk').innerHTML=h}
+
+/* falling sprinkles */
+const still=matchMedia('(prefers-reduced-motion: reduce)').matches;let beatBoost=0;
+{const cv=$('#sprinkles'),ctx=cv.getContext('2d');let W=0,H=0;const ps=[];const cols=['#ff4f9a','#5ef2c6','#ffd23f','#59b8ff','#b04dff','#fff'];
+ const size=()=>{const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0)};
+ const sizer=new ResizeObserver(size);sizer.observe(cv);size();
+ for(let i=0;i<55;i++)ps.push({x:Math.random(),y:Math.random(),v:.0006+Math.random()*.0012,r:Math.random()*6,s:(Math.random()-.5)*.04,c:cols[i%6]});
+ let vis=true;new IntersectionObserver(e=>{vis=e[0].isIntersecting}).observe(cv);
+ const draw=()=>{if(vis){ctx.clearRect(0,0,W,H);beatBoost*=.9;ps.forEach(p=>{if(!still){p.y+=p.v*(1+beatBoost*4);p.r+=p.s;if(p.y>1.05){p.y=-.05;p.x=Math.random()}}
+   ctx.save();ctx.translate(p.x*W,p.y*H);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.globalAlpha=.75;ctx.beginPath();ctx.roundRect?ctx.roundRect(-7,-2.5,14,5,2.5):ctx.rect(-7,-2.5,14,5);ctx.fill();ctx.restore()})}
+   if(!still)requestAnimationFrame(draw)};draw()}
+
+/* ===== Donuts Department radio: original music, made live in the browser ===== */
+{
+let ac=null,master=null,timer=null,step=0,nextT=0,station=0,on=false;
+const STATIONS=[
+  {name:'Glaze FM',bpm:84,swing:.18,chords:[[53,57,60,64],[52,55,59,62],[50,53,57,60],[48,52,55,59]],bass:[41,40,38,36],
+   kick:[1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0],snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],hat:[1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,1],lead:[72,0,0,76,0,0,74,0,0,0,72,0,69,0,0,0]},
+  {name:'Goblin Arcade',bpm:132,swing:0,chords:[[57,60,64],[53,57,60],[55,59,62],[52,55,59]],bass:[45,41,43,40],
+   kick:[1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],snare:[0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],hat:[0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],lead:[81,0,79,76,0,76,79,0,81,84,0,81,79,0,76,0]}
+];
+const mtof=m=>440*2**((m-69)/12);
+let noiseBuf;
+function init(){ac=new (window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=.55;
+  const comp=ac.createDynamicsCompressor();master.connect(comp);comp.connect(ac.destination);
+  noiseBuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+function env(g,t,a,peak,dec){g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(0.0001,t+a+dec)}
+function kick(t){const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(42,t+.18);env(g,t,.003,.9,.3);o.connect(g).connect(master);o.start(t);o.stop(t+.4)}
+function noise(t,f,q,peak,dec,type){const s=ac.createBufferSource();s.buffer=noiseBuf;const fl=ac.createBiquadFilter();fl.type=type;fl.frequency.value=f;fl.Q.value=q;const g=ac.createGain();env(g,t,.002,peak,dec);s.connect(fl).connect(g).connect(master);s.start(t);s.stop(t+dec+.05)}
+function tone(t,m,type,peak,dec,cut,det=0){const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();o.type=type;o.frequency.value=mtof(m);o.detune.value=det;f.type='lowpass';f.frequency.value=cut;env(g,t,.01,peak,dec);o.connect(f).connect(g).connect(master);o.start(t);o.stop(t+dec+.1)}
+function play(t,i){const S=STATIONS[station];const bar=Math.floor(i/16)%4,s=i%16;
+  if(S.kick[s]){kick(t);if(s===0)setTimeout(()=>beatBoost=1,Math.max(0,(t-ac.currentTime)*1000))}
+  if(S.snare[s])noise(t,1800,.8,.45,.18,'bandpass');
+  if(S.hat[s])noise(t,8000,1,station?.12:.08,.04,'highpass');
+  if(s===0||(station===0&&s===10)){const c=S.chords[bar];c.forEach((m,k)=>{tone(t,m,station?'square':'triangle',station?.035:.07,station?.25:1.6,station?2200:1400,k*3);if(!station)tone(t,m+12,'sine',.025,1.2,3000)})}
+  if(station===1&&s%2===0){const c=S.chords[bar];tone(t,c[(s/2)%c.length]+12,'square',.03,.12,3500)}
+  if(s%4===0||(station===0&&s===7)){tone(t,S.bass[bar],station?'square':'sine',station?.08:.22,station?.18:.45,station?600:500)}
+  const L=S.lead[s];if(L&&(bar%2===1||station))tone(t,L-(station?0:12),station?'square':'sine',station?.04:.06,station?.15:.5,station?3000:2000,station?0:6);
+  if(station===0&&s===0&&bar===0)noise(t,3000,.3,.015,3.5,'bandpass')}
+function sched(){const S=STATIONS[station];const sp=60/S.bpm/4;while(nextT<ac.currentTime+.15){const sw=(step%2)?sp*S.swing:0;play(nextT+sw,step);nextT+=sp;step++}}
+function start(){if(!ac)init();ac.resume();step=0;nextT=ac.currentTime+.06;master.gain.cancelScheduledValues(ac.currentTime);master.gain.setValueAtTime(.55,ac.currentTime);timer=setInterval(sched,25);on=true;ui()}
+function stop(){clearInterval(timer);timer=null;on=false;if(ac)master.gain.setTargetAtTime(0.0001,ac.currentTime,.05);ui()}
+function ui(){const b=$('#radio');b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);$('#radioTxt').textContent=on?STATIONS[station].name:'Play music';$('#fig').classList.toggle('playing',on);
+  b.setAttribute('aria-label',on?'Music playing: '+STATIONS[station].name+'. Tap to change station or stop':'Play Donuts Department radio')}
+// tap: off -> Glaze FM -> Goblin Arcade -> off
+$('#radio').addEventListener('click',()=>{try{if(!on){station=0;start();toast('Now playing Glaze FM. Tap again for Goblin Arcade.')}else if(station===0){stop();station=1;start();toast('Goblin Arcade. Tap again to stop.')}else{stop();station=0;toast('Music off.')}}catch(e){toast('Music is not available in this browser.')}});
+document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidden)ac.suspend();else if(on)ac.resume()});
+}
+
+renderMenu();tickHero();setInterval(tickHero,1000);setInterval(renderMenu,60000);loadFeed();setInterval(loadFeed,5*60e3);
+}
+</script>
+</body>
+</html>

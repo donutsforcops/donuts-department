@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buyer's Giveaway Wheel – donutsforcops</title>
+<style>
+  :root { --bg:#0e0e12; --panel:#18181f; --line:#2a2a35; --text:#f3f3f6; --muted:#9a9aa8; --accent:#ffd400; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  header { padding:18px 24px 6px; }
+  h1 { margin:0; font-size:22px; }
+  header p { margin:4px 0 0; color:var(--muted); font-size:14px; }
+  main { display:grid; grid-template-columns:minmax(300px,1fr) 360px; gap:20px; padding:16px 24px 32px; }
+  @media (max-width:860px){ main{ grid-template-columns:1fr; } }
+  .stage { display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .wheelwrap { position:relative; width:min(560px,90vw); aspect-ratio:1; }
+  canvas { width:100%; height:100%; display:block; }
+  .pointer { position:absolute; top:-6px; left:50%; transform:translateX(-50%); width:0; height:0;
+    border-left:18px solid transparent; border-right:18px solid transparent; border-top:34px solid var(--accent); filter:drop-shadow(0 2px 3px #000a); z-index:2; }
+  button { font:inherit; border:0; border-radius:10px; cursor:pointer; }
+  #spin { background:var(--accent); color:#111; font-weight:800; font-size:20px; padding:14px 48px; }
+  #spin:disabled { opacity:.4; cursor:not-allowed; }
+  .result { min-height:64px; text-align:center; }
+  .result .label { color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:.08em; }
+  .result .name { font-size:34px; font-weight:800; color:var(--accent); }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .panel h2 { margin:0 0 4px; font-size:16px; }
+  .panel .hint { color:var(--muted); font-size:12.5px; margin:0 0 12px; }
+  .slots { display:grid; grid-template-columns:1fr; gap:6px; max-height:520px; overflow:auto; padding-right:4px; }
+  .slot { display:flex; align-items:center; gap:8px; }
+  .slot span { width:30px; color:var(--muted); font-size:13px; text-align:right; }
+  .slot input { flex:1; background:#0f0f15; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:7px 9px; font-size:14px; }
+  .slot input:focus { outline:none; border-color:var(--accent); }
+  .row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .ghost { background:#262632; color:var(--text); padding:8px 12px; font-size:13px; }
+  textarea { width:100%; min-height:90px; background:#0f0f15; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:8px; font:inherit; font-size:13px; }
+  .tally { margin-top:14px; font-size:13px; }
+  .tally div { display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px dashed var(--line); }
+  .tally .pct { color:var(--muted); }
+  .history { margin-top:12px; font-size:12.5px; color:var(--muted); }
+  details summary { cursor:pointer; color:var(--muted); font-size:13px; margin-top:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🍩 Buyer's Giveaway Wheel</h1>
+  <p>Every auction win = 1 slice. Win 3 auctions, you're on the wheel 3 times. Winner is picked with your browser's cryptographic random generator, then the wheel animates to that slice.</p>
+</header>
+<main>
+  <section class="stage">
+    <div class="wheelwrap">
+      <div class="pointer"></div>
+      <canvas id="wheel" width="1100" height="1100"></canvas>
+    </div>
+    <button id="spin">SPIN</button>
+    <div class="result" id="result"></div>
+  </section>
+
+  <aside class="panel">
+    <h2>Auction winners (20)</h2>
+    <p class="hint">Type the Whatnot username that won each auction. Same name in multiple slots = multiple entries.</p>
+    <div class="slots" id="slots"></div>
+    <details>
+      <summary>Paste a list instead</summary>
+      <p class="hint" style="margin-top:8px">One winner per line, in auction order. Fills the slots above.</p>
+      <textarea id="bulk" placeholder="yadii27&#10;natehay25&#10;yadii27"></textarea>
+      <div class="row"><button class="ghost" id="applyBulk">Fill slots</button></div>
+    </details>
+    <div class="row">
+      <button class="ghost" id="shuffle">Shuffle slice order</button>
+      <button class="ghost" id="clear">Clear all</button>
+    </div>
+    <div class="tally" id="tally"></div>
+    <div class="history" id="history"></div>
+  </aside>
+</main>
+<script>
+const N = 20;
+const COLORS = ['#ffd400','#ff5c8a','#4fc3f7','#7cdb6b','#b388ff','#ff9f43','#26d7c4','#f06292','#9ccc65','#ffb74d'];
+const canvas = document.getElementById('wheel'), ctx = canvas.getContext('2d');
+const slotsEl = document.getElementById('slots');
+const SHOW_WINNERS = [];
+let winners = SHOW_WINNERS.slice(); while (winners.length<N) winners.push('');
+let order = [];          // wheel slice order (indices into entries)
+let rotation = 0;        // radians
+let spinning = false;
+let history = [];
+
+try { const s = JSON.parse(localStorage.getItem('dfc-wheel-blank') || 'null'); if (s && Array.isArray(s.winners)) { winners = s.winners.slice(0,N); while (winners.length<N) winners.push(''); history = s.history || []; } } catch(e){}
+function save(){ try { localStorage.setItem('dfc-wheel-blank', JSON.stringify({winners, history})); } catch(e){} }
+
+function rand(){ // uniform [0,1) from crypto
+  const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] / 4294967296;
+}
+function randInt(n){ // unbiased integer 0..n-1
+  const lim = Math.floor(4294967296 / n) * n, a = new Uint32Array(1);
+  do { crypto.getRandomValues(a); } while (a[0] >= lim);
+  return a[0] % n;
+}
+
+function entries(){ return winners.map(w=>w.trim()).filter(Boolean); }
+
+function buildOrder(shuffle){
+  const e = entries();
+  order = e.map((_,i)=>i);
+  if (shuffle) for (let i=order.length-1;i>0;i--){ const j=randInt(i+1); [order[i],order[j]]=[order[j],order[i]]; }
+}
+
+function renderSlots(){
+  slotsEl.innerHTML = '';
+  for (let i=0;i<N;i++){
+    const d = document.createElement('div'); d.className='slot';
+    d.innerHTML = `<span>#${i+1}</span>`;
+    const inp = document.createElement('input'); inp.value = winners[i]; inp.placeholder='winner username';
+    inp.addEventListener('input', ()=>{ winners[i]=inp.value; save(); buildOrder(false); draw(); tally(); });
+    d.appendChild(inp); slotsEl.appendChild(d);
+  }
+}
+
+function draw(){
+  const e = entries(), W = canvas.width, c = W/2, r = c-12;
+  ctx.clearRect(0,0,W,W);
+  if (!e.length){
+    ctx.beginPath(); ctx.arc(c,c,r,0,Math.PI*2); ctx.fillStyle='#18181f'; ctx.fill();
+    ctx.lineWidth=6; ctx.strokeStyle='#2a2a35'; ctx.stroke();
+    ctx.fillStyle='#9a9aa8'; ctx.font='bold 44px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('Add auction winners →', c, c); return;
+  }
+  const seg = Math.PI*2/order.length;
+  order.forEach((idx,k)=>{
+    const a0 = rotation + k*seg - Math.PI/2, a1 = a0+seg;
+    ctx.beginPath(); ctx.moveTo(c,c); ctx.arc(c,c,r,a0,a1); ctx.closePath();
+    ctx.fillStyle = COLORS[k % COLORS.length]; if (order.length%COLORS.length===1 && k===order.length-1) ctx.fillStyle = COLORS[3];
+    ctx.fill(); ctx.lineWidth=3; ctx.strokeStyle='#0e0e12'; ctx.stroke();
+    ctx.save(); ctx.translate(c,c); ctx.rotate(a0+seg/2);
+    ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillStyle='#111';
+    const fs = Math.max(18, Math.min(40, 600/order.length + 12));
+    ctx.font = `700 ${fs}px system-ui`;
+    let name = e[idx]; while (ctx.measureText(name).width > r-110 && name.length>3) name = name.slice(0,-2)+'…';
+    ctx.fillText(name, r-24, 0); ctx.restore();
+  });
+  ctx.beginPath(); ctx.arc(c,c,60,0,Math.PI*2); ctx.fillStyle='#0e0e12'; ctx.fill();
+  ctx.font='56px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('🍩',c,c+4);
+}
+
+function tally(){
+  const e = entries(), counts = {};
+  e.forEach(n=>{ const k=n.toLowerCase(); counts[k]=counts[k]||{name:n,c:0}; counts[k].c++; });
+  const list = Object.values(counts).sort((a,b)=>b.c-a.c);
+  document.getElementById('tally').innerHTML = `<div><b>${e.length} entries · ${list.length} buyers</b><span class="pct">odds</span></div>` +
+    list.map(x=>`<div><span>${esc(x.name)} ×${x.c}</span><span class="pct">${(x.c/e.length*100).toFixed(1)}%</span></div>`).join('');
+  document.getElementById('spin').disabled = e.length < 1;
+  document.getElementById('history').innerHTML = history.length ? '<b>Past spins:</b> ' + history.map(esc).join(', ') : '';
+}
+function esc(s){ return s.replace(/[&<>"]/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
+
+function spin(){
+  const e = entries(); if (spinning || !e.length) return;
+  spinning = true; document.getElementById('spin').disabled = true;
+  document.getElementById('result').innerHTML = '';
+  const n = order.length, seg = Math.PI*2/n;
+  const k = randInt(n);                         // the winning slice — decided by crypto RNG
+  const offset = (0.1 + 0.8*rand()) * seg;      // land somewhere inside that slice, not on a line
+  // pointer at top: slice k spans [rotation + k*seg, +seg] relative to top; need rotation_final + k*seg + offset ≡ 0 (mod 2π)
+  let target = -(k*seg + offset);
+  const twoPi = Math.PI*2, start = rotation;
+  target = target - Math.ceil((target - start)/twoPi)*twoPi; // normalise below start... then add full turns
+  target += twoPi * (6 + randInt(3));
+  if (target < start) target += twoPi * Math.ceil((start-target)/twoPi);
+  const dur = 6500 + randInt(1500), t0 = performance.now();
+  function frame(t){
+    const p = Math.min(1,(t-t0)/dur), ease = 1 - Math.pow(1-p, 4);
+    rotation = start + (target-start)*ease; draw();
+    if (p<1) requestAnimationFrame(frame);
+    else {
+      rotation = target % twoPi; draw(); spinning=false;
+      const name = e[order[k]];
+      history.unshift(name); save(); tally();
+      document.getElementById('result').innerHTML = `<div class="label">Winner</div><div class="name">🎉 ${esc(name)} 🎉</div>`;
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+document.getElementById('spin').onclick = spin;
+document.getElementById('shuffle').onclick = ()=>{ if(!spinning){ buildOrder(true); draw(); } };
+document.getElementById('clear').onclick = ()=>{ if(spinning) return; winners = Array(N).fill(''); history=[]; save(); renderSlots(); buildOrder(false); draw(); tally(); document.getElementById('result').innerHTML=''; };
+document.getElementById('applyBulk').onclick = ()=>{
+  const lines = document.getElementById('bulk').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,N);
+  winners = Array(N).fill(''); lines.forEach((l,i)=>winners[i]=l); save(); renderSlots(); buildOrder(true); draw(); tally();
+};
+
+renderSlots(); buildOrder(true); draw(); tally();
+</script>
+<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;right:calc(6px + env(safe-area-inset-right,0px));top:calc(6px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a></body>
+</html>

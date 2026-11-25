@@ -1,0 +1,806 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Donut Patrol</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Figtree:wght@400;600;800&display=swap">
+<style>
+  /* Layout: one-screen arcade cabinet — brand marquee on top, night-shift playfield, controls strip below.
+     Deliberately single-theme: a midnight patrol beat lit by a pink donut-shop sign. */
+  :root {
+    --night: #121a33;       /* page ground */
+    --beat: #1b2547;        /* playfield */
+    --glaze: #ff6fae;       /* strawberry glaze accent */
+    --cream: #fff3e2;       /* text */
+    --siren: #4fa3ff;       /* police blue */
+    --gold: #ffd36b;        /* badge gold */
+    --muted: #9aa6cc;
+    --font-display: "Shrikhand", "Cooper Black", Georgia, serif;
+    --font-body: "Figtree", system-ui, -apple-system, sans-serif;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--night);
+    color: var(--cream);
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .cabinet {
+    width: 100%;
+    max-width: 540px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .brandwrap { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  #logo { width: 48px; height: 48px; flex: none; }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 6vw, 2.1rem);
+    line-height: 1;
+    color: var(--glaze);
+    text-shadow: 0 0 18px rgba(255, 111, 174, .45);
+    margin: 0;
+  }
+  .sub {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    font-weight: 800;
+    font-size: .68rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--siren);
+  }
+  .rank {
+    letter-spacing: .06em;
+    color: var(--night);
+    background: var(--gold);
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+  .hud {
+    display: flex;
+    gap: 16px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+  }
+  .hud div { display: flex; flex-direction: column; align-items: flex-end; }
+  .hud span {
+    font-size: .62rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .hud b { font-size: 1.25rem; }
+  #lives { color: var(--glaze); }
+  .field {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--beat);
+    box-shadow: inset 0 0 0 2px rgba(79, 163, 255, .25);
+    touch-action: none;
+  }
+  canvas { display: block; }
+  #game { width: 100%; height: 100%; }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: safe center;
+    gap: 12px;
+    text-align: center;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(18, 26, 51, .82);
+    backdrop-filter: blur(2px);
+  }
+  #mascot { width: 128px; height: 112px; flex: none; }
+  .tagline {
+    font-family: var(--font-display);
+    font-size: .95rem;
+    color: var(--gold);
+    transform: rotate(-3deg);
+  }
+  .overlay h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.7rem, 7.5vw, 2.4rem);
+    line-height: 1.1;
+    margin: 0;
+    color: var(--cream);
+    text-wrap: balance;
+  }
+  .overlay p { margin: 0; max-width: 32ch; color: var(--muted); line-height: 1.5; }
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 16px;
+    text-align: left;
+    font-size: .84rem;
+    width: 100%;
+    max-width: 380px;
+  }
+  .legend div { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .legend canvas { width: 30px; height: 30px; flex: none; }
+  .legend b { color: var(--cream); font-weight: 800; }
+  .legend span { color: var(--muted); }
+  button {
+    font: 800 1rem var(--font-body);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--night);
+    background: var(--glaze);
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #c2427f;
+    transition: transform .08s, box-shadow .08s;
+    flex: none;
+  }
+  button:active { transform: translateY(4px); box-shadow: 0 2px 0 #c2427f; }
+  button:focus-visible { outline: 3px solid var(--siren); outline-offset: 3px; }
+  .plug { font-size: .8rem; color: var(--muted); }
+  .plug b { color: var(--cream); }
+  footer {
+    font-size: .78rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  footer b { color: var(--cream); }
+  @media (max-width: 420px) {
+    .legend { grid-template-columns: 1fr; }
+    #mascot { width: 96px; height: 84px; }
+  }
+</style>
+
+<div class="cabinet">
+  <header>
+    <div class="brandwrap">
+      <canvas id="logo" aria-hidden="true"></canvas>
+      <div>
+        <h1 class="brand">Donut Patrol</h1>
+        <div class="sub">donutsforcops <span class="rank" id="rank">Rookie Snacker</span></div>
+      </div>
+    </div>
+    <div class="hud" aria-live="polite">
+      <div><span>Score</span><b id="score">0</b></div>
+      <div><span>Best</span><b id="best">0</b></div>
+      <div><span>Shift</span><b id="lives">♥♥♥</b></div>
+    </div>
+  </header>
+
+  <div class="field" id="field">
+    <canvas id="game" aria-label="Donut Patrol game area"></canvas>
+    <div class="overlay" id="overlay">
+      <canvas id="mascot" aria-hidden="true"></canvas>
+      <div class="tagline" id="tagline">What are you looking at?</div>
+      <h2 id="ovTitle">The donuts are getting away</h2>
+      <p id="ovText">Officer, it's a Code Glazed. Catch every donut before it hits the pavement. Stay away from the salad.</p>
+      <div class="legend" id="legend">
+        <div><canvas data-icon="donut"></canvas><span><b>Donut</b> +1</span></div>
+        <div><canvas data-icon="golden"></canvas><span><b>Golden glaze</b> +5</span></div>
+        <div><canvas data-icon="surprise"></canvas><span><b>Surprise box</b> +3 to +10</span></div>
+        <div><canvas data-icon="goblin"></canvas><span><b>Goblin Special</b> 2× points</span></div>
+        <div><canvas data-icon="coffee"></canvas><span><b>Coffee break</b> slow-mo</span></div>
+        <div><canvas data-icon="salad"></canvas><span><b>Salad</b> lose a heart</span></div>
+        <div><canvas data-icon="burnt"></canvas><span><b>Burnt donut</b> lose a heart</span></div>
+        <div><canvas data-icon="drop"></canvas><span><b>Dropped donut</b> lose a heart</span></div>
+      </div>
+      <button id="startBtn" type="button">Start shift</button>
+      <div class="plug" id="plug" hidden>Catch <b>donutsforcops</b> live on Whatnot for $1 starts and Surprise Saturdays.</div>
+    </div>
+  </div>
+
+  <footer>Drag, move the mouse, or use <b>← →</b> / <b>A D</b>. <b>P</b> pauses.</footer>
+</div>
+
+<script>
+(() => {
+  const TAU = Math.PI * 2;
+  const $ = id => document.getElementById(id);
+  const canvas = $('game');
+  const ctx = canvas.getContext('2d');
+  const field = $('field');
+  const overlay = $('overlay');
+  const startBtn = $('startBtn');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const GLAZES = ['#ff6fae', '#7a4a2a', '#fff3e2', '#b48cff', '#6fe0c4'];
+  const SPRINKLES = ['#ff5a5a', '#ffd93d', '#4fa3ff', '#6fe0c4', '#ffffff'];
+  const RANKS = [
+    [0, 'Rookie Snacker'], [20, 'Patrol Muncher'], [50, 'Sergeant Sprinkles'],
+    [100, 'Detective Glaze'], [175, 'Lieutenant Cruller'], [275, 'Captain Crumbs'], [400, 'Chief of Donuts']
+  ];
+  const CHATTER = [
+    '10-4, sprinkles secured.',
+    'Suspect fleeing in a cruller. Pursue.',
+    'Requesting backup. And coffee.',
+    'Evidence locker is getting suspiciously empty.',
+    'All units: the jelly-filled one is armed and delicious.',
+    'Officer reports donut. Repeat, donut.',
+    'Sir, that is a lot of donuts. Copy that.',
+    'Dispatch to unit 4: save us a maple bar.',
+    'Witness says the glaze went that way.',
+    'This is not a drill. This is a bear claw.'
+  ];
+  const SALAD_LINES = ['Salad on the beat! Disgusting.', 'Who ordered the kale? Write them up.', 'That was a vegetable, officer.'];
+  const BURNT_LINES = ['Burnt one. Call the fire department.', 'That donut has a record.', 'Crispy. Too crispy.'];
+  const DROP_LINES = ['Donut down! Donut down!', 'Five-second rule does not apply on duty.'];
+
+  /* ---------- drawing kit (all original artwork) ---------- */
+  function rr(c, x, y, w, h, r) {
+    c.beginPath();
+    c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+  }
+  function star(c, cx, cy, R, r, color) {
+    c.fillStyle = color; c.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const a = -Math.PI / 2 + i * Math.PI / 5, q = i % 2 ? r : R;
+      c.lineTo(cx + Math.cos(a) * q, cy + Math.sin(a) * q);
+    }
+    c.closePath(); c.fill();
+  }
+  function makeSprinkles(r) {
+    return Array.from({ length: 9 }, () => ({
+      a: Math.random() * TAU, d: r * (0.55 + Math.random() * 0.25),
+      rot: Math.random() * Math.PI, c: SPRINKLES[(Math.random() * SPRINKLES.length) | 0]
+    }));
+  }
+
+  function drawDonut(c, x, y, r, rot, kind, glaze, sprinkles) {
+    c.save(); c.translate(x, y); c.rotate(rot);
+    c.fillStyle = kind === 'burnt' ? '#2a1a12' : kind === 'golden' ? '#e8a93a' : '#e9b370';
+    c.beginPath(); c.arc(0, 0, r, 0, TAU); c.arc(0, 0, r * 0.32, 0, TAU, true); c.fill('evenodd');
+    if (kind === 'burnt') {
+      c.fillStyle = '#120a06';
+      for (let i = 0; i < 5; i++) { c.beginPath(); c.arc(Math.cos(i * 1.3) * r * .65, Math.sin(i * 1.3) * r * .65, r * .12, 0, TAU); c.fill(); }
+      c.strokeStyle = 'rgba(200,200,210,.55)'; c.lineWidth = 2; c.lineCap = 'round';
+      c.beginPath(); c.moveTo(-4, -r - 2); c.quadraticCurveTo(-10, -r - 9, -3, -r - 15); c.stroke();
+      c.beginPath(); c.moveTo(5, -r - 2); c.quadraticCurveTo(11, -r - 9, 4, -r - 16); c.stroke();
+    } else {
+      c.fillStyle = kind === 'golden' ? '#ffe27a' : glaze;
+      c.beginPath();
+      for (let i = 0; i <= 20; i++) {
+        const a = (i / 20) * TAU, q = r * (0.86 + Math.sin(a * 5) * 0.05);
+        i ? c.lineTo(Math.cos(a) * q, Math.sin(a) * q) : c.moveTo(Math.cos(a) * q, Math.sin(a) * q);
+      }
+      c.closePath();
+      c.moveTo(r * 0.42, 0); c.arc(0, 0, r * 0.42, 0, TAU, true);
+      c.fill('evenodd');
+      // shine
+      c.strokeStyle = 'rgba(255,255,255,.45)'; c.lineWidth = r * 0.1; c.lineCap = 'round';
+      c.beginPath(); c.arc(0, 0, r * 0.68, -2.6, -1.9); c.stroke();
+      if (kind === 'donut' && sprinkles) {
+        c.lineWidth = Math.max(1.6, r * 0.11);
+        for (const s of sprinkles) {
+          const sx = Math.cos(s.a) * s.d, sy = Math.sin(s.a) * s.d, k = r * 0.13;
+          c.strokeStyle = s.c;
+          c.beginPath(); c.moveTo(sx - Math.cos(s.rot) * k, sy - Math.sin(s.rot) * k);
+          c.lineTo(sx + Math.cos(s.rot) * k, sy + Math.sin(s.rot) * k); c.stroke();
+        }
+      }
+      if (kind === 'golden') star(c, 0, -r * 0.64, r * 0.2, r * 0.09, '#fff7d6');
+    }
+    c.restore();
+  }
+
+  function drawCoffee(c, x, y, s, rot) {
+    c.save(); c.translate(x, y); c.rotate(rot);
+    c.fillStyle = '#fff3e2';
+    c.beginPath(); c.moveTo(-s * .55, -s * .55); c.lineTo(s * .55, -s * .55); c.lineTo(s * .42, s * .8); c.lineTo(-s * .42, s * .8); c.closePath(); c.fill();
+    c.fillStyle = '#8a5a3b';
+    c.beginPath(); c.moveTo(-s * .5, -s * .1); c.lineTo(s * .5, -s * .1); c.lineTo(s * .46, s * .35); c.lineTo(-s * .46, s * .35); c.closePath(); c.fill();
+    star(c, 0, s * .12, s * .16, s * .07, '#ffd36b');
+    c.fillStyle = '#2b3557'; rr(c, -s * .65, -s * .75, s * 1.3, s * .24, s * .1); c.fill();
+    c.strokeStyle = 'rgba(255,243,226,.6)'; c.lineWidth = 2; c.lineCap = 'round';
+    c.beginPath(); c.moveTo(-s * .18, -s * .9); c.quadraticCurveTo(-s * .38, -s * 1.15, -s * .16, -s * 1.38); c.stroke();
+    c.beginPath(); c.moveTo(s * .18, -s * .9); c.quadraticCurveTo(-s * .02, -s * 1.15, s * .2, -s * 1.38); c.stroke();
+    c.restore();
+  }
+
+  function drawSalad(c, x, y, s, rot) {
+    c.save(); c.translate(x, y); c.rotate(rot);
+    const leaves = ['#3fae5a', '#69c96f', '#2e8b47', '#7ed67a', '#3fae5a'];
+    leaves.forEach((col, i) => {
+      c.fillStyle = col;
+      c.beginPath(); c.ellipse(-s * .55 + i * s * .28, -s * .05 - Math.sin(i * 1.7) * s * .15, s * .32, s * .24, i * .6, 0, TAU); c.fill();
+    });
+    c.fillStyle = '#ff5a5a'; c.beginPath(); c.arc(s * .18, -s * .22, s * .14, 0, TAU); c.fill();
+    c.fillStyle = '#ffe27a'; c.beginPath(); c.arc(-s * .3, -s * .25, s * .1, 0, TAU); c.fill();
+    c.fillStyle = '#e8eef9';
+    c.beginPath(); c.moveTo(-s * .85, 0); c.lineTo(s * .85, 0); c.quadraticCurveTo(s * .75, s * .8, 0, s * .8); c.quadraticCurveTo(-s * .75, s * .8, -s * .85, 0); c.fill();
+    // no-entry stripe so it reads as "bad" at a glance
+    c.strokeStyle = '#ff5a5a'; c.lineWidth = s * .14;
+    c.beginPath(); c.arc(0, s * .05, s * 1.05, 0, TAU); c.stroke();
+    c.beginPath(); c.moveTo(-s * .74, -s * .7); c.lineTo(s * .74, s * .8); c.stroke();
+    c.restore();
+  }
+
+  function drawGoblin(c, x, y, s, rot) {
+    c.save(); c.translate(x, y); c.rotate(rot);
+    c.fillStyle = '#5fbf4a';
+    c.beginPath(); c.moveTo(-s * .6, -s * .2); c.lineTo(-s * 1.15, -s * .6); c.lineTo(-s * .55, s * .15); c.fill();
+    c.beginPath(); c.moveTo(s * .6, -s * .2); c.lineTo(s * 1.15, -s * .6); c.lineTo(s * .55, s * .15); c.fill();
+    c.fillStyle = '#6fd257'; c.beginPath(); c.ellipse(0, 0, s * .7, s * .78, 0, 0, TAU); c.fill();
+    c.fillStyle = '#ffe27a';
+    c.beginPath(); c.ellipse(-s * .26, -s * .14, s * .17, s * .13, -.3, 0, TAU); c.fill();
+    c.beginPath(); c.ellipse(s * .26, -s * .14, s * .17, s * .13, .3, 0, TAU); c.fill();
+    c.fillStyle = '#121a33';
+    c.beginPath(); c.arc(-s * .22, -s * .12, s * .06, 0, TAU); c.fill();
+    c.beginPath(); c.arc(s * .3, -s * .12, s * .06, 0, TAU); c.fill();
+    c.fillStyle = '#2a1a12'; c.beginPath(); c.arc(0, s * .25, s * .36, 0.15, Math.PI - 0.15); c.closePath(); c.fill();
+    c.fillStyle = '#fff3e2';
+    for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(i * s * .12 - s * .05, s * .3); c.lineTo(i * s * .12 + s * .05, s * .3); c.lineTo(i * s * .12, s * .42); c.fill(); }
+    c.restore();
+  }
+
+  function drawSurprise(c, x, y, s, rot) {
+    c.save(); c.translate(x, y); c.rotate(rot);
+    c.fillStyle = '#c98d4f'; rr(c, -s * .8, -s * .6, s * 1.6, s * 1.35, s * .12); c.fill();
+    c.fillStyle = '#ff6fae'; c.fillRect(-s * .12, -s * .6, s * .24, s * 1.35); c.fillRect(-s * .8, -s * .02, s * 1.6, s * .22);
+    c.beginPath(); c.ellipse(-s * .25, -s * .72, s * .26, s * .14, -.5, 0, TAU); c.ellipse(s * .25, -s * .72, s * .26, s * .14, .5, 0, TAU); c.fill();
+    c.fillStyle = '#fff3e2'; c.font = `900 ${s * .7}px Figtree, system-ui, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText('?', -s * .45, -s * .28); c.fillText('?', s * .46, s * .44);
+    c.restore();
+  }
+
+  // the mascot: a cartoon officer with a serious donut habit
+  function drawCop(c, x, y, s, mouth) {
+    c.save(); c.translate(x, y);
+    c.fillStyle = '#f2b98a'; c.beginPath(); c.arc(0, 0, s, 0, TAU); c.fill();                 // face
+    c.beginPath(); c.arc(-s * .98, s * .05, s * .2, 0, TAU); c.arc(s * .98, s * .05, s * .2, 0, TAU); c.fill(); // ears
+    c.fillStyle = '#ff9f9f'; c.globalAlpha = .5;
+    c.beginPath(); c.arc(-s * .58, s * .35, s * .17, 0, TAU); c.arc(s * .58, s * .35, s * .17, 0, TAU); c.fill();
+    c.globalAlpha = 1;
+    c.fillStyle = '#121a33';                                                                   // shades
+    rr(c, -s * .78, -s * .2, s * .68, s * .38, s * .14); c.fill();
+    rr(c, s * .1, -s * .2, s * .68, s * .38, s * .14); c.fill();
+    c.fillRect(-s * .12, -s * .12, s * .24, s * .08);
+    c.fillStyle = 'rgba(79,163,255,.75)'; c.fillRect(-s * .62, -s * .14, s * .18, s * .06); c.fillRect(s * .26, -s * .14, s * .18, s * .06);
+    c.fillStyle = '#5a3420';                                                                   // mustache
+    c.beginPath(); c.ellipse(-s * .24, s * .36, s * .3, s * .12, .25, 0, TAU); c.ellipse(s * .24, s * .36, s * .3, s * .12, -.25, 0, TAU); c.fill();
+    if (mouth > 0) { c.fillStyle = '#7a2a2a'; c.beginPath(); c.ellipse(0, s * .6, s * .2, s * .16 * mouth + s * .04, 0, 0, TAU); c.fill(); }
+    else { c.strokeStyle = '#7a2a2a'; c.lineWidth = s * .08; c.lineCap = 'round'; c.beginPath(); c.arc(0, s * .44, s * .2, .4, Math.PI - .4); c.stroke(); }
+    c.fillStyle = '#1d2b5c';                                                                   // cap crown
+    c.beginPath(); c.moveTo(-s * .95, -s * .45); c.lineTo(-s * 1.15, -s * 1.05); c.quadraticCurveTo(0, -s * 1.45, s * 1.15, -s * 1.05); c.lineTo(s * .95, -s * .45); c.closePath(); c.fill();
+    c.fillStyle = '#0d1430'; c.fillRect(-s * .98, -s * .58, s * 1.96, s * .16);                // band
+    c.beginPath(); c.ellipse(0, -s * .4, s * 1.05, s * .2, 0, 0, Math.PI); c.fill();           // visor
+    star(c, 0, -s * .92, s * .26, s * .11, '#ffd36b');                                         // generic star badge
+    c.restore();
+  }
+
+  function drawBox(c, x, y, w, h, glow) {
+    c.save();
+    if (glow) { c.shadowColor = glow; c.shadowBlur = 18; }
+    c.fillStyle = '#ffd6e8';
+    c.beginPath(); c.moveTo(x + 4, y); c.lineTo(x - 8, y - 16); c.lineTo(x + w + 8, y - 16); c.lineTo(x + w - 4, y); c.closePath(); c.fill();
+    c.fillStyle = '#ff6fae'; rr(c, x, y, w, h, 6); c.fill();
+    c.shadowBlur = 0;
+    c.fillStyle = '#4fa3ff'; c.fillRect(x, y + h * .62, w, 5);
+    c.fillStyle = '#fff3e2'; c.font = `400 ${Math.round(h * .5)}px Shrikhand, Georgia, serif`;
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText('D4C', x + w / 2, y + h * .36);
+    c.restore();
+  }
+
+  function drawLogo(c, s) {
+    // donut wearing a police cap: the donutsforcops mark
+    drawDonut(c, s * .5, s * .6, s * .36, 0, 'donut', '#ff6fae', [
+      { a: .4, d: s * .24, rot: .3, c: '#ffd93d' }, { a: 1.6, d: s * .25, rot: 1.2, c: '#4fa3ff' },
+      { a: 2.7, d: s * .23, rot: 2.1, c: '#ffffff' }, { a: 3.9, d: s * .25, rot: .8, c: '#6fe0c4' }, { a: 5.1, d: s * .24, rot: 2.6, c: '#ff5a5a' }
+    ]);
+    c.save(); c.translate(s * .5, s * .3); c.rotate(-.18);
+    c.fillStyle = '#1d2b5c';
+    c.beginPath(); c.moveTo(-s * .26, s * .04); c.lineTo(-s * .32, -s * .14); c.quadraticCurveTo(0, -s * .27, s * .32, -s * .14); c.lineTo(s * .26, s * .04); c.closePath(); c.fill();
+    c.fillStyle = '#0d1430'; c.beginPath(); c.ellipse(0, s * .05, s * .3, s * .06, 0, 0, Math.PI); c.fill();
+    star(c, 0, -s * .08, s * .07, s * .03, '#ffd36b');
+    c.restore();
+  }
+
+  function drawItem(c, d) {
+    if (d.kind === 'donut' || d.kind === 'golden' || d.kind === 'burnt') drawDonut(c, d.x, d.y, d.r, d.rot, d.kind, d.glaze, d.sprinkles);
+    else if (d.kind === 'coffee') drawCoffee(c, d.x, d.y, d.r * .9, d.rot * .2);
+    else if (d.kind === 'salad') drawSalad(c, d.x, d.y, d.r * .85, d.rot * .3);
+    else if (d.kind === 'goblin') drawGoblin(c, d.x, d.y, d.r * .9, Math.sin(d.rot) * .3);
+    else if (d.kind === 'surprise') drawSurprise(c, d.x, d.y, d.r * .8, Math.sin(d.rot) * .25);
+  }
+
+  function setupSmall(cv, w, h) {
+    const k = Math.min(devicePixelRatio || 1, 2);
+    cv.width = w * k; cv.height = h * k;
+    const c = cv.getContext('2d'); c.setTransform(k, 0, 0, k, 0, 0); return c;
+  }
+
+  /* ---------- static art: logo, mascot, legend icons ---------- */
+  function paintStatic() {
+    drawLogo(setupSmall($('logo'), 48, 48), 48);
+    const m = setupSmall($('mascot'), 128, 112);
+    drawCop(m, 64, 62, 34, 0.9);
+    drawDonut(m, 98, 92, 18, .3, 'donut', '#ff6fae', makeSprinkles(18));
+    drawDonut(m, 28, 94, 14, -.4, 'donut', '#b48cff', makeSprinkles(14));
+    document.querySelectorAll('[data-icon]').forEach(cv => {
+      const c = setupSmall(cv, 30, 30), k = cv.dataset.icon;
+      if (k === 'drop') {
+        drawDonut(c, 15, 12, 9, .5, 'donut', '#fff3e2', makeSprinkles(9));
+        c.fillStyle = '#ff5a5a'; c.fillRect(3, 25, 24, 3);
+      } else drawItem(c, { kind: k, x: 15, y: k === 'coffee' ? 18 : 15, r: k === 'goblin' ? 12 : 12, rot: 0, glaze: '#ff6fae', sprinkles: makeSprinkles(12) });
+    });
+  }
+
+  /* ---------- world ---------- */
+  let W = 0, H = 0, dpr = 1, skyline = null;
+  let best = 0;
+  try { best = parseInt(localStorage.getItem('donutPatrolBest') || '0', 10) || 0; } catch (e) {}
+  $('best').textContent = best;
+
+  const state = {
+    running: false, paused: false,
+    score: 0, lives: 3, time: 0, spawnTimer: 0, caught: 0, rankIdx: 0,
+    items: [], pops: [], crumbs: [],
+    box: { x: 0, w: 92, h: 30, target: null },
+    keys: { left: false, right: false },
+    goblin: 0, coffee: 0, chomp: 0, shake: 0,
+    radio: { text: '', life: 0 }, banner: { text: '', life: 0 }
+  };
+
+  function buildSkyline() {
+    skyline = document.createElement('canvas');
+    skyline.width = Math.round(W * dpr); skyline.height = Math.round(H * dpr);
+    const c = skyline.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const g = c.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, '#1b2547'); g.addColorStop(1, '#0e1430');
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    for (let i = 0; i < 50; i++) {
+      c.globalAlpha = .25 + Math.random() * .5; c.fillStyle = '#fff3e2';
+      c.beginPath(); c.arc(Math.random() * W, Math.random() * H * .5, Math.random() * 1.3 + .3, 0, TAU); c.fill();
+    }
+    c.globalAlpha = 1;
+    // moon shaped like a donut, naturally
+    c.fillStyle = 'rgba(255,243,226,.9)';
+    c.beginPath(); c.arc(W * .16, H * .14, 20, 0, TAU); c.arc(W * .16, H * .14, 7, 0, TAU, true); c.fill('evenodd');
+    // skyline
+    let x = -10;
+    while (x < W + 10) {
+      const bw = 34 + Math.random() * 46, bh = H * (.18 + Math.random() * .22);
+      c.fillStyle = Math.random() > .5 ? '#151d3d' : '#18224a';
+      c.fillRect(x, H - 14 - bh, bw, bh);
+      for (let wy = H - 14 - bh + 10; wy < H - 30; wy += 16)
+        for (let wx = x + 7; wx < x + bw - 10; wx += 13)
+          if (Math.random() > .62) { c.fillStyle = Math.random() > .85 ? 'rgba(255,111,174,.55)' : 'rgba(255,211,107,.45)'; c.fillRect(wx, wy, 6, 8); }
+      x += bw + 4;
+    }
+    c.fillStyle = '#0a0f24'; c.fillRect(0, H - 14, W, 14);
+    c.fillStyle = 'rgba(255,217,61,.5)';
+    for (let lx = 10; lx < W; lx += 40) c.fillRect(lx, H - 8, 20, 2);
+  }
+
+  function resize() {
+    const r = field.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    if (!W || !H) return;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    state.box.w = Math.max(80, Math.min(112, W * .22));
+    if (!state.box.x) state.box.x = W / 2;
+    state.box.x = Math.min(Math.max(state.box.x, state.box.w / 2), W - state.box.w / 2);
+    buildSkyline();
+  }
+  new ResizeObserver(resize).observe(field);
+  resize();
+
+  function pickKind() {
+    const t = state.time;
+    const table = [
+      ['donut', .62], ['golden', .05], ['surprise', .04], ['goblin', .035], ['coffee', .035],
+      ['burnt', Math.min(.06 + t / 400, .16)], ['salad', Math.min(.04 + t / 400, .14)]
+    ];
+    const total = table.reduce((s, e) => s + e[1], 0);
+    let roll = Math.random() * total;
+    for (const [k, w] of table) { if ((roll -= w) < 0) return k; }
+    return 'donut';
+  }
+
+  function makeItem() {
+    const kind = pickKind(), r = 17 + Math.random() * 5;
+    return {
+      kind, r, sprinkles: makeSprinkles(r),
+      x: r + 6 + Math.random() * (W - r * 2 - 12), y: -r * 1.6,
+      vy: 120 + Math.min(state.time * 4.2, 250) + Math.random() * 40,
+      spin: (Math.random() - .5) * 3, rot: Math.random() * TAU,
+      glaze: GLAZES[(Math.random() * GLAZES.length) | 0]
+    };
+  }
+
+  const pick = a => a[(Math.random() * a.length) | 0];
+  function radio(text) { state.radio = { text, life: 3.2 }; }
+  function banner(text) { state.banner = { text, life: 2 }; }
+  function pop(x, y, color, text) { state.pops.push({ x, y, text, color, life: .9 }); }
+  function crumbs(x, y, color) {
+    if (reduceMotion) return;
+    for (let i = 0; i < 10; i++) state.crumbs.push({ x, y, vx: (Math.random() - .5) * 160, vy: -Math.random() * 160, life: .6, color });
+  }
+
+  function updateHud() {
+    $('score').textContent = state.score;
+    $('lives').textContent = '♥'.repeat(Math.max(0, state.lives)) + '♡'.repeat(Math.max(0, 3 - state.lives));
+    let idx = 0;
+    RANKS.forEach(([min], i) => { if (state.score >= min) idx = i; });
+    if (idx > state.rankIdx && state.running) { banner('Promoted: ' + RANKS[idx][1]); radio('Congrats on the promotion. Donuts are on you.'); }
+    state.rankIdx = idx;
+    $('rank').textContent = RANKS[idx][1];
+  }
+
+  function loseLife(x, y, msg, line) {
+    state.lives--;
+    state.shake = reduceMotion ? 0 : .25;
+    pop(x, y, '#ff5a5a', msg);
+    radio(line);
+    updateHud();
+    if (state.lives <= 0) endGame();
+  }
+
+  function score(d, x, y) {
+    let pts = d.kind === 'golden' ? 5 : d.kind === 'surprise' ? 3 + ((Math.random() * 8) | 0) : 1;
+    if (state.goblin > 0) pts *= 2;
+    state.score += pts;
+    state.caught++;
+    state.chomp = .25;
+    pop(x, y, d.kind === 'golden' ? '#ffe27a' : d.kind === 'surprise' ? '#ff6fae' : '#fff3e2', '+' + pts);
+    crumbs(x, y + 16, d.kind === 'golden' ? '#ffe27a' : d.glaze);
+    if (d.kind === 'surprise') radio('Surprise! Box contained ' + pts + ' points of evidence.');
+    else if (d.kind === 'golden') radio('Golden glaze recovered. Do not log it. Eat it.');
+    else if (state.caught % 7 === 0) radio(pick(CHATTER));
+    updateHud();
+  }
+
+  function step(dt) {
+    state.time += dt;
+    const world = dt * (state.coffee > 0 ? .5 : 1);
+    const b = state.box;
+    const speed = Math.max(440, W * 1.15);
+    if (state.keys.left) b.x -= speed * dt;
+    if (state.keys.right) b.x += speed * dt;
+    if (b.target != null) b.x += (b.target - b.x) * Math.min(1, dt * 18);
+    b.x = Math.min(Math.max(b.x, b.w / 2), W - b.w / 2);
+
+    state.spawnTimer -= world;
+    if (state.spawnTimer <= 0) {
+      state.items.push(makeItem());
+      state.spawnTimer = Math.max(.32, 1 - state.time * .011) * (.7 + Math.random() * .6);
+    }
+
+    const catchY = H - b.h - 18;
+    for (let i = state.items.length - 1; i >= 0; i--) {
+      const d = state.items[i];
+      d.y += d.vy * world; d.rot += d.spin * world;
+      const inX = Math.abs(d.x - b.x) < b.w / 2 + d.r * .4;
+      if (d.y + d.r * .5 >= catchY - 14 && d.y - d.r < catchY + 8 && inX) {
+        state.items.splice(i, 1);
+        const px = d.x, py = catchY - 46;
+        if (d.kind === 'burnt') loseLife(px, py, 'Burnt!', pick(BURNT_LINES));
+        else if (d.kind === 'salad') loseLife(px, py, 'Ew, salad!', pick(SALAD_LINES));
+        else if (d.kind === 'coffee') { state.coffee = 4; pop(px, py, '#d9a77a', 'Coffee break!'); radio('Coffee acquired. Time slows down. Mostly you do.'); }
+        else if (d.kind === 'goblin') { state.goblin = 6; pop(px, py, '#6fd257', 'Goblin Special 2×'); radio('Goblin Special is live. Double points, officer.'); }
+        else score(d, px, py);
+        continue;
+      }
+      if (d.y - d.r > H) {
+        state.items.splice(i, 1);
+        if (d.kind === 'donut' || d.kind === 'golden') loseLife(d.x, H - 50, 'Dropped!', pick(DROP_LINES));
+      }
+    }
+    for (let i = state.pops.length - 1; i >= 0; i--) {
+      const p = state.pops[i]; p.life -= dt; p.y -= 46 * dt;
+      if (p.life <= 0) state.pops.splice(i, 1);
+    }
+    for (let i = state.crumbs.length - 1; i >= 0; i--) {
+      const p = state.crumbs[i]; p.life -= dt; p.vy += 500 * dt; p.x += p.vx * dt; p.y += p.vy * dt;
+      if (p.life <= 0) state.crumbs.splice(i, 1);
+    }
+    state.goblin = Math.max(0, state.goblin - dt);
+    state.coffee = Math.max(0, state.coffee - dt);
+    state.chomp = Math.max(0, state.chomp - dt);
+    state.shake = Math.max(0, state.shake - dt);
+    state.radio.life -= dt; state.banner.life -= dt;
+  }
+
+  function drawNeon() {
+    const flick = reduceMotion || Math.sin(state.time * 13) > -.92;
+    const w = Math.min(170, W * .42), h = 46, x = W - w - 14, y = 58;
+    ctx.save();
+    ctx.fillStyle = 'rgba(10,15,36,.75)'; rr(ctx, x, y, w, h, 10); ctx.fill();
+    ctx.strokeStyle = '#ff6fae'; ctx.lineWidth = 2;
+    if (flick) { ctx.shadowColor = '#ff6fae'; ctx.shadowBlur = 14; }
+    rr(ctx, x, y, w, h, 10); ctx.stroke();
+    ctx.fillStyle = flick ? '#ffd6e8' : '#7a4a68';
+    ctx.font = `400 ${Math.round(Math.min(18, w / 8.5))}px Shrikhand, Georgia, serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('Donuts 4 Cops', x + w / 2, y + h * .42);
+    ctx.shadowColor = '#4fa3ff';
+    ctx.fillStyle = '#9fd0ff'; ctx.font = '800 9px Figtree, system-ui, sans-serif';
+    ctx.fillText('OPEN 24/7 · NO SALAD', x + w / 2, y + h * .8);
+    ctx.restore();
+  }
+
+  function render() {
+    if (!W || !H) return;
+    ctx.save();
+    if (state.shake > 0) ctx.translate((Math.random() - .5) * 8, (Math.random() - .5) * 8);
+    ctx.drawImage(skyline, 0, 0, W, H);
+    drawNeon();
+    if (!reduceMotion && state.running) {
+      const left = Math.sin(state.time * 5) > 0;
+      const glow = ctx.createRadialGradient(left ? 0 : W, H, 0, left ? 0 : W, H, W * .7);
+      glow.addColorStop(0, left ? 'rgba(79,163,255,.2)' : 'rgba(255,90,90,.16)');
+      glow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = glow; ctx.fillRect(0, 0, W, H);
+    }
+    if (state.coffee > 0) { ctx.fillStyle = 'rgba(138,90,59,.12)'; ctx.fillRect(0, 0, W, H); }
+    for (const d of state.items) drawItem(ctx, d);
+
+    const b = state.box, by = H - b.h - 18, bx = b.x - b.w / 2;
+    ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.beginPath(); ctx.ellipse(b.x, H - 11, b.w * .55, 5, 0, 0, TAU); ctx.fill();
+    drawCop(ctx, b.x, by - 30, 20, state.chomp > 0 ? 1 : 0);
+    drawBox(ctx, bx, by, b.w, b.h, state.goblin > 0 ? '#6fd257' : null);
+    ctx.fillStyle = '#f2b98a';
+    ctx.beginPath(); ctx.arc(bx + 4, by + 10, 6, 0, TAU); ctx.arc(bx + b.w - 4, by + 10, 6, 0, TAU); ctx.fill();
+
+    for (const p of state.crumbs) { ctx.globalAlpha = Math.max(0, p.life / .6); ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, 3, 3); }
+    ctx.font = '800 17px Figtree, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    for (const p of state.pops) { ctx.globalAlpha = Math.max(0, p.life / .9); ctx.fillStyle = p.color; ctx.fillText(p.text, p.x, p.y); }
+    ctx.globalAlpha = 1;
+
+    // power-up pills
+    let px = 12;
+    for (const [t, label, col] of [[state.goblin, 'GOBLIN 2×', '#6fd257'], [state.coffee, 'COFFEE BREAK', '#d9a77a']]) {
+      if (t <= 0) continue;
+      ctx.font = '800 11px Figtree, system-ui, sans-serif';
+      const text = `${label} ${Math.ceil(t)}s`, tw = ctx.measureText(text).width + 18;
+      ctx.fillStyle = col; rr(ctx, px, 52, tw, 22, 11); ctx.fill();
+      ctx.fillStyle = '#121a33'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(text, px + 9, 63.5);
+      px += tw + 6;
+    }
+
+    // dispatch radio bar
+    if (state.radio.life > 0 && state.running) {
+      ctx.globalAlpha = Math.min(1, state.radio.life * 2);
+      ctx.fillStyle = 'rgba(10,15,36,.85)'; rr(ctx, 10, 10, W - 20, 32, 9); ctx.fill();
+      ctx.font = '800 10px Figtree, system-ui, sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#4fa3ff'; ctx.fillText('DISPATCH', 22, 26);
+      ctx.font = '600 13px Figtree, system-ui, sans-serif'; ctx.fillStyle = '#fff3e2';
+      let line = state.radio.text; const maxW = W - 112;
+      while (ctx.measureText(line).width > maxW && line.length > 4) line = line.slice(0, -2);
+      if (line !== state.radio.text) line = line.slice(0, -1) + '…';
+      ctx.fillText(line, 84, 26.5);
+      ctx.globalAlpha = 1;
+    }
+    if (state.banner.life > 0 && state.running) {
+      ctx.globalAlpha = Math.min(1, state.banner.life * 2);
+      ctx.font = `400 ${Math.round(Math.min(28, W / 13))}px Shrikhand, Georgia, serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.lineWidth = 6; ctx.strokeStyle = '#121a33'; ctx.strokeText(state.banner.text, W / 2, H * .4);
+      ctx.fillStyle = '#ffd36b'; ctx.fillText(state.banner.text, W / 2, H * .4);
+      ctx.globalAlpha = 1;
+    }
+    ctx.restore();
+  }
+
+  let last = performance.now();
+  function loop(now) {
+    const dt = Math.min(.05, (now - last) / 1000);
+    last = now;
+    if (state.running && !state.paused) step(dt);
+    else { state.time += dt * .3; for (const d of state.items) { d.y += 20 * dt; d.rot += d.spin * dt * .3; if (d.y > H + 30) d.y = -30; } }
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  function showOverlay(title, text, btn, opts = {}) {
+    $('ovTitle').textContent = title;
+    $('ovText').textContent = text;
+    $('tagline').textContent = opts.tagline || 'What are you looking at?';
+    $('legend').hidden = !opts.legend;
+    $('plug').hidden = !opts.plug;
+    startBtn.textContent = btn;
+    overlay.hidden = false;
+  }
+
+  function startGame() {
+    Object.assign(state, {
+      running: true, paused: false, score: 0, lives: 3, time: 0, spawnTimer: .4, caught: 0, rankIdx: 0,
+      items: [], pops: [], crumbs: [], goblin: 0, coffee: 0, chomp: 0
+    });
+    state.box.x = W / 2; state.box.target = null;
+    updateHud();
+    radio('All units, Code Glazed downtown. Go go go.');
+    overlay.hidden = true;
+  }
+
+  function endGame() {
+    state.running = false;
+    const newBest = state.score > best;
+    if (newBest) {
+      best = state.score; $('best').textContent = best;
+      try { localStorage.setItem('donutPatrolBest', String(best)); } catch (e) {}
+    }
+    const rank = RANKS[state.rankIdx][1];
+    showOverlay(
+      newBest ? 'New department record!' : 'End of shift',
+      `You retired as ${rank} with ${state.score} point${state.score === 1 ? '' : 's'}.` + (newBest ? ' The donuts never stood a chance.' : ` Your best is ${best}.`),
+      'Clock back in',
+      { plug: true, tagline: newBest ? 'Frame this one.' : 'You ate the evidence, didn’t you?' }
+    );
+    startBtn.focus();
+  }
+
+  function togglePause() {
+    if (!state.running) return;
+    state.paused = !state.paused;
+    if (state.paused) showOverlay('Donut break', 'Press P or tap Resume to get back on patrol.', 'Resume', { tagline: 'Taking five. Or six. Or a dozen.' });
+    else overlay.hidden = true;
+  }
+
+  startBtn.addEventListener('click', () => {
+    if (state.running && state.paused) togglePause();
+    else startGame();
+  });
+
+  const pointerX = e => e.clientX - field.getBoundingClientRect().left;
+  field.addEventListener('pointermove', e => { if (state.running) state.box.target = pointerX(e); });
+  field.addEventListener('pointerdown', e => { if (state.running) state.box.target = pointerX(e); });
+
+  addEventListener('keydown', e => {
+    const k = e.key.toLowerCase();
+    if (k === 'arrowleft' || k === 'a') { state.keys.left = true; state.box.target = null; e.preventDefault(); }
+    if (k === 'arrowright' || k === 'd') { state.keys.right = true; state.box.target = null; e.preventDefault(); }
+    if (k === 'p') togglePause();
+    if ((k === ' ' || k === 'enter') && !state.running && document.activeElement !== startBtn) { startGame(); e.preventDefault(); }
+  });
+  addEventListener('keyup', e => {
+    const k = e.key.toLowerCase();
+    if (k === 'arrowleft' || k === 'a') state.keys.left = false;
+    if (k === 'arrowright' || k === 'd') state.keys.right = false;
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && state.running && !state.paused) togglePause();
+  });
+
+  paintStatic();
+  if (document.fonts) document.fonts.ready.then(() => { paintStatic(); });
+  // a few items drifting behind the start screen so the first frame isn't empty
+  for (let i = 0; i < 6; i++) { const d = makeItem(); d.y = 60 + Math.random() * Math.max(60, H - 160); state.items.push(d); }
+  requestAnimationFrame(loop);
+})();
+</script>
+
+<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;right:calc(6px + env(safe-area-inset-right,0px));top:calc(6px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a></body></html>
