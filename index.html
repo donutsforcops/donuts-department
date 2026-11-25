@@ -131,7 +131,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .mug::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 15px,rgba(255,255,255,.14) 15px 16px);pointer-events:none}
 .plate{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);background:#111;color:#fff;font:400 12px Bungee,sans-serif;padding:3px 10px;border-radius:4px;letter-spacing:.06em;z-index:1}
 .motto{font-family:Bungee;font-size:clamp(14px,1.8vw,18px);color:var(--mint);margin:8px 0 0;min-height:1.3em;transition:opacity .4s}
-.gob b{font-family:Bungee;font-size:17px;color:var(--sun);line-height:1.15}
+.gob b{font:800 16px/1.3 Rubik,sans-serif;color:var(--sun)}
 .gob span{color:var(--mute);font-size:14px}
 .snapbtns{display:flex;gap:8px;margin-top:6px}
 .snapbtns button{min-width:46px;min-height:46px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:800 18px Rubik;cursor:pointer}
@@ -313,7 +313,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
     <div class="open">● OPEN LATE</div>
     <h1 class="sign" aria-label="Donuts Department"><span class="flk">Do</span>nuts<br>Department</h1>
     <p class="sub">Supreme · Strangelove · FTP · $1 starts</p>
-    <p class="motto" id="motto">To protect and sprinkle.</p>
+    <p class="motto" id="motto">To protect and sprinkle. Mostly sprinkle.</p>
     <div class="next" id="nextCard" aria-live="polite">
       <div class="lbl" id="nextLbl">Next shift</div>
       <div class="nexthead"><img id="nextPoster" alt="" hidden><div><h3 id="nextTitle">Loading the glaze…</h3>
@@ -361,11 +361,11 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   </div>
 </div></header>
 
-<div class="ticker" aria-hidden="true"><div><span>TO PROTECT AND SPRINKLE</span><span>GLAZE AND ORDER</span><span>YOU HAVE THE RIGHT TO REMAIN GLAZED</span><span>BOOK 'EM, DANISH</span><span>COPS &amp; CRULLERS</span><span>ALL POINTS BOSTON CREAM</span><span>DONUT RESIST</span><span>SQUAD CARBS</span></div></div>
+<div class="ticker" aria-hidden="true"><div><span>TO PROTECT AND SPRINKLE</span><span>GLAZE AND ORDER</span><span>ANYTHING YOU BID CAN AND WILL BE USED AGAINST YOU</span><span>PROBABLE CAUSE FOR A DOZEN</span><span>NO LOITERING · UNLESS THERE'S A $1 START</span><span>BOOK 'EM, DANISH</span><span>OPEN LATE · NO WARRANT REQUIRED</span></div></div>
 
 <section class="band" id="streams"><div class="wrap">
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="13" y="12" width="22" height="32" rx="5" fill="#ff4f9a"/><rect x="17" y="17" width="14" height="9" rx="2" fill="#2a1220"/><circle cx="20" cy="33" r="2.5" fill="#fff4e6"/><circle cx="28" cy="33" r="2.5" fill="#fff4e6"/><rect x="28" y="2" width="3" height="11" rx="1.5" fill="#d8bfcb"/><path d="M36 8q5 5 0 10M40 5q8 8 0 16" stroke="#5ef2c6" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span>On the beat</h2>
-  <p class="lede">Upcoming donutsforcops streams. Times are in your time zone. Tap a show to set a reminder on Whatnot.</p>
+  <p class="lede">The patrol schedule, straight from dispatch. Times adjust to your time zone, and Whatnot always has the final word. Tap a show to set a reminder.</p>
   <ul class="menu" id="menu"></ul>
   <p style="margin-top:18px"><button class="btn ghost" id="more">Show the full schedule</button></p>
   <p class="fine feedchip" id="feedNote"></p>
@@ -375,7 +375,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 
 <section class="band" id="crew" style="background:var(--bg2)"><div class="wrap">
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="14" cy="28" r="11" fill="none" stroke="#c98a45" stroke-width="7"/><circle cx="14" cy="28" r="11" fill="none" stroke="#ff4f9a" stroke-width="4" stroke-dasharray="40 30"/><circle cx="34" cy="28" r="11" fill="none" stroke="#c98a45" stroke-width="7"/><circle cx="34" cy="28" r="11" fill="none" stroke="#ff4f9a" stroke-width="4" stroke-dasharray="40 30"/><path d="M22 12h4v8h-4z" fill="#d8bfcb"/></svg></span>Partners in crumb</h2>
-  <p class="lede">Our recommended streamers. Go show them some love when donutsforcops isn't live.</p>
+  <p class="lede">Other precincts we trust. When donutsforcops is off the clock, these are the shows we're watching.</p>
   <div class="crew" id="crewList"></div>
 </div></section>
 
@@ -383,7 +383,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 
 <section class="band" id="dispatch"><div class="wrap">
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="4" y="16" width="40" height="26" rx="6" fill="#59b8ff"/><circle cx="16" cy="29" r="7" fill="#2a1220"/><circle cx="16" cy="29" r="3" fill="#5ef2c6"/><rect x="27" y="23" width="12" height="4" rx="2" fill="#fff4e6"/><rect x="27" y="31" width="12" height="4" rx="2" fill="#fff4e6"/><path d="M10 16L34 4" stroke="#d8bfcb" stroke-width="3"/></svg></span>Dispatch</h2>
-  <p class="lede">Chatter from the Donuts Department radio. Fresh jokes every day, and the codes every officer should know.</p>
+  <p class="lede">Overheard on the precinct scanner. A new joke every day, plus the codes every officer is expected to know by heart.</p>
   <div class="dispatch">
     <article class="joke">
       <div class="joke-top"><span class="led"></span>INCOMING · <span id="jokeNo">#01</span></div>
@@ -397,22 +397,22 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 
 <section class="band" id="goblins"><div class="wrap">
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="20" cy="20" r="13" fill="#59b8ff33" stroke="#ffd23f" stroke-width="5"/><path d="M30 30l12 12" stroke="#ffd23f" stroke-width="7" stroke-linecap="round"/><circle cx="16" cy="16" r="3" fill="#fff"/></svg></span>The usual suspects</h2>
-  <p class="lede">Known Givy Goblins, last seen in chat with their phones out, waiting on the show. Approach with sprinkles.</p>
+  <p class="lede">Six repeat offenders, all charged with loitering in chat before showtime. Every one of them claims they were just browsing.</p>
   <div class="gobs" id="gobs"></div>
   <div class="snapbtns"><button id="gPrev" aria-label="Previous goblin">‹</button><button id="gNext" aria-label="Next goblin">›</button></div>
 </div></section>
 
 <section class="band" id="arcade" style="background:var(--bg2)"><div class="wrap">
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 18h24v14a10 10 0 0 1-10 10h-4A10 10 0 0 1 10 32z" fill="#fff4e6"/><rect x="10" y="22" width="24" height="7" fill="#ff4f9a"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="#fff4e6" stroke-width="4" fill="none"/><path d="M17 4q-3 4 0 8M24 2q-3 5 0 10" stroke="#d8bfcb" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span>The break room</h2>
-  <p class="lede">Every officer needs a break. Kill time before the show starts. Every game runs right here in your phone's browser, no download, no sign-in.</p>
+  <p class="lede">Every precinct has one. Six games, no download, and nobody is timing your break.</p>
   <div class="arcade" id="cabs"></div>
 </div></section>
 
-<div class="tapewrap"><div class="tape tl" aria-hidden="true"><div>CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · CAUTION · HOT GLAZE · DO NOT TOUCH · </div></div></div>
+<div class="tapewrap"><div class="tape tl" aria-hidden="true"><div>EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · </div></div></div>
 
 <section class="band" id="drops"><div class="wrap">
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 10h32v32H8z" fill="#fff4e6" opacity=".9"/><rect x="8" y="6" width="32" height="7" fill="#ff3d3d"/><rect x="12" y="20" width="24" height="5" fill="#2a1220"/><circle cx="24" cy="34" r="6" fill="#ff4f9a"/><circle cx="24" cy="34" r="2" fill="#fff4e6"/></svg></span>The evidence locker</h2>
-  <p class="lede">Where the heat comes from. Check the droplist, then catch it at a dollar on stream.</p>
+  <p class="lede">Everything that comes through here gets bagged, tagged and opened at a dollar. These are the sources.</p>
   <div class="brands">
     <article class="drop dfc">
       <h3>donutsforcops</h3>
@@ -476,17 +476,17 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   <div class="steps" id="steps"></div>
 </div></section>
 
-<div class="tapewrap"><div class="tape tr" aria-hidden="true"><div>DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · DONUT CROSS · </div></div></div>
+<div class="tapewrap"><div class="tape tr" aria-hidden="true"><div>POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · </div></div></div>
 
 <section class="band" id="faq"><div class="wrap">
   <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 0v12" stroke="#d8bfcb" stroke-width="3"/><path d="M10 26a14 14 0 0 1 28 0z" fill="#59b8ff"/><path d="M14 26l-8 18h36l-8-18z" fill="#ffd23f" opacity=".35"/><circle cx="24" cy="27" r="4" fill="#fff4e6"/></svg></span>The interrogation room</h2>
-  <p class="lede">Quick answers. You have the right to remain curious.</p>
+  <p class="lede">Normally we ask the questions around here. Go ahead, you get a few.</p>
   <div class="faq" id="faqList"></div>
 </div></section>
 
 <section class="band"><div class="wrap">
   <div class="sharebox">
-    <div><h2 style="font-size:clamp(24px,4vw,36px)"><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 36V24a12 12 0 0 1 24 0v12z" fill="#ff3d3d"/><rect x="8" y="36" width="32" height="7" rx="2" fill="#2a1220"/><path d="M19 22a5 5 0 0 1 5-5" stroke="#fff" stroke-width="3" fill="none"/><path d="M4 14l5 3M44 14l-5 3M24 2v6M10 5l3 5M38 5l-3 5" stroke="#ffd23f" stroke-width="3" stroke-linecap="round"/></svg></span>Call for backup</h2><p class="lede" style="margin-bottom:0">Send this page to anyone who should be at the next show. On iPhone, open it in Safari, tap Share, then Add to Home Screen to keep it like an app.</p></div>
+    <div><h2 style="font-size:clamp(24px,4vw,36px)"><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 36V24a12 12 0 0 1 24 0v12z" fill="#ff3d3d"/><rect x="8" y="36" width="32" height="7" rx="2" fill="#2a1220"/><path d="M19 22a5 5 0 0 1 5-5" stroke="#fff" stroke-width="3" fill="none"/><path d="M4 14l5 3M44 14l-5 3M24 2v6M10 5l3 5M38 5l-3 5" stroke="#ffd23f" stroke-width="3" stroke-linecap="round"/></svg></span>Call for backup</h2><p class="lede" style="margin-bottom:0">Every good officer needs a partner. Send this to whoever you'd trust with the last donut. On iPhone, open it in Safari, tap Share, then Add to Home Screen to keep it like an app.</p></div>
     <button class="btn" id="share">Copy link</button>
   </div>
 </div></section>
@@ -573,12 +573,12 @@ const CONFIG={
     {t:'Buyer\'s Giveaway Wheel',d:'The wheel from the show. Spin it and see what you\'d win.',u:'games/giveaway-wheel/',c:'#5ef2c6',art:'wheel'}
   ],
   goblins:[
-    {spot:'bathtub',line:'I plead the frosted.',tip:'Caught in the tub, phone dry, refreshing the app.',bg:'#2b6f8f'},
-    {spot:'dinner table',line:'Am I being glazed?',tip:'Dinner is getting cold. Doesn\'t care.',bg:'#8f5a2b'},
-    {spot:'bathroom',line:'I\'m just here for the hole thing.',tip:'Been in there twenty minutes. Still waiting.',bg:'#5a6b7a'},
-    {spot:'car',line:'I know my rights. Right to remain glazed.',tip:'Parked. Engine running. Notifications on.',bg:'#3a3f8f'},
-    {spot:'shop counter',line:'You\'ll never take me unglazed.',tip:'On the clock, phone under the register.',bg:'#2b8f62'},
-    {spot:'bed',line:'I want my lawyer. And a cruller.',tip:'Should be asleep. Absolutely not asleep.',bg:'#6a2b8f'}
+    {spot:'bathtub',line:'I was in the tub the whole time, officer. Phone? What phone?',tip:'Found with wet hands and a fully charged battery.',bg:'#2b6f8f'},
+    {spot:'dinner table',line:'I can explain the cold lasagna. The show was about to start.',tip:'Family reports he said grace in under four seconds.',bg:'#8f5a2b'},
+    {spot:'bathroom',line:'Twenty minutes is a perfectly normal amount of time. I know my rights.',tip:'Door locked. Notifications on. Volume suspiciously high.',bg:'#5a6b7a'},
+    {spot:'car',line:'Parked with the engine running isn\'t loitering. It\'s commitment.',tip:'Has been "about to go inside" for forty-five minutes.',bg:'#3a3f8f'},
+    {spot:'shop counter',line:'The register can wait. The auction can\'t.',tip:'Customers report being rung up during the final ten seconds of a bid.',bg:'#2b8f62'},
+    {spot:'bed',line:'I was asleep. The blue light on my face is a coincidence.',tip:'Alarm set for 6 a.m. Currently 1:14 a.m.',bg:'#6a2b8f'}
   ],
   steps:[
     {t:'Report for duty',d:'New to Whatnot? Sign up with our invite link and you\'ll follow donutsforcops automatically. Turn on notifications to get pinged the second the show goes live.',i:'bell'},
@@ -675,7 +675,7 @@ const gob=g=>`<svg viewBox="0 0 120 120"><rect width="120" height="120" fill="${
   <path d="M42 70q18 16 36 0" fill="#3a0f1a" stroke="#2a5a12" stroke-width="2"/><path d="M48 71l3 5 3-4 3 5 3-5 3 4 3-5" fill="#fff"/>
   <rect x="76" y="74" width="18" height="30" rx="4" fill="#111" transform="rotate(12 85 89)"/><rect x="79" y="78" width="12" height="20" rx="2" fill="#ff4f9a" transform="rotate(12 85 89)"/>
   <ellipse cx="82" cy="98" rx="9" ry="7" fill="#7fd13f"/></svg>`;
-const WANTED=`<div class="gob wanted"><svg viewBox="0 0 120 150" role="img" aria-label="Wanted poster for Big Givy"><rect width="120" height="150" fill="#f3e2b8"/><rect x="5" y="5" width="110" height="140" fill="none" stroke="#7a4a1c" stroke-width="2" stroke-dasharray="4 3"/><text x="60" y="26" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="20" fill="#7a1a1a">WANTED</text><path d="M44 46l4-8 4 6 4-8 4 8 4-6 4 8z" fill="#ffd23f"/><path d="M30 60l-12-9 14 4zM90 60l12-9-14 4z" fill="#6fbf3a"/><ellipse cx="60" cy="68" rx="26" ry="22" fill="#7fd13f"/><circle cx="51" cy="64" r="5" fill="#fff"/><circle cx="69" cy="64" r="5" fill="#fff"/><circle cx="52" cy="65" r="2.5" fill="#111"/><circle cx="70" cy="65" r="2.5" fill="#111"/><path d="M48 76q12 10 24 0" fill="#3a0f1a"/><text x="60" y="106" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="12" fill="#2a1220">BIG GIVY</text><text x="60" y="121" text-anchor="middle" font-family="Rubik,sans-serif" font-size="8.5" font-weight="700" fill="#2a1220">REWARD: ONE DOZEN GLAZED</text><text x="60" y="134" text-anchor="middle" font-family="Rubik,sans-serif" font-size="7" fill="#7a4a1c">Last seen yelling in chat</text></svg><b>"Do a giveaway!"</b><span>Most wanted. Ringleader of the Givy Goblins. Considered extremely loud.</span></div>`;
+const WANTED=`<div class="gob wanted"><svg viewBox="0 0 120 150" role="img" aria-label="Wanted poster for Big Givy"><rect width="120" height="150" fill="#f3e2b8"/><rect x="5" y="5" width="110" height="140" fill="none" stroke="#7a4a1c" stroke-width="2" stroke-dasharray="4 3"/><text x="60" y="26" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="20" fill="#7a1a1a">WANTED</text><path d="M44 46l4-8 4 6 4-8 4 8 4-6 4 8z" fill="#ffd23f"/><path d="M30 60l-12-9 14 4zM90 60l12-9-14 4z" fill="#6fbf3a"/><ellipse cx="60" cy="68" rx="26" ry="22" fill="#7fd13f"/><circle cx="51" cy="64" r="5" fill="#fff"/><circle cx="69" cy="64" r="5" fill="#fff"/><circle cx="52" cy="65" r="2.5" fill="#111"/><circle cx="70" cy="65" r="2.5" fill="#111"/><path d="M48 76q12 10 24 0" fill="#3a0f1a"/><text x="60" y="106" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="12" fill="#2a1220">BIG GIVY</text><text x="60" y="121" text-anchor="middle" font-family="Rubik,sans-serif" font-size="8.5" font-weight="700" fill="#2a1220">REWARD: ONE DOZEN</text><text x="60" y="134" text-anchor="middle" font-family="Rubik,sans-serif" font-size="7" fill="#7a4a1c">Last seen yelling in chat</text></svg><b>Ringleader. Considered extremely loud.</b><span>Wanted for disturbing the peace in chat on multiple counts. Do not engage before showtime.</span></div>`;
 $('#gobs').innerHTML=WANTED+CONFIG.goblins.map((g,i)=>`<div class="gob"><div class="mug">${gob(g)}<span class="plate">DFC-0${i+1}</span></div><b>"${esc(g.line)}"</b><span>Suspect #${i+1}, the ${esc(g.spot)} goblin. ${esc(g.tip)}</span></div>`).join('');
 const gs=$('#gobs');const step=d=>gs.scrollBy({left:d*(gs.firstElementChild.offsetWidth+14),behavior:'smooth'});
 $('#gPrev').addEventListener('click',()=>step(-1));$('#gNext').addEventListener('click',()=>step(1));
@@ -834,41 +834,39 @@ ui();
 
 /* ===== Dispatch: jokes and radio codes ===== */
 {const J=[
- ['What do you call an officer who only eats Boston cream?','A filling officer.'],
- ["What's the Donuts Department emergency number?",'9-1-dozen.'],
- ['Why did the cruller get pulled over?','Too many twists in its story.'],
- ['How does a donut cop say goodbye?','"Ten-four… dozen."'],
- ['Why did the officer turn down the plain donut?','No probable glaze.'],
- ['What did the detective say to the jelly donut?',"\"Don't play dumb. I know you're full of it.\""],
- ['Why did the donut go to court?','It got framed. In a box of twelve.'],
- ["What's the Donuts Department motto?",'Glaze first, ask questions later.'],
- ['What do donut cops yell at the door?','"Open up! It\'s the glaze!"'],
- ['Where do donut cops keep the evidence?','In the hole. Nobody ever checks the hole.'],
- ['Why did the bear claw get off easy?','Great lawyer. Even better flakiness.'],
- ['How do you catch a runaway donut?','Set up a coffee checkpoint. They always stop for coffee.'],
- ['Why was the donut going 12 over the limit?','It was in a dozen zone.'],
- ['What did the sergeant say to the stale donut?','"You\'ve been sitting there all day. You\'re coming with me."'],
- ['Why did the donut join the force?','To protect and serve. Mostly serve.'],
- ['What do you call a donut stakeout?','A cakeout.'],
- ["How does a donut plead the Fifth?",'It remains glazed.'],
- ['Why was the old-fashioned promoted to detective?','It always looks at a case from every angle. Twice.'],
- ['What did the officer say to the fresh batch?','"Freeze! Okay, now thaw. Now glaze."'],
- ['Why are donut cops great at negotiations?','They always bring a dozen options to the table.']
+ ['What do you call the officer in charge of every Boston cream report?','The filling clerk.'],
+ ['Why was the maple bar released without charges?','Insufficient evidence. Somebody ate it.'],
+ ['Why did the bear claw get the case dismissed?','The evidence was flaky, and the defense knew it.'],
+ ['Why is the old-fashioned the only one they trust with paperwork?','It still does everything by the book.'],
+ ["What's the one legal term every donut cop knows by heart?",'Habeas crumbs.'],
+ ['Two officers, one donut left. How does the precinct settle it?','Joint custody. Each gets half, and neither is happy about it.'],
+ ['Why did the cruller\'s alibi fall apart?','Too many twists. The jury could follow the plot, they just didn\'t buy it.'],
+ ['What do you call a stakeout where nobody brought donuts?','A mistake. Possibly a firing offense.'],
+ ['The precinct installed a camera in the break room. What happened?','It cracked three cases in a week and still can\'t explain where the last dozen went.'],
+ ['Why did the detective refuse to eat the evidence?','Chain of custody. Also, it was a plain one.'],
+ ['The chief asked dispatch for a dozen units on scene. What showed up?','Twelve crullers in a box. Honestly, response times improved.'],
+ ['What happens to the last donut nobody claims by the end of the shift?','It becomes a cold case.'],
+ ["What's the Donuts Department emergency number?",'9-1-dozen. The hold music is the Siren Funk station.'],
+ ['Why won\'t the jelly donut talk in interrogation?','Advice of counsel. Also, its mouth is full.'],
+ ['How does the night shift handle a hostage situation?','Nobody touches the box until the coffee arrives.'],
+ ['"Officer, I swear the glaze was like that when I found it."','"Sir, you\'re covered in sprinkles, and the box is in your lap."']
 ];
  const day=Math.floor(Date.now()/864e5);let j=day%J.length;
  const show=()=>{$('#jokeQ').textContent=J[j][0];$('#jokeA').textContent='';$('#jokeNo').textContent='#'+String(j+1).padStart(2,'0');
    clearTimeout(show.t);show.t=setTimeout(()=>{$('#jokeA').textContent=J[j][1]},still?0:1400)};
  show();$('#jokeNext').addEventListener('click',()=>{j=(j+1+Math.floor(Math.random()*(J.length-1)))%J.length;show()});
- $('#jokeCopy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(J[j][0]+' '+J[j][1]+' (donutsdepartment.netlify.app)');toast('Joke copied. Spread the glaze.')}catch(e){toast('Copy did not work in this browser.')}});
- const C=[['10-4','Copy that. Also: four donuts, please.'],['10-12','A dozen on scene.'],['10-13',"Baker's dozen. Officer feeling generous."],['10-20','Location of the nearest glaze.'],
-  ['10-33','Emergency. The box is empty.'],['10-99','Show is live. All units to Whatnot.'],['Code Glazed','Everything is fresh. Proceed.'],['Code Sprinkle','Giveaway in progress.'],
-  ['Code Cruller','Situation got twisted.'],['Code Jelly','Sticky situation. Bring napkins.']];
+ $('#jokeCopy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(J[j][0]+' '+J[j][1]+' (donutsdepartment.netlify.app)');toast('Joke copied. Use it responsibly.')}catch(e){toast('Copy did not work in this browser.')}});
+ const C=[['10-4','Acknowledged. Four donuts, please, and one for the dispatcher.'],['10-12','A dozen units on scene. Or a dozen donuts. Dispatch will accept either.'],
+  ['10-13',"Baker's dozen. Officer is in a generous mood. Proceed with caution."],['10-20','Location requested. Answer is always the nearest open bakery.'],
+  ['10-33','Emergency. The box is empty and nobody is admitting to anything.'],['10-99','donutsforcops is live. All units report to Whatnot.'],
+  ['Code Glazed','Fresh batch confirmed. Proceed at normal speed.'],['Code Cruller','Situation has taken a twist. Request backup with napkins.'],
+  ['Code Jelly','Sticky situation. Do not shake hands with anyone involved.'],['Code Stale','Nothing worth saving here. All units stand down.']];
  $('#codes').innerHTML=C.map(([a,b])=>`<div class="code"><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join('')}
 
 /* ===== Swear-in badge maker ===== */
 {const RANKS=['Officer','Sergeant','Detective','Lieutenant','Captain','Deputy','Inspector','Chief'];
  const NICKS=['Sprinkles','Cruller','Bear Claw','Jelly','Maple','Glaze','Boston Cream','Old Fashioned','Fritter','Munchkin','Powder','Long John','Cronut','Twist'];
- const DUTY=['Stakeouts and cakeouts','Sprinkle patrol','Glaze inspections','Box logo recovery','Coffee checkpoints','Dozen counting','Night shift streams','Giveaway crowd control'];
+ const DUTY=['Night-shift stream surveillance','Glaze quality control','Undercover in the bakery line','Evidence tasting (unofficial)','Coffee run logistics','Late-auction crowd control','Cold case review: the last donut','Sticker recovery unit'];
  const hash=s=>{let h=2166136261;for(const c of s.toLowerCase())h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0};
  const svg=$('#badgeArt');
  function draw(name){const n=(name||'').trim().slice(0,18)||'Rookie';const h=hash(n);
@@ -890,14 +888,14 @@ ui();
   svg.setAttribute('aria-label',`Badge: ${rank} ${n}, nickname ${nick}, badge number ${no}`);
   $('#swearLine').textContent=`${rank} ${n}, a.k.a. "${nick}". Assigned to: ${duty.toLowerCase()}.`}
  draw('donutsforcops');
- $('#swearForm').addEventListener('submit',e=>{e.preventDefault();const v=$('#swearName').value;draw(v);if(v.trim())toast('Sworn in. Welcome to the force.')})}
+ $('#swearForm').addEventListener('submit',e=>{e.preventDefault();const v=$('#swearName').value;draw(v);if(v.trim())toast('Sworn in. Report to the break room for orientation.')})}
 
 /* footer donut box */
 {const cols=['#ff4f9a','#ffd9a8','#7a4a1c','#b04dff','#5ef2c6','#ffd23f'];
  $('#boxDonuts').innerHTML=cols.map((c,i)=>{const x=40+i*28;return `<circle cx="${x}" cy="52" r="13" fill="#c98a45"/><circle cx="${x}" cy="51" r="11" fill="${c}"/><circle cx="${x}" cy="52" r="4" fill="#ff86bb"/>`}).join('')}
 
 $('#yr').textContent=new Date().getFullYear();
-{const M=['To protect and sprinkle.','Glaze and order, every night.','You have the right to remain glazed.','Book \'em, Danish.','Donut resist a $1 start.','Serving and protecting since the first dozen.'];let i=0;const el=$('#motto');
+{const M=['To protect and sprinkle. Mostly sprinkle.','Anything you bid can and will be used against you in a court of glaze.','Open late. No warrant required.','Patrolling the streetwear beat since the first dozen.','Off duty on paper. Live on Whatnot.','Every steal gets a full investigation. Most of them start at a dollar.'];let i=0;const el=$('#motto');
  if(!still)setInterval(()=>{el.style.opacity=0;setTimeout(()=>{i=(i+1)%M.length;el.textContent=M[i];el.style.opacity=1},400)},4500)}
 renderMenu();tickHero();status();loadFeed();
 setInterval(tickHero,1000);setInterval(()=>{renderMenu();status()},30e3);
