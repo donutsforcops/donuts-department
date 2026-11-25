@@ -236,6 +236,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .drop .btn{background:#fff;color:#111;border-color:#fff}
 .drop .btn.alt{background:transparent;color:inherit;border-color:currentColor}
 .drop.sup{background:#e10600}
+.drop.ftp{background:#0d0d0d;border:2px solid #f2f2f2;font-family:Rubik}.drop.ftp h3{font-family:Rubik,sans-serif;font-weight:800;font-size:48px;letter-spacing:-.02em;line-height:.9;font-style:italic}
 .drop.sl{background:linear-gradient(135deg,#1c1c1c,#3a2a5a);border:2px solid #7a5cff}
 .drop.dfc{background:linear-gradient(135deg,#ff4f9a,#c41f66)}
 .drop.bg{background:linear-gradient(90deg,#ff3d3d,#ff9f1c,#ffd23f,#3dff8b,#3dc5ff,#b04dff,#ff3d9a);background-size:300% 100%;animation:sweep 10s linear infinite;color:#111}
@@ -426,6 +427,13 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
       <div class="supclock" id="supClock">--</div>
       <div class="row"><a class="btn" href="https://www.supremecommunity.com">Supreme Community</a><a class="btn alt" href="https://apps.apple.com/app/id1341148556">CMTY.ONE app</a></div>
     </article>
+    <article class="drop ftp">
+      <h3>FTP</h3>
+      <p>Zac Clark's LA streetwear label, loud since 2010. Drops land with little warning and sell out fast.</p>
+      <ul><li>Tees, hoodies, hats and accessories</li><li>Surprise drops announced on social</li><li>Catch FTP at a dollar on donutsforcops streams</li></ul>
+      <div class="row"><a class="btn" href="https://fuckthepopulation.com">FTP web store</a></div>
+      <small>Lots of copycat FTP sites exist. This is the brand's own shop.</small>
+    </article>
     <article class="drop sl">
       <h3>Strangelove</h3>
       <p>Sean Cliver's art-first skate brand.</p>
@@ -549,9 +557,15 @@ const CONFIG={
     {name:'Katie',h:'katien9',about:'Supreme, Palace, Bearbricks, Drew House and PopMart.',tags:['Hoodies','$1 starts','Personal shopping'],c:['#ff8ac2','#b04dff']},
     {name:'Select Steals',h:'selectsteals',about:'Supreme, Bape and streetwear accessories, clothing and posters at $1.',tags:['$1 starts','Posters','Weekends'],c:['#ffd23f','#ff6b3d']},
     {name:'J Raww',h:'jraww_worldwide',about:'Stickers plus custom hand-drawn art, and cool stuff that catches his eye.',tags:['Stickers','Custom art','Giveaways'],c:['#5ef2c6','#2b8f62']},
+    {name:'Endless Rotation',h:'endlessrotation',about:'$1 starts and sudden death auctions, with giveaways every time they go live.',tags:['$1 starts','Sudden death','Giveaways'],c:['#ff6b3d','#ff3d9a']},
+    {name:'Schematic',h:'schematicflips',about:'Rare, unique and limited clothing, accessories and collectibles, shipped fast.',tags:['Streetwear','$1 heat','Collectibles'],c:['#3dc5ff','#2b5bd6']},
+    {name:'Manny',h:'notmanny',about:'Supreme personal shopping, hoodies and hats. Full-time buyer, part-time seller.',tags:['Supreme','Personal shopping','Hats'],c:['#ffd23f','#b3800f']},
+    {name:'cooljewels',h:'cooljewels',about:'$1 start Supreme shows almost every night. Bookmark them all.',tags:['Supreme','$1 starts','Nightly'],c:['#5ef2c6','#3dc5ff']},
+    {name:'LocallyCopped',h:'locallycopped',about:'$1 Supreme shows, plus his own music on every streaming platform.',tags:['Supreme','$1 starts','Music'],c:['#b04dff','#ff4f9a']},
     {name:'Equals',h:'equals3wi',about:'Tons of deals on streetwear, plus Bape sticker runs.',tags:['Streetwear','$1 starts','Buyer giveaways'],c:['#59b8ff','#3a3f8f']}
   ],
   arcade:[
+    {t:'Donut Patrol: City Beat',d:'New! Run your beat through the city maze, clear every donut and outrun the crew that wants them back.',u:'games/city-beat/',c:'#ffd23f',art:'maze'},
     {t:'Donut Patrol',d:'Catch donuts, grab coffee and Goblin Specials, dodge the salad.',u:'games/donut-patrol/',c:'#ff4f9a',art:'donut'},
     {t:'Best In The Game',d:'Pixel space shooter: hold off Big Givy and the Givy Goblins.',u:'games/best-in-the-game/',c:'#3dc5ff',art:'ship'},
     {t:'Road Rage Fighter',d:'Angel gets out of the car. Everyone\'s gonna have a bad day now.',u:'games/road-rage-fighter/',c:'#ff3d3d',art:'fist'},
@@ -673,6 +687,7 @@ const ART={
   ship:c=>`<path d="M50 14 70 70 50 60 30 70z" fill="${c}"/><rect x="46" y="70" width="8" height="12" fill="#ffd23f"/><circle cx="20" cy="22" r="2" fill="#fff"/><circle cx="80" cy="34" r="2" fill="#fff"/><circle cx="72" cy="84" r="2" fill="#fff"/><ellipse cx="82" cy="12" rx="9" ry="6" fill="#d9772e"/>`,
   fist:c=>`<rect x="26" y="30" width="48" height="34" rx="10" fill="${c}"/><rect x="26" y="30" width="48" height="10" rx="5" fill="#ff8a8a"/><rect x="34" y="64" width="30" height="20" rx="4" fill="${c}"/><path d="M78 20l8-8M84 34l10-2M70 12l2-10" stroke="#ffd23f" stroke-width="4" stroke-linecap="round"/>`,
   car:c=>`<rect x="14" y="46" width="72" height="22" rx="8" fill="${c}"/><path d="M28 46l10-16h26l10 16z" fill="${c}"/><path d="M34 44l7-11h19l7 11z" fill="#08040a"/><circle cx="32" cy="70" r="8" fill="#222" stroke="#fff" stroke-width="3"/><circle cx="68" cy="70" r="8" fill="#222" stroke="#fff" stroke-width="3"/><rect x="40" y="22" width="20" height="7" rx="2" fill="#111" stroke="${c}" stroke-width="2"/>`,
+  maze:c=>`<rect x="8" y="8" width="84" height="84" rx="6" fill="none" stroke="#3b5bff" stroke-width="5"/><path d="M8 34h28M64 8v26M36 34v24M64 58h28M8 66h20M50 70v22M36 58h14" stroke="#3b5bff" stroke-width="5" stroke-linecap="round"/><g fill="#ffd9a8"><circle cx="22" cy="22" r="3"/><circle cx="50" cy="22" r="3"/><circle cx="78" cy="46" r="3"/><circle cx="22" cy="48" r="3"/><circle cx="78" cy="80" r="3"/></g><circle cx="50" cy="46" r="9" fill="${c}"/><circle cx="50" cy="46" r="3" fill="#08040a"/><path d="M42 39h16l-2-6h-12z" fill="#24346f"/><path d="M27 75a7 7 0 0 1 14 0v8l-3-2-2 2-2-2-2 2-2-2-3 2z" fill="#ff3d3d"/>`,
   wheel:c=>{let s='';const cols=[c,'#ff4f9a','#ffd23f','#3dc5ff','#b04dff','#ff3d3d'];for(let i=0;i<6;i++){const a=i*Math.PI/3,b=(i+1)*Math.PI/3;s+=`<path d="M50 52L${50+36*Math.cos(a)} ${52+36*Math.sin(a)}A36 36 0 0 1 ${50+36*Math.cos(b)} ${52+36*Math.sin(b)}z" fill="${cols[i]}"/>`}return s+`<circle cx="50" cy="52" r="6" fill="#fff"/><path d="M44 8h12L50 20z" fill="#fff"/>`}
 };
 $('#cabs').innerHTML=CONFIG.arcade.map(g=>`<a class="cab" href="${esc(g.u)}"><div class="scr"><svg viewBox="0 0 100 100">${ART[g.art](g.c)}</svg></div><h3>${esc(g.t)}</h3><p>${esc(g.d)}</p><span class="play">Insert coin ›</span></a>`).join('');
