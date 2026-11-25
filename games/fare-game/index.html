@@ -88,19 +88,23 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
 
 /* Touch */
 #touch{position:absolute;inset:0;pointer-events:none}
-#steer{position:absolute;left:0;bottom:0;width:46%;height:56%;pointer-events:auto;touch-action:none}
-#track{position:absolute;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(22px + env(safe-area-inset-bottom,0px));width:158px;height:64px;border-radius:32px;background:rgba(27,20,48,.5);border:3px solid rgba(255,243,214,.55)}
-#knob{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px;border-radius:50%;background:var(--cream);color:var(--ink);display:grid;place-items:center;font:400 15px var(--display)}
+#steer{position:absolute;left:0;bottom:0;width:52%;height:64%;pointer-events:auto;touch-action:none}
+#track{position:absolute;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));width:148px;height:148px;border-radius:50%;background:radial-gradient(circle,rgba(27,20,48,.25) 0 38%,rgba(27,20,48,.6) 70%);border:3px solid rgba(255,243,214,.55);box-shadow:inset 0 0 0 18px rgba(255,243,214,.05)}
+#track i{position:absolute;color:rgba(255,243,214,.6);font:400 13px var(--display);line-height:1;pointer-events:none}
+#track .up{left:50%;top:8px;transform:translateX(-50%)}#track .dn{left:50%;bottom:8px;transform:translateX(-50%)}
+#track .lf{left:9px;top:50%;transform:translateY(-50%)}#track .rt{right:9px;top:50%;transform:translateY(-50%)}
+#knob{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#fff,var(--cream) 55%,#d8c9a8);box-shadow:0 5px 0 rgba(0,0,0,.35);will-change:transform}
+#steer.on #track{border-color:var(--sun)}#steer.on #knob{box-shadow:0 2px 0 rgba(0,0,0,.35),0 0 18px rgba(255,197,49,.6)}
 .tb{position:absolute;pointer-events:auto;border-radius:50%;display:grid;place-items:center;font:400 13px var(--display);touch-action:none;border:3px solid rgba(255,243,214,.8);box-shadow:0 4px 0 rgba(0,0,0,.35)}
 .tb.on{transform:translateY(3px) scale(.96);filter:brightness(1.35)}
-#bBrake{right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:88px;height:88px;background:var(--cherry);color:#fff;font-size:14px}
-#bDrift{right:calc(110px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:72px;height:72px;background:var(--sun);color:var(--ink)}
-#bHorn{right:calc(120px + env(safe-area-inset-right,0px));bottom:calc(98px + env(safe-area-inset-bottom,0px));width:50px;height:50px;background:var(--ink2);color:var(--cream);font-size:10px}
-#bBoost{right:calc(34px + env(safe-area-inset-right,0px));bottom:calc(118px + env(safe-area-inset-bottom,0px));width:68px;height:68px;background:var(--cyan);color:var(--ink)}
+#bBrake{right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(66px + env(safe-area-inset-bottom,0px));width:88px;height:88px;background:var(--cherry);color:#fff;font-size:14px}
+#bDrift{right:calc(110px + env(safe-area-inset-right,0px));bottom:calc(58px + env(safe-area-inset-bottom,0px));width:72px;height:72px;background:var(--sun);color:var(--ink)}
+#bHorn{right:calc(120px + env(safe-area-inset-right,0px));bottom:calc(142px + env(safe-area-inset-bottom,0px));width:50px;height:50px;background:var(--ink2);color:var(--cream);font-size:10px}
+#bBoost{right:calc(34px + env(safe-area-inset-right,0px));bottom:calc(164px + env(safe-area-inset-bottom,0px));width:68px;height:68px;background:var(--cyan);color:var(--ink)}
 #pauseBtn{position:absolute;pointer-events:auto;right:calc(10px + env(safe-area-inset-right,0px));top:calc(clamp(92px,23vmin,150px) + 16px + env(safe-area-inset-top,0px));width:46px;height:32px;border-radius:5px;background:var(--glass);font:400 12px var(--display)}
 
-#app.touch #speedo{left:calc(18px + env(safe-area-inset-left,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:none;width:154px;text-align:left}
-#app.touch #bubble{bottom:calc(176px + env(safe-area-inset-bottom,0px))}
+#app.touch #speedo{left:calc(22px + env(safe-area-inset-left,0px));bottom:calc(182px + env(safe-area-inset-bottom,0px));transform:none;width:154px;text-align:left}
+#app.touch #bubble{bottom:calc(240px + env(safe-area-inset-bottom,0px))}
 
 /* Panels */
 .panel{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;display:flex;padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));box-sizing:border-box}
@@ -183,7 +187,7 @@ td:last-child,th:last-child,td:nth-child(3),th:nth-child(3){text-align:right;whi
     </div>
   </div>
   <div id="touch" hidden>
-    <div id="steer"><div id="track"><div id="knob">&#9664;&#9654;</div></div></div>
+    <div id="steer" aria-label="Joystick: push up to drive, tilt to turn, pull down to brake"><div id="track"><i class="up">GO</i><i class="lf">&#9664;</i><i class="rt">&#9654;</i><i class="dn">REV</i><div id="knob"></div></div></div>
     <div class="tb" id="bBrake" data-k="brake">BRAKE</div>
     <div class="tb" id="bHorn" data-k="horn">HONK</div>
     <div class="tb" id="bDrift" data-k="drift">DRIFT</div>
@@ -1453,14 +1457,14 @@ function buildPlayer(spec){
 }
 function placeCarAt(x,z,a){car.x=x;car.z=z;car.y=surfaceAt(x,z);car.a=a;car.vx=car.vz=car.vy=0;car.grounded=true;car.air=0;car.driftT=0;car.fuel=100;car.pad=0;car.pitch=car.roll=0}
 /* ========= Input ========= */
-const input={gas:0,brake:0,steerT:0,drift:false,boost:false,touch:false,key:{},touchSteer:0,touchActive:false,tBrake:false,tDrift:false,tBoost:false};
+const input={gas:0,brake:0,steerT:0,drift:false,boost:false,touch:false,key:{},touchSteer:0,touchActive:false,joyGas:0,joyBrake:0,tBrake:false,tDrift:false,tBoost:false};
 const $=id=>document.getElementById(id);
 function isTouchDevice(){return ('ontouchstart' in window)||(navigator.maxTouchPoints>0&&matchMedia('(pointer:coarse)').matches)}
 function readInput(){
   const k=input.key;
   const kb=(k.ArrowUp||k.KeyW)?1:0, kbB=(k.ArrowDown||k.KeyS)?1:0, kS=((k.ArrowRight||k.KeyD)?1:0)-((k.ArrowLeft||k.KeyA)?1:0);
   if(input.touch){
-    input.brake=Math.max(input.tBrake?1:0,kbB);input.gas=input.tBrake?0:1;
+    input.brake=Math.max(input.tBrake?1:0,kbB,input.joyBrake);input.gas=input.brake>0?0:Math.max(kb,input.joyGas);
     input.steerT=kS||input.touchSteer;input.drift=input.tDrift||!!k.Space;input.boost=input.tBoost||!!(k.ShiftLeft||k.ShiftRight);
   } else {
     input.gas=kb;input.brake=kbB;input.steerT=kS;input.drift=!!k.Space;input.boost=!!(k.ShiftLeft||k.ShiftRight);
@@ -1484,11 +1488,28 @@ addEventListener('keyup',e=>{input.key[e.code]=false});
 addEventListener('blur',()=>{input.key={}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&G.state==='play')pauseGame()});
 function initTouch(){
-  const pad=$('steer'),knob=$('knob');let id=null,ox=0;
-  const set=v=>{input.touchSteer=v;knob.style.transform=`translateX(${v*48}px)`};
-  pad.addEventListener('pointerdown',e=>{id=e.pointerId;ox=e.clientX;try{pad.setPointerCapture(id)}catch(_){ }set(0);e.preventDefault()});
-  pad.addEventListener('pointermove',e=>{if(e.pointerId===id)set(clamp((e.clientX-ox)/52,-1,1))});
-  const end=e=>{if(e.pointerId===id){id=null;set(0)}};
+  /* Joystick: push up to drive, tilt left/right to turn (up-left / up-right to turn while driving),
+     pull down to brake and reverse. The stick appears wherever your thumb lands in the left zone. */
+  const pad=$('steer'),track=$('track'),knob=$('knob');let id=null,cx=0,cy=0;const R=58,HALF=74;
+  const curve=(v,dz)=>{const a=Math.abs(v);return a<dz?0:Math.sign(v)*Math.pow((a-dz)/(1-dz),1.4)};
+  const set=(dx,dy)=>{
+    const len=Math.hypot(dx,dy);if(len>R){dx*=R/len;dy*=R/len}
+    knob.style.transform=`translate(${dx}px,${dy}px)`;
+    const nx=dx/R,ny=dy/R,fwd=-ny;
+    input.touchSteer=curve(nx,.12);
+    let gas=fwd>.12?Math.min(1,(fwd-.12)/.6):0;
+    if(Math.abs(nx)>.45&&fwd>-.25)gas=Math.max(gas,.55);           // tilting sideways still rolls you forward
+    input.joyGas=gas;input.joyBrake=ny>.4?Math.min(1,(ny-.4)/.45):0;
+  };
+  const home=()=>{track.style.left='';track.style.bottom=''};
+  pad.addEventListener('pointerdown',e=>{
+    id=e.pointerId;try{pad.setPointerCapture(id)}catch(_){ }
+    const r=pad.getBoundingClientRect();
+    const x=clamp(e.clientX-r.left,HALF+6,r.width-HALF-6),y=clamp(r.bottom-e.clientY,HALF+6,r.height-HALF-6);
+    track.style.left=(x-HALF)+'px';track.style.bottom=(y-HALF)+'px';
+    cx=r.left+x;cy=r.bottom-y;pad.classList.add('on');set(e.clientX-cx,e.clientY-cy);e.preventDefault()});
+  pad.addEventListener('pointermove',e=>{if(e.pointerId===id)set(e.clientX-cx,e.clientY-cy)});
+  const end=e=>{if(e.pointerId===id){id=null;pad.classList.remove('on');set(0,0);home()}};
   pad.addEventListener('pointerup',end);pad.addEventListener('pointercancel',end);
   document.querySelectorAll('.tb').forEach(b=>{
     const prop={brake:'tBrake',drift:'tDrift',boost:'tBoost',horn:'tHorn'}[b.dataset.k];
@@ -1684,8 +1705,7 @@ function trick(label,money){
 function stepCar(dt){
   const s=car.spec, a0=car.a, fx=-Math.sin(a0), fz=-Math.cos(a0), rx=Math.cos(a0), rz=-Math.sin(a0);
   let vf=car.vx*fx+car.vz*fz, vl=car.vx*rx+car.vz*rz;
-  car.steer=input.touch&&input.touchSteer?input.steerT:damp(car.steer,input.steerT,11,dt);
-  if(input.touch&&!input.touchSteer&&!input.steerT)car.steer=damp(car.steer,0,14,dt);
+  car.steer=damp(car.steer,input.steerT,input.touch?(input.steerT?7.5:13):11,dt);
   const boostWant=input.boost&&car.fuel>0&&input.brake<.5;
   if(boostWant&&!car.boostWas&&G.state==='play')Snd.boostOn();car.boostWas=boostWant;
   car.boosting=boostWant||car.pad>0;
@@ -2121,7 +2141,7 @@ function boot(){
   initPeds();for(let i=0;i<20;i++){const c=traffic[i];spawnCar(c,false)}
   initTouch();
   $('keys').innerHTML=input.touch
-    ?'The car accelerates by itself. <b>Drag the pad</b> to steer. <b>Brake</b> stops or reverses. <b>Drift</b> takes tight turns. Sound needs your ringer on.'
+    ?'Use the <b>joystick</b>: push up to drive, push up-left or up-right to turn, pull down to brake and reverse. <b>Drift</b> takes tight turns. Sound needs your ringer on.'
     :'<b>WASD</b> or <b>arrows</b> drive. <b>Space</b> drift. <b>Shift</b> boost. <b>H</b> honk. <b>N</b> radio. <b>R</b> tow. <b>P</b> pause. <b>M</b> mute.';
   renderMenu();
   $('start').onclick=()=>{Snd.init();Snd.ui();startGame()};$('again').onclick=()=>{Snd.ui();startGame()};$('restart').onclick=()=>{Snd.ui();startGame()};$('radio').onclick=nextStation;$('radio2').onclick=nextStation;
@@ -2137,4 +2157,4 @@ function boot(){
 boot();
 </script>
 
-<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;right:calc(6px + env(safe-area-inset-right,0px));top:calc(6px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a></body></html>
+<a href="../../#arcade" id="dd-back" aria-label="Back to Donuts Department" style="position:fixed;z-index:2147483647;left:calc(10px + env(safe-area-inset-left,0px));top:calc(100px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:4px;height:26px;padding:0 9px;border-radius:13px;background:rgba(23,11,18,.72);color:#ff9cc7;font:700 12px system-ui,sans-serif;text-decoration:none;border:1px solid rgba(255,79,154,.5);opacity:.6">&#8249; Dept</a></body></html>
