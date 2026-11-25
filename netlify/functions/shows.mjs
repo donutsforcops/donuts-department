@@ -47,6 +47,7 @@ export default async () => {
         at: s.scheduled_start_at || new Date().toISOString(),
         live: s.status === 'live',
         u: publicUrl(s.id),
+        thumb: s.thumbnail && /^https:\/\//.test(s.thumbnail.url || '') ? s.thumbnail.url : '',
       }));
     return json({ updated: new Date().toISOString(), shows }, 200, {
       // One shared copy for every visitor, refreshed from Whatnot at most about once a minute.

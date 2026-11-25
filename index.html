@@ -11,8 +11,24 @@
 <link rel="icon" href="icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Donuts Department</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Donuts Department">
+<meta property="og:title" content="Donuts Department · donutsforcops">
+<meta property="og:description" content="Live Supreme, Strangelove and FTP streams with $1 starts, an arcade, and the Givy Goblins. Open late.">
+<meta property="og:url" content="https://donutsdepartment.netlify.app/">
+<meta property="og:image" content="https://donutsdepartment.netlify.app/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://donutsdepartment.netlify.app/og-image.png">
+<link rel="preload" href="fonts/bungee-shade.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/bungee.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Bungee Shade';src:url(fonts/bungee-shade.woff2) format('woff2');font-display:swap}
+@font-face{font-family:Bungee;src:url(fonts/bungee.woff2) format('woff2');font-display:swap}
+@font-face{font-family:Rubik;src:url(fonts/rubik-400.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Rubik;src:url(fonts/rubik-600.woff2) format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:Rubik;src:url(fonts/rubik-800.woff2) format('woff2');font-weight:800;font-display:swap}
+</style>
 <style>
 /* VOICE: loud, sugary, late-night streetwear shop — hype without clutter
    IDEA: a 24-hour donut shop at night: flickering neon sign, menu board of streams, arcade corner, jukebox
@@ -40,6 +56,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .brand{font-family:Bungee;font-size:19px;text-decoration:none;color:var(--pink);white-space:nowrap}
 .links{display:flex;gap:2px;margin-left:auto}
 .links a{text-decoration:none;padding:10px 12px;border-radius:10px;font-weight:600;font-size:15px}
+.links a{white-space:nowrap}@media(max-width:1100px){.links a.opt{display:none}}
 .links a:hover{background:var(--card)}
 .radio{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:6px 14px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:700 14px Rubik;cursor:pointer;white-space:nowrap}
 .radio .eq{display:inline-flex;gap:2px;align-items:flex-end;height:14px}
@@ -92,7 +109,6 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .menu p{margin:4px 0 0;color:var(--mute);font-size:15px}
 .tag{display:inline-block;font-size:13px;font-weight:800;padding:3px 10px;border-radius:999px;margin-bottom:4px;color:#1a0b12}
 .tag.dfc{background:var(--pink);color:#fff}
-.tag.bitg{background:linear-gradient(90deg,#ff3d3d,#ffd23f,#3dff8b,#3dc5ff,#b04dff);animation:hue 6s linear infinite}
 @keyframes hue{to{filter:hue-rotate(360deg)}}
 .empty{padding:22px;border:2px dashed var(--line);border-radius:16px;color:var(--mute)}
 .fine{font-size:14px;color:var(--mute);margin-top:14px}
@@ -107,12 +123,6 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .next.swap{animation:swap .9s ease-out}
 @keyframes swap{0%{transform:scale(.96);box-shadow:0 0 0 0 #5ef2c6aa}40%{box-shadow:0 0 0 8px #5ef2c644}100%{transform:none;box-shadow:0 0 0 0 transparent}}
 .clock .any{grid-column:1/-1;font-family:Bungee;font-size:22px;color:var(--mint);background:transparent;text-align:left;padding:4px 0}
-/* crew: equal cards, shuffled each visit */
-{const list=CONFIG.crew.slice();for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}
- $('#crewList').innerHTML=list.map(m=>`<article class="mate"><div class="av" style="background:linear-gradient(135deg,${esc(m.c[0])},${esc(m.c[1])})">${esc(m.name[0])}</div>
-  <h3>${esc(m.name)}</h3><div class="hd">@${esc(m.h)}</div><p>${esc(m.about)}</p><div class="chips">${m.tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
-  <a class="btn ghost" href="https://www.whatnot.com/user/${encodeURIComponent(m.h)}">Watch live</a></article>`).join('')}
-
 /* goblins */
 .gobs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,260px);gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:thin}
 .gob{scroll-snap-align:start;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:10px}
@@ -121,6 +131,27 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .gob span{color:var(--mute);font-size:14px}
 .snapbtns{display:flex;gap:8px;margin-top:6px}
 .snapbtns button{min-width:46px;min-height:46px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font:800 18px Rubik;cursor:pointer}
+/* new: posters, invite, footer */
+.skip{position:absolute;left:-999px;top:8px;z-index:99;background:var(--sun);color:#1a0b12;padding:10px 14px;border-radius:10px;font-weight:800}.skip:focus{left:8px}
+.nexthead{display:flex;gap:14px;align-items:flex-start}
+#nextPoster{width:84px;aspect-ratio:3/4;object-fit:cover;border-radius:12px;flex:none;border:2px solid var(--line);background:var(--bg2)}
+.newbie{display:block;margin-top:14px;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--mint) 12%,transparent);border:1px dashed var(--mint);color:var(--ink);text-decoration:none;font-size:14px;line-height:1.4}
+.newbie b{color:var(--mint)}
+.thumb{float:left;width:54px;height:72px;object-fit:cover;border-radius:10px;margin:2px 12px 4px 0;border:2px solid var(--line);background:var(--bg2)}
+.open.live{color:#ff4d6d;border-color:#ff4d6d;box-shadow:0 0 16px #ff4d6d77}
+.join{background:radial-gradient(800px 400px at 15% 50%,#123b33 0%,transparent 70%),var(--bg)}
+.joinbox{display:grid;grid-template-columns:180px minmax(0,1fr);gap:clamp(18px,4vw,48px);align-items:center;border:2px solid var(--mint);border-radius:28px;padding:clamp(20px,4vw,40px);box-shadow:0 0 40px #5ef2c622}
+.joinbox h2{color:var(--mint)}
+.joinbox p{color:var(--mute);font-size:17px;max-width:60ch}
+.joinart svg{width:100%;filter:drop-shadow(0 0 20px #ff4f9a66);animation:spin 30s linear infinite}
+.btn.big{min-height:54px;padding:12px 24px;font-size:17px;background:var(--mint);border-color:var(--mint);color:#10241d}
+.foot{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:24px;align-items:start}
+.foot .fbrand b{font-family:Bungee;font-size:22px;color:var(--pink);display:block;margin-bottom:6px;font-weight:400}
+.foot h4{margin:0 0 8px;color:var(--ink);font-size:15px}
+.foot nav{display:flex;flex-direction:column;gap:2px}
+.foot nav a{text-decoration:none;padding:6px 0;min-height:32px}
+.foot nav a:hover{color:var(--pink)}
+.foot .legal{grid-column:1/-1;margin:8px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:13px}
 /* crew */
 .crew{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:16px}
 .mate{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px}
@@ -176,11 +207,14 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .sharebox{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:22px}
 footer{border-top:1px solid var(--line);color:var(--mute);font-size:14px}
 footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
-footer a{margin-right:10px}
+
 .toast{position:fixed;left:50%;bottom:calc(90px + var(--safe-b));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:50}
 .toast.on{opacity:1}
 @media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.fig{min-height:300px;order:-1;margin:-10px -10px -30px}}
 @media(max-width:700px){
+  .joinbox{grid-template-columns:1fr;text-align:left}.joinart{width:110px}.btn.big{width:100%}
+  .foot{grid-template-columns:1fr 1fr}.foot .fbrand{grid-column:1/-1}
+  #nextPoster{width:64px}
   .links{display:none}.radio{margin-left:auto}
   .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 4px calc(6px + var(--safe-b))}
   .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;font-size:11px;font-weight:700;color:var(--mute);min-height:48px;justify-content:center;border-radius:12px}
@@ -202,9 +236,10 @@ footer a{margin-right:10px}
 </style>
 </head>
 <body class="feed-loading">
+<a class="skip" href="#streams">Skip to the schedule</a>
 <nav class="top"><div class="wrap">
   <a class="brand" href="#top">Donuts Department</a>
-  <div class="links"><a href="#streams">Streams</a><a href="#crew">Streamers</a><a href="#goblins">Goblins</a><a href="#arcade">Arcade</a><a href="#drops">Brands</a><a href="#cop">How to cop</a></div>
+  <div class="links"><a href="#streams">Streams</a><a href="#crew">Streamers</a><a class="opt" href="#goblins">Goblins</a><a href="#arcade">Arcade</a><a class="opt" href="#drops">Brands</a><a href="#join">Join</a><a class="opt" href="#cop">How to cop</a></div>
   <button class="radio" id="radio" aria-pressed="false" aria-label="Play Donuts Department radio"><span class="eq"><i></i><i></i><i></i></span><span id="radioTxt">Play music</span></button>
 </div></nav>
 
@@ -215,15 +250,16 @@ footer a{margin-right:10px}
     <p class="sub">Supreme · Strangelove · FTP · $1 starts</p>
     <div class="next" id="nextCard" aria-live="polite">
       <div class="lbl" id="nextLbl">Next stream</div>
-      <h3 id="nextTitle">Loading the glaze…</h3>
+      <div class="nexthead"><img id="nextPoster" alt="" hidden><div><h3 id="nextTitle">Loading the glaze…</h3>
       <div id="nextWhen" class="lbl"></div>
-      <div class="feedchip" id="heroFeed"></div>
+      <div class="feedchip" id="heroFeed"></div></div></div>
       <div class="live" id="liveBar"><i></i><span>LIVE NOW on Whatnot</span></div>
       <div class="clock" id="clock"></div>
       <div class="row">
         <a class="btn" id="nextGo" href="https://www.whatnot.com/user/donutsforcops">Open the show</a>
-        <a class="btn ghost" id="nextCal" href="#">Add to calendar</a>
+        <a class="btn ghost" id="nextCal" href="#">+ Calendar</a>
       </div>
+      <a class="newbie" href="https://www.whatnot.com/invite/donutsforcops"><b>New to Whatnot?</b> Join with our invite link and get credit on your first order ›</a>
     </div>
   </div>
   <div class="fig" id="fig" aria-hidden="true">
@@ -303,6 +339,18 @@ footer a{margin-right:10px}
   </div>
 </div></section>
 
+<section class="join band" id="join"><div class="wrap">
+  <div class="joinbox">
+    <div class="joinart" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="46" fill="#ff4f9a"/><circle cx="60" cy="60" r="17" fill="#2a1220"/><g fill="#fff"><rect x="30" y="34" width="12" height="4" rx="2" transform="rotate(30 36 36)"/><rect x="76" y="38" width="12" height="4" rx="2" transform="rotate(-20 82 40)"/><rect x="80" y="74" width="12" height="4" rx="2" transform="rotate(50 86 76)"/><rect x="28" y="76" width="12" height="4" rx="2" transform="rotate(-40 34 78)"/></g><g fill="#5ef2c6"><rect x="54" y="20" width="12" height="4" rx="2"/><rect x="52" y="96" width="12" height="4" rx="2" transform="rotate(20 58 98)"/></g></svg></div>
+    <div>
+      <h2>New to Whatnot? Get a head start.</h2>
+      <p>Sign up with the Donuts Department invite link. You'll automatically follow donutsforcops, see our shows first in the app, and get credit applied to your first purchase.</p>
+      <div class="row"><a class="btn big" href="https://www.whatnot.com/invite/donutsforcops">Join Whatnot with our link</a><a class="btn ghost" href="#cop">How it works</a></div>
+      <p class="fine">Already on Whatnot? Just <a href="https://www.whatnot.com/user/donutsforcops">follow donutsforcops</a>. Credit amounts are set by Whatnot and can change.</p>
+    </div>
+  </div>
+</div></section>
+
 <section class="band" id="cop" style="background:var(--bg2)"><div class="wrap">
   <h2>The sweet info on getting your cops</h2>
   <p class="lede">New to Whatnot? Here's how a show works, from follow to front door.</p>
@@ -322,9 +370,12 @@ footer a{margin-right:10px}
   </div>
 </div></section>
 
-<footer class="band"><div class="wrap">
-  <span>Donuts Department · donutsforcops · streetwear, skate and sugar. Not affiliated with Supreme or Strangelove.</span>
-  <span><a href="https://www.whatnot.com/user/donutsforcops">donutsforcops</a><a href="https://strangeloveskateboards.com">Strangelove</a><a href="https://www.supremecommunity.com">Supreme Community</a></span>
+<footer class="band"><div class="wrap foot">
+  <div class="fbrand"><b><span class="flk">Do</span>nuts Department</b><span>Streetwear, skate and sugar from donutsforcops. Open late.</span></div>
+  <nav aria-label="Watch"><h4>Watch</h4><a href="#streams">Upcoming streams</a><a href="#crew">Recommended streamers</a><a href="https://www.whatnot.com/user/donutsforcops">donutsforcops on Whatnot</a></nav>
+  <nav aria-label="Play"><h4>Play</h4><a href="#arcade">Arcade</a><a href="#goblins">Givy Goblins</a><a href="#faq">Questions</a></nav>
+  <nav aria-label="Shop"><h4>Shop</h4><a href="https://www.whatnot.com/invite/donutsforcops">Join Whatnot</a><a href="https://strangeloveskateboards.com">Strangelove</a><a href="https://www.supremecommunity.com">Supreme Community</a></nav>
+  <p class="legal">© <span id="yr">2026</span> Donuts Department. Independent reseller, not affiliated with Supreme, Strangelove or FTP.</p>
 </div></footer>
 
 <nav class="tabbar" aria-label="Sections">
@@ -341,6 +392,7 @@ footer a{margin-right:10px}
 /* ======== EDIT ME: everything the site shows lives here ======== */
 const CONFIG={
   whatnot:'https://www.whatnot.com/user/donutsforcops',
+  invite:'https://www.whatnot.com/invite/donutsforcops',   // referral link: new Whatnot sign-ups
   showLengthHrs:3,
   notes:{dfc:'$1 starts, Givy Goblins giveaways, buyer\'s giveaway every show'},
   // Exact shows from Whatnot, Eastern time (YYYY-MM-DD HH:MM). Past shows hide themselves.
@@ -361,7 +413,7 @@ const CONFIG={
     {who:'dfc',at:'2027-04-14 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/879945e9-4ae4-42ac-8219-7bd2e74ff779'},
     {who:'dfc',at:'2027-04-21 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/c8418cb4-c24c-4a5a-9f5b-100bc0faa936'},
   ],
-  // Recommended streamers: every card gets the same space. Order shuffles on each visit.
+  // Recommended streamers: every card gets the same space, listed A to Z.
   crew:[
     {name:'Best In The Game',h:'best_in_the_game',about:'Supreme sticker specialist. Box logos, minis and rare pulls.',tags:['Stickers','$1 starts','Sudden death'],c:['#ff3d3d','#3dc5ff']},
     {name:'Katie',h:'katien9',about:'Supreme, Palace, Bearbricks, Drew House and PopMart.',tags:['Hoodies','$1 starts','Personal shopping'],c:['#ff8ac2','#b04dff']},
@@ -385,14 +437,14 @@ const CONFIG={
     {spot:'bed',line:'Come on! Where is he at!',tip:'Should be asleep. Absolutely not asleep.',bg:'#6a2b8f'}
   ],
   steps:[
-    {t:'Follow the shop',d:'Follow donutsforcops on Whatnot and turn on notifications so you get pinged the second the show goes live.',i:'bell'},
+    {t:'Join and follow',d:'New to Whatnot? Sign up with our invite link and you\'ll follow donutsforcops automatically. Turn on notifications to get pinged the second the show goes live.',i:'bell'},
     {t:'Pull up early',d:'The Givy Goblins start yelling before the show. Early chat gets in on the first giveaways.',i:'clock'},
     {t:'Bid from a dollar',d:'Supreme, Strangelove and FTP start at $1. Tap to bid; the highest bid when the timer ends takes it.',i:'gavel'},
     {t:'Buy, get a shot',d:'Buyers are entered in the buyer\'s giveaway. Spend once, stay in the running all night.',i:'gift'},
     {t:'It ships to you',d:'Wins ship to the address on your Whatnot account. Stickers go out light as letter mail.',i:'box'}
   ],
   faq:[
-    ['Do I need the Whatnot app?','Watching and bidding work best in the free Whatnot app on your phone. Make an account, add a card and address once, and you\'re ready to bid.'],
+    ['Do I need the Whatnot app?','Watching and bidding work best in the free Whatnot app on your phone. Sign up with our invite link (whatnot.com/invite/donutsforcops), add a card and address once, and you\'re ready to bid.'],
     ['What does a "$1 start" mean?','Every auction opens at one dollar. Where it ends is up to chat. Sometimes a box logo goes for a steal.'],
     ['What is a sudden death auction?','Some of our recommended streamers run these. The timer doesn\'t reset when someone bids, so whoever is highest when it hits zero wins. No last-second extensions.'],
     ['How do the giveaways work?','Givy giveaways are free to enter during the show. The buyer\'s giveaway is only for people who bought something that show.'],
@@ -415,12 +467,12 @@ const upcoming=now=>SHOWS.filter(o=>o.live||o.at.getTime()+CONFIG.showLengthHrs*
 const liveNow=(o,now)=>o.live!==undefined?o.live:o.at<=now;
 /* ===== live schedule from Whatnot (/api/shows on the hosted site); the list above is only the backup ===== */
 let feedState='loading',feedAt=0,lastCheck=0,sig='',changed=new Set(),busy=false;
-const keyOf=o=>o.u+'|'+o.at.getTime()+'|'+o.title+'|'+(o.live?1:0);
+const keyOf=o=>o.u+'|'+o.at.getTime()+'|'+o.title+'|'+(o.live?1:0)+'|'+(o.thumb||'');
 async function loadFeed(){if(busy)return;busy=true;lastCheck=Date.now();
   try{const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),8000);
     const r=await fetch('/api/shows',{cache:'no-store',signal:ctl.signal});clearTimeout(to);if(!r.ok)throw 0;
     const j=await r.json();if(!j||!Array.isArray(j.shows))throw 0;
-    const next=j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
+    const next=j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,thumb:/^https:\/\//.test(s.thumb||'')?s.thumb:'',note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
     const nsig=next.map(keyOf).join(';');
     if(sig&&nsig!==sig){const old=new Set(sig.split(';'));changed=new Set(next.filter(o=>!old.has(keyOf(o))).map(o=>o.u));toast('Schedule updated from Whatnot');setTimeout(()=>{changed.clear();renderMenu()},9000)}
     sig=nsig;SHOWS=next;feedState='live';feedAt=Date.parse(j.updated)||Date.now();
@@ -443,7 +495,7 @@ let filter='all',more=false;
 function renderMenu(){const now=Date.now();const all=upcoming(now).filter(o=>filter==='all'||o.who===filter);const list=more?all:all.slice(0,8);$('#more').hidden=more||all.length<=8;
   $('#menu').innerHTML=list.length?list.map(o=>{const isLive=liveNow(o,now);const r=isLive?'':rel(o.at,now);
     return `<li class="${changed.has(o.u)?'fresh':''}"><time>${isLive?'LIVE':esc(fmtDay(o.at))}<small>${esc(fmtTime(o.at))}</small>${r?`<span class="soon">${esc(r)}</span>`:''}</time>
-    <div><span class="tag ${o.who}">${esc(who[o.who].n)}</span>${changed.has(o.u)?'<span class="upd">Just updated</span>':''}<h3>${esc(o.title)}</h3><p>${esc(o.note)}</p></div>
+    <div>${o.thumb?`<img class="thumb" src="${esc(o.thumb)}" alt="" loading="lazy">`:''}<span class="tag ${o.who}">${esc(who[o.who].n)}</span>${changed.has(o.u)?'<span class="upd">Just updated</span>':''}<h3>${esc(o.title)}</h3><p>${esc(o.note)}</p></div>
     <div class="row"><a class="btn ${isLive?'':'ghost'}" href="${esc(o.u)}">${isLive?'Watch now':'Show page'}</a>${isLive?'':`<a class="btn ghost" href="${esc(gcal(o))}">+ Calendar</a>`}</div></li>`}).join('')
     :'<li class="empty">Nothing scheduled here right now. Follow on Whatnot to hear about new shows.</li>'}
 $('#more').addEventListener('click',()=>{more=true;renderMenu()});
@@ -451,9 +503,11 @@ $('#more').addEventListener('click',()=>{more=true;renderMenu()});
 const pad=n=>String(n).padStart(2,'0');
 let heroKey='';
 function tickHero(){const now=Date.now();const n=upcoming(now)[0];
-  if(!n){$('#nextTitle').textContent='New shows coming soon';$('#nextWhen').textContent='Follow on Whatnot to hear first.';$('#clock').innerHTML='';$('#liveBar').classList.remove('on');heroKey='';return}
+  if(!n){$('#nextPoster').hidden=true;$('.open').classList.remove('live');$('.open').textContent='● OPEN LATE';$('#nextTitle').textContent='New shows coming soon';$('#nextWhen').textContent='Follow on Whatnot to hear first.';$('#clock').innerHTML='';$('#liveBar').classList.remove('on');heroKey='';return}
   const k=keyOf(n);if(heroKey&&k!==heroKey){const c=$('#nextCard');c.classList.remove('swap');void c.offsetWidth;c.classList.add('swap')}heroKey=k;
   const live=liveNow(n,now);$('#liveBar').classList.toggle('on',live);
+  const sign=$('.open');sign.classList.toggle('live',live);sign.textContent=live?'● LIVE NOW':'● OPEN LATE';
+  const pst=$('#nextPoster');if(n.thumb){if(pst.getAttribute('src')!==n.thumb)pst.src=n.thumb;pst.hidden=false}else pst.hidden=true;
   $('#nextLbl').textContent=live?'Happening right now · '+who[n.who].n:'Next stream · '+who[n.who].n;
   $('#nextTitle').textContent=n.title;
   $('#nextWhen').textContent=fmtDay(n.at)+' at '+fmtTime(n.at);
@@ -464,8 +518,8 @@ function tickHero(){const now=Date.now();const n=upcoming(now)[0];
   const sup=nextWeekly({day:4,h:11,m:0},new Date(now));const t=Math.floor((sup-now)/1e3);
   $('#supClock').textContent=`${Math.floor(t/86400)}d ${pad(Math.floor(t%86400/3600))}h ${pad(Math.floor(t%3600/60))}m ${pad(t%60)}s`}
 
-/* crew: equal cards, shuffled each visit */
-{const list=CONFIG.crew.slice();for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}
+/* crew: equal cards, A to Z */
+{const list=CONFIG.crew.slice().sort((a,b)=>a.name.localeCompare(b.name,undefined,{sensitivity:'base'}));
  $('#crewList').innerHTML=list.map(m=>`<article class="mate"><div class="av" style="background:linear-gradient(135deg,${esc(m.c[0])},${esc(m.c[1])})">${esc(m.name[0])}</div>
   <h3>${esc(m.name)}</h3><div class="hd">@${esc(m.h)}</div><p>${esc(m.about)}</p><div class="chips">${m.tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
   <a class="btn ghost" href="https://www.whatnot.com/user/${encodeURIComponent(m.h)}">Watch live</a></article>`).join('')}
@@ -560,6 +614,7 @@ $('#radio').addEventListener('click',()=>{try{if(!on){station=0;start();toast('N
 document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidden)ac.suspend();else if(on)ac.resume()});
 }
 
+$('#yr').textContent=new Date().getFullYear();
 renderMenu();tickHero();status();loadFeed();
 setInterval(tickHero,1000);setInterval(()=>{renderMenu();status()},30e3);
 /* check Whatnot every minute while the page is on screen, and right away when someone comes back to it */
