@@ -40,3 +40,13 @@ label{display:flex;align-items:center;gap:8px;font: .85rem monospace}input{width
 #shelf small{font: .72rem monospace;color:#3d4137;border-top:2px solid #905b61}
 #shelf [aria-pressed=true]{border-color:#a6caa7}
 #skip{display:block;margin:12px auto}#source{color:#bfdac1}
+
+.locker{padding:16px;background:linear-gradient(110deg,#3c423b,#262b27);border:3px ridge #686b5c;border-radius:3px;box-shadow:0 8px 18px #0005}
+.locker h2{margin:0 0 12px;padding:4px 10px;border-left:4px solid #9e5554;color:#e4dac4;font:700 1rem monospace;text-transform:uppercase;letter-spacing:.08em}
+@media(prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  .locker{view-transition-name:evidence-locker}
+  ::view-transition-group(evidence-locker){animation-duration:.48s;animation-timing-function:ease-out}
+  @keyframes open-locker{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+  main{animation:open-locker .32s ease-out}
+}

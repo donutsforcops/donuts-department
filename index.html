@@ -28,6 +28,13 @@
 @font-face{font-family:Rubik;src:url(fonts/rubik-400.woff2) format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:Rubik;src:url(fonts/rubik-600.woff2) format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:Rubik;src:url(fonts/rubik-800.woff2) format('woff2');font-weight:800;font-display:swap}
+/* Two offset VHS spines beside the channel-surfing set. */
+.parole-tapes{position:absolute;z-index:4;right:40%;bottom:5%;width:clamp(138px,41%,204px);padding:5px 9px 6px;background:repeating-linear-gradient(90deg,#262622 0 2px,#393934 2px 3px);border:2px outset #5b5952;border-radius:3px;box-shadow:3px 5px 0 #151513,2px 8px 0 #6b6456,4px 11px 0 #242422;transform:rotate(-5deg);text-decoration:none}
+.parole-tapes strong,.parole-tapes span{display:block;background:#e5d8b6;color:#27241f;padding:3px 7px;line-height:1.1}
+.parole-tapes strong{font:bold italic clamp(15px,2vw,22px) Georgia,serif;border-bottom:2px solid #964b4b}.parole-tapes span{font:700 12px monospace}
+.parole-tapes:focus-visible{outline:3px solid var(--sun);outline-offset:4px}
+@media(prefers-reduced-motion:no-preference){.parole-tapes{transition:transform .18s}.parole-tapes:hover{transform:translateY(-4px) rotate(-3deg)}}
+@media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}.parole-tapes{view-transition-name:evidence-locker}}
 </style>
 <style>
 /* VOICE: loud, sugary, late-night streetwear shop — hype without clutter
@@ -399,6 +406,13 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 .apbcard .ok{font-weight:800;color:#1f6b4c;margin:12px 0 0}.apbcard .err{font-weight:800;color:#b0123f;margin:12px 0 0}
 @media(max-width:860px){.apb{grid-template-columns:1fr}}
 @media(max-width:700px){.bags{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bag{padding:20px 6px 6px}.bag .tagx{font-size:12px;padding:6px 8px}.booked{grid-template-columns:96px minmax(0,1fr);gap:12px;padding:12px}.booked .bk{display:none}.apbcard .row2{grid-template-columns:1fr}}
+/* Two offset VHS spines beside the channel-surfing set. */
+.parole-tapes{position:absolute;z-index:4;right:40%;bottom:5%;width:clamp(138px,41%,204px);padding:5px 9px 6px;background:repeating-linear-gradient(90deg,#262622 0 2px,#393934 2px 3px);border:2px outset #5b5952;border-radius:3px;box-shadow:3px 5px 0 #151513,2px 8px 0 #6b6456,4px 11px 0 #242422;transform:rotate(-5deg);text-decoration:none}
+.parole-tapes strong,.parole-tapes span{display:block;background:#e5d8b6;color:#27241f;padding:3px 7px;line-height:1.1}
+.parole-tapes strong{font:bold italic clamp(15px,2vw,22px) Georgia,serif;border-bottom:2px solid #964b4b}.parole-tapes span{font:700 12px monospace}
+.parole-tapes:focus-visible{outline:3px solid var(--sun);outline-offset:4px}
+@media(prefers-reduced-motion:no-preference){.parole-tapes{transition:transform .18s}.parole-tapes:hover{transform:translateY(-4px) rotate(-3deg)}}
+@media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}.parole-tapes{view-transition-name:evidence-locker}}
 </style>
 </head>
 <body class="feed-loading">
@@ -459,6 +473,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
         <circle cx="0" cy="-16" r="5" fill="#ff4f9a"/>
       </g>
     </svg>
+    <a class="parole-tapes" href="skate-tv/"><strong>Play on parole</strong><span>Watch skate videos ▸</span></a>
     <div class="tv" id="tv">
       <span class="ant" aria-hidden="true"><i></i><i></i></span>
       <button class="tvset" id="tvBtn" type="button" aria-label="Donuts Department TV. Tap to change the channel.">
