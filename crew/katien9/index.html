@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Katie · Partners in crumb · Donuts Department</title>
+<meta name="description" content="Supreme, Palace, Bearbricks, Drew House and PopMart.">
+<meta name="theme-color" content="#170b12">
+<meta property="og:title" content="Katie · Donuts Department">
+<meta property="og:description" content="Supreme, Palace, Bearbricks, Drew House and PopMart.">
+<meta property="og:image" content="https://donutsdepartment.netlify.app/og-image.png">
+<link rel="icon" href="../../icon-180.png"><link rel="apple-touch-icon" href="../../icon-180.png">
+<style>
+@font-face{font-family:Bungee;src:url(../../fonts/bungee.woff2) format('woff2');font-display:swap}
+@font-face{font-family:Rubik;src:url(../../fonts/rubik-400.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Rubik;src:url(../../fonts/rubik-600.woff2) format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:Rubik;src:url(../../fonts/rubik-800.woff2) format('woff2');font-weight:800;font-display:swap}
+:root{color-scheme:dark;--bg:#170b12;--bg2:#22111b;--card:#2c1623;--ink:#fff4e6;--mute:#d8bfcb;--pink:#ff4f9a;--mint:#5ef2c6;--sun:#ffd23f;--line:#4a2a3b;--a:#ff8ac2;--b:#b04dff}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1200px 500px at 50% -120px,color-mix(in srgb,var(--a) 28%,transparent),transparent 70%),var(--bg);color:var(--ink);font:400 16px/1.55 Rubik,system-ui,sans-serif;min-height:100vh}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:16px 18px calc(48px + env(safe-area-inset-bottom,0px))}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.back{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid var(--line);text-decoration:none;font-weight:800;background:#0006}
+.brand{font-family:Bungee;color:var(--pink);text-decoration:none;font-size:15px}
+.hero{text-align:center;padding:18px 0 8px}
+.av{width:112px;height:112px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-family:Bungee;font-size:48px;color:#fff;text-shadow:0 3px 0 #0004;background:linear-gradient(135deg,var(--a),var(--b));box-shadow:0 0 0 5px var(--bg),0 0 0 8px var(--line),0 12px 40px color-mix(in srgb,var(--a) 45%,transparent)}
+h1{font-family:Bungee;font-weight:400;font-size:clamp(30px,8vw,48px);line-height:1.05;margin:0}
+.hd{color:var(--mute);font-weight:600;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0 4px}
+.chips span{font-size:13px;font-weight:800;padding:5px 11px;border-radius:999px;background:var(--bg2);border:1px solid var(--line)}
+.cta{display:grid;gap:10px;margin:22px 0}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:12px 20px;border-radius:999px;border:2px solid var(--pink);background:var(--pink);color:#fff;text-decoration:none;font:800 16px Rubik,sans-serif}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn small{font-weight:600;color:var(--mute)}
+.btn:active{transform:scale(.98)}
+a:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.memo{position:relative;background:#f6ead2;color:#2a1a12;border-radius:6px;padding:26px 22px 22px;margin:26px 0;box-shadow:0 14px 40px #0008;transform:rotate(-.6deg)}
+.memo:before{content:"";position:absolute;left:50%;top:-12px;width:110px;height:24px;margin-left:-55px;background:#ffd23fcc;transform:rotate(2deg)}
+.memo .lbl{font:800 11px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#8a5a3a;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 10px}.memo .lbl span{white-space:nowrap}
+.memo h2{font-family:Bungee;font-weight:400;font-size:24px;margin:10px 0 8px;color:#7a1238}
+.memo p{margin:0 0 12px;font-size:17px}
+.memo .sig{font:600 14px Rubik;color:#6b4a36;margin:14px 0 0}
+.stamp{position:absolute;right:14px;bottom:14px;border:3px solid #c0164e;color:#c0164e;font-family:Bungee;font-size:13px;padding:3px 8px;transform:rotate(-12deg);opacity:.75;border-radius:4px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px 20px;margin:16px 0}
+.card h3{margin:0 0 8px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--sun)}
+.card ul{margin:0;padding-left:20px}
+.card li{margin:4px 0}
+.links{display:grid;gap:10px}
+.join{border-color:var(--mint)}
+.join p{margin:0 0 12px;color:var(--mute)}
+.join .btn{background:var(--mint);border-color:var(--mint);color:#10241d}
+.more{display:flex;flex-wrap:wrap;gap:8px}
+.more a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);text-decoration:none;font-weight:700;font-size:14px}
+.fine{color:var(--mute);font-size:13px;text-align:center;margin-top:26px}
+@media(min-width:620px){.cta{grid-template-columns:1fr 1fr}}
+</style></head>
+<body><main class="wrap">
+<div class="top"><a class="back" href="../../index.html#crew">‹ Dept</a><a class="brand" href="../../index.html">Donuts Department</a></div>
+<header class="hero">
+  <div class="av" aria-hidden="true">K</div>
+  <h1>Katie</h1>
+  <div class="hd">@katien9 on Whatnot</div>
+  <div class="chips"><span>Hoodies</span><span>$1 starts</span><span>Personal shopping</span></div>
+</header>
+<div class="cta">
+  <a class="btn" href="https://www.whatnot.com/user/katien9">Watch on Whatnot</a>
+  <a class="btn ghost" href="https://www.whatnot.com/user/katien9/shows">Upcoming shows</a>
+</div>
+<article class="memo">
+  <div class="lbl"><span>INTERNAL MEMO · COMMENDATION</span><span>FILE DD-106</span></div>
+  <h2>Shoutout</h2>
+  <p>For range. Supreme, Palace, Bearbricks, Market, Drew House and PopMart, all under one badge and authentic every time. Personal shopping is available for anyone who knows what they want.</p>
+  <p class="sig">Signed, the Donuts Department (donutsforcops)</p>
+  <span class="stamp">Approved</span>
+</article>
+<section class="card"><h3>On the table</h3><ul><li>Supreme and Palace</li><li>Bearbricks and PopMart</li><li>Market and Drew House</li></ul></section>
+<section class="card"><h3>Find them elsewhere</h3><div class="links"><a class="btn ghost" href="https://grailed.app.link/89aCrsM2Y1b" rel="noopener">Grailed <small>Katie&#x27;s Grailed</small></a></div></section>
+<section class="card join"><h3>New to Whatnot?</h3>
+  <p>Sign up with the Donuts Department invite link, then follow Katie. You'll get credit toward your first order.</p>
+  <a class="btn" href="https://www.whatnot.com/invite/donutsforcops">Join Whatnot with our link</a></section>
+<section class="card"><h3>Other precincts</h3><div class="more"><a href="../best_in_the_game/index.html">Best In The Game</a><a href="../cooljewels/index.html">cooljewels</a><a href="../endlessrotation/index.html">Endless Rotation</a><a href="../equals3wi/index.html">Equals</a><a href="../jraww_worldwide/index.html">J Raww</a><a href="../locallycopped/index.html">LocallyCopped</a><a href="../notmanny/index.html">Manny</a><a href="../schematicflips/index.html">Schematic</a><a href="../selectsteals/index.html">Select Steals</a></div></section>
+<p class="fine">Details come from Katie's public Whatnot profile. Whatnot has the final word on shows and times.</p>
+</main></body></html>

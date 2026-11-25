@@ -227,6 +227,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .mate .hd{font-size:14px;color:var(--mute);font-weight:600;margin-top:-6px}
 .mate p{margin:0;color:var(--mute);font-size:15px;flex:1}
 .mate .chips{display:flex;flex-wrap:wrap;gap:6px}
+.mate h3 a{color:inherit;text-decoration:none}.mate .mbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mate .mbtns .btn{justify-content:center;text-align:center;padding-left:8px;padding-right:8px}
 .mate .chips span{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--bg2);color:var(--ink)}
 /* arcade */
 .arcade{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:16px}
@@ -307,7 +308,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   .ticker{font-size:15px}
   .drop{min-height:0}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{padding:14px 12px 12px}.stat b{font-size:30px}.stat span{font-size:14px}.stat small{font-size:12px}.stat svg{width:26px;height:26px;right:8px}
-  .crew{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mate{padding:14px}.mate .av{width:52px;height:52px;font-size:21px}.mate h3{font-size:17px}.mate p{font-size:14px}.mate .btn{padding:8px 10px;font-size:14px}
+  .crew{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mate .mbtns{grid-template-columns:1fr;gap:6px}.mate .mbtns .btn{min-height:42px}.mate{padding:14px}.mate .av{width:52px;height:52px;font-size:21px}.mate h3{font-size:17px}.mate p{font-size:14px}.mate .btn{padding:8px 10px;font-size:14px}
   .arcade{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cab{padding:8px}.cab h3{font-size:15px}.cab p{font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
@@ -573,19 +574,7 @@ const CONFIG={
     {who:'dfc',at:'2027-04-21 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/c8418cb4-c24c-4a5a-9f5b-100bc0faa936'},
   ],
   // Recommended streamers: every card gets the same space, listed A to Z.
-  crew:[
-    {name:'Best In The Game',h:'best_in_the_game',about:'Supreme sticker specialist. Box logos, minis and rare pulls.',tags:['Stickers','$1 starts','Sudden death'],c:['#ff3d3d','#3dc5ff']},
-    {name:'Katie',h:'katien9',about:'Supreme, Palace, Bearbricks, Drew House and PopMart.',tags:['Hoodies','$1 starts','Personal shopping'],c:['#ff8ac2','#b04dff']},
-    {name:'Select Steals',h:'selectsteals',about:'Supreme, Bape and streetwear accessories, clothing and posters at $1.',tags:['$1 starts','Posters','Weekends'],c:['#ffd23f','#ff6b3d']},
-    {name:'J Raww',h:'jraww_worldwide',about:'Stickers plus custom hand-drawn art, and cool stuff that catches his eye.',tags:['Stickers','Custom art','Giveaways'],c:['#5ef2c6','#2b8f62']},
-    {name:'Endless Rotation',h:'endlessrotation',about:'$1 starts and sudden death auctions, with giveaways every time they go live.',tags:['$1 starts','Sudden death','Giveaways'],c:['#ff6b3d','#ff3d9a']},
-    {name:'Schematic',h:'schematicflips',about:'Rare, unique and limited clothing, accessories and collectibles, shipped fast.',tags:['Streetwear','$1 heat','Collectibles'],c:['#3dc5ff','#2b5bd6']},
-    {name:'Manny',h:'notmanny',about:'Supreme personal shopping, hoodies and hats. Full-time buyer, part-time seller.',tags:['Supreme','Personal shopping','Hats'],c:['#ffd23f','#b3800f']},
-    {name:'cooljewels',h:'cooljewels',about:'$1 start Supreme shows almost every night. Bookmark them all.',tags:['Supreme','$1 starts','Nightly'],c:['#5ef2c6','#3dc5ff']},
-    {name:'LocallyCopped',h:'locallycopped',about:'$1 Supreme shows, plus his own music on every streaming platform.',tags:['Supreme','$1 starts','Music'],c:['#b04dff','#ff4f9a']},
-    {name:'troublemad3',h:'troublemad3',about:'A friend of the Department. When the patrol is off duty, this is where you will find us in chat.',tags:['Live shows','Friend of the Dept','Whatnot'],c:['#ff3d3d','#ffd23f']},
-    {name:'Equals',h:'equals3wi',about:'Tons of deals on streetwear, plus Bape sticker runs.',tags:['Streetwear','$1 starts','Buyer giveaways'],c:['#59b8ff','#3a3f8f']}
-  ],
+  crew:[{"name": "Best In The Game", "h": "best_in_the_game", "about": "Supreme sticker specialist. Box logos, minis and rare pulls.", "tags": ["Stickers", "$1 starts", "Sudden death"], "c": ["#ff3d3d", "#3dc5ff"]}, {"name": "cooljewels", "h": "cooljewels", "about": "$1 start Supreme shows almost every night. Bookmark them all.", "tags": ["Supreme", "$1 starts", "Nightly"], "c": ["#5ef2c6", "#3dc5ff"]}, {"name": "Endless Rotation", "h": "endlessrotation", "about": "$1 starts and sudden death auctions, with giveaways every time they go live.", "tags": ["$1 starts", "Sudden death", "Giveaways"], "c": ["#ff6b3d", "#ff3d9a"]}, {"name": "Equals", "h": "equals3wi", "about": "Tons of deals on streetwear, plus Bape sticker runs.", "tags": ["Streetwear", "$1 starts", "Buyer giveaways"], "c": ["#59b8ff", "#3a3f8f"]}, {"name": "J Raww", "h": "jraww_worldwide", "about": "Stickers plus custom hand-drawn art, and cool stuff that catches his eye.", "tags": ["Stickers", "Custom art", "Giveaways"], "c": ["#5ef2c6", "#2b8f62"]}, {"name": "Katie", "h": "katien9", "about": "Supreme, Palace, Bearbricks, Drew House and PopMart.", "tags": ["Hoodies", "$1 starts", "Personal shopping"], "c": ["#ff8ac2", "#b04dff"]}, {"name": "LocallyCopped", "h": "locallycopped", "about": "$1 Supreme shows, plus his own music on every streaming platform.", "tags": ["Supreme", "$1 starts", "Music"], "c": ["#b04dff", "#ff4f9a"]}, {"name": "Manny", "h": "notmanny", "about": "Supreme personal shopping, hoodies and hats. Full-time buyer, part-time seller.", "tags": ["Supreme", "Personal shopping", "Hats"], "c": ["#ffd23f", "#b3800f"]}, {"name": "Schematic", "h": "schematicflips", "about": "Rare, unique and limited clothing, accessories and collectibles, shipped fast.", "tags": ["Streetwear", "$1 heat", "Collectibles"], "c": ["#3dc5ff", "#2b5bd6"]}, {"name": "Select Steals", "h": "selectsteals", "about": "Supreme, Bape and streetwear accessories, clothing and posters at $1.", "tags": ["$1 starts", "Posters", "Weekends"], "c": ["#ffd23f", "#ff6b3d"]}],
   arcade:[
     {t:'Donut Patrol: City Beat',d:'New! Run your beat through the city maze, clear every donut and outrun the crew that wants them back.',u:'games/city-beat/',c:'#ffd23f',art:'maze'},
     {t:'Donut Patrol',d:'Catch donuts, grab coffee and Goblin Specials, dodge the salad.',u:'games/donut-patrol/',c:'#ff4f9a',art:'donut'},
@@ -690,8 +679,8 @@ function tickHero(){const now=Date.now();const n=upcoming(now)[0];
 /* crew: equal cards, A to Z */
 {const list=CONFIG.crew.slice().sort((a,b)=>a.name.localeCompare(b.name,undefined,{sensitivity:'base'}));
  $('#crewList').innerHTML=list.map(m=>`<article class="mate"><div class="av" style="background:linear-gradient(135deg,${esc(m.c[0])},${esc(m.c[1])})">${esc(m.name[0])}</div>
-  <h3>${esc(m.name)}</h3><div class="hd">@${esc(m.h)}</div><p>${esc(m.about)}</p><div class="chips">${m.tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
-  <a class="btn ghost" href="https://www.whatnot.com/user/${encodeURIComponent(m.h)}">Watch live</a></article>`).join('')}
+  <h3><a href="crew/${encodeURIComponent(m.h)}/index.html">${esc(m.name)}</a></h3><div class="hd">@${esc(m.h)}</div><p>${esc(m.about)}</p><div class="chips">${m.tags.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
+  <div class="mbtns"><a class="btn" href="crew/${encodeURIComponent(m.h)}/index.html">Case file</a><a class="btn ghost" href="https://www.whatnot.com/user/${encodeURIComponent(m.h)}">Watch live</a></div></article>`).join('')}
 
 /* goblins */
 const gob=g=>`<svg viewBox="0 0 120 120"><rect width="120" height="120" fill="${g.bg}"/><circle cx="96" cy="22" r="10" fill="#fff2"/><rect y="88" width="120" height="32" fill="#0003"/>
