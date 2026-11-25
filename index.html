@@ -101,8 +101,8 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .tabs button{flex:none;min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid var(--line);background:transparent;color:var(--ink);font:600 15px Rubik;cursor:pointer}
 .tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .menu{list-style:none;margin:0;padding:0;border-top:2px dashed var(--line)}
-.menu li{display:grid;grid-template-columns:9.5em minmax(0,1fr) auto;gap:18px;align-items:center;padding:18px 0;border-bottom:2px dashed var(--line)}
-.menu time{font-family:Bungee;font-size:clamp(20px,2.4vw,28px);line-height:1.05;white-space:nowrap}
+.menu li{display:grid;grid-template-columns:14em minmax(0,1fr) auto;gap:18px;align-items:center;padding:18px 0;border-bottom:2px dashed var(--line)}
+.menu time{font-family:Bungee;font-size:clamp(18px,1.9vw,23px);line-height:1.05;white-space:nowrap}
 .menu time small{display:block;font-family:Rubik;font-size:14px;color:var(--mute);font-weight:600;margin-top:4px}
 .menu time .soon{display:inline-block;font:800 12px Rubik;background:var(--mint);color:#10241d;border-radius:6px;padding:2px 6px;margin-top:6px}
 .menu h3{font-size:18px;font-family:Rubik;font-weight:800}
@@ -153,7 +153,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .foot .fbrand b{font-family:Bungee;font-size:22px;color:var(--pink);display:block;margin-bottom:6px;font-weight:400}
 .foot h4{margin:0 0 8px;color:var(--ink);font-size:15px}
 .foot nav{display:flex;flex-direction:column;gap:2px}
-.foot nav a{text-decoration:none;padding:6px 0;min-height:32px}
+.foot nav a{text-decoration:none;padding:6px 0;min-height:44px;display:flex;align-items:center}
 .foot nav a:hover{color:var(--pink)}
 .foot .legal{grid-column:1/-1;margin:8px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:13px}
 /* headings with icons */
@@ -230,6 +230,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .mate .chips span{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--bg2);color:var(--ink)}
 /* arcade */
 .arcade{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:16px}
+@media(min-width:900px){.arcade{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .cab{display:flex;flex-direction:column;text-decoration:none;background:linear-gradient(180deg,#3b1a2e,#1d0d17);border-radius:22px 22px 10px 10px;padding:12px;border:2px solid var(--line);transition:transform .2s}
 .cab:hover{transform:translateY(-6px)}
 .cab .scr{aspect-ratio:4/3;border-radius:14px;background:#08040a;display:grid;place-items:center;overflow:hidden;border:6px solid #000;box-shadow:inset 0 0 30px #000}
@@ -328,7 +329,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
     <p class="motto" id="motto">To protect and sprinkle. Mostly sprinkle.</p>
     <div class="next" id="nextCard" aria-live="polite">
       <div class="lbl" id="nextLbl">Next shift</div>
-      <div class="nexthead"><img id="nextPoster" alt="" hidden><div><h3 id="nextTitle">Loading the glaze…</h3>
+      <div class="nexthead"><img id="nextPoster" alt="Show poster" hidden><div><h3 id="nextTitle">Loading the glaze…</h3>
       <div id="nextWhen" class="lbl"></div>
       <div class="feedchip" id="heroFeed"></div></div></div>
       <div class="live" id="liveBar"><i></i><span>LIVE NOW on Whatnot</span></div>
@@ -551,7 +552,8 @@ const CONFIG={
   whatnot:'https://www.whatnot.com/user/donutsforcops',
   invite:'https://www.whatnot.com/invite/donutsforcops',   // referral link: new Whatnot sign-ups
   showLengthHrs:3,
-  notes:{dfc:'$1 starts, giveaways all show and a buyer\'s giveaway'},
+  notes:{dfc:'Live on Whatnot with donutsforcops'},
+  beat:['Report at the posted time. Stragglers get the paperwork.','Coffee is on. Evidence gets opened at a dollar.','Plainclothes welcome. Bring your own paddle.','Unmarked units standing by for the buyer\'s giveaway.','Roll call at the top of the hour. Glazed alibis accepted.','Shift runs late. The box stays open until it\'s empty.'],
   // Exact shows from Whatnot, Eastern time (YYYY-MM-DD HH:MM). Past shows hide themselves.
   streams:[
     {who:'dfc',at:'2026-11-24 23:22',title:'Donuts, Strangelove & Supreme',u:'https://www.whatnot.com/live/16a7c55c-ee44-44e7-ae05-5ffe7f2eeda8'},
@@ -631,18 +633,20 @@ const upcoming=now=>SHOWS.filter(o=>o.live||o.at.getTime()+CONFIG.showLengthHrs*
 const liveNow=(o,now)=>o.live!==undefined?o.live:o.at<=now;
 /* ===== live schedule from Whatnot (/api/shows on the hosted site); the list above is only the backup ===== */
 let feedState='loading',feedAt=0,lastCheck=0,sig='',changed=new Set(),busy=false;
+const mapFeed=j=>j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,thumb:/^https:\/\//.test(s.thumb||'')?s.thumb:'',note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
+try{const c=JSON.parse(localStorage.getItem('dd-feed')||'null');if(c&&Array.isArray(c.shows)&&Date.now()-Date.parse(c.saved)<14*864e5){const m=mapFeed(c).map(o=>({...o,live:undefined}));if(m.length)SHOWS=m}}catch(e){}
 const keyOf=o=>o.u+'|'+o.at.getTime()+'|'+o.title+'|'+(o.live?1:0)+'|'+(o.thumb||'');
 async function loadFeed(){if(busy)return;busy=true;lastCheck=Date.now();
   try{const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),8000);
     const r=await fetch('/api/shows',{cache:'no-store',signal:ctl.signal});clearTimeout(to);if(!r.ok)throw 0;
     const j=await r.json();if(!j||!Array.isArray(j.shows))throw 0;
-    const next=j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,thumb:/^https:\/\//.test(s.thumb||'')?s.thumb:'',note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
+    const next=mapFeed(j);try{localStorage.setItem('dd-feed',JSON.stringify({saved:new Date().toISOString(),shows:j.shows.slice(0,30)}))}catch(e){}
     const nsig=next.map(keyOf).join(';');
     if(sig&&nsig!==sig){const old=new Set(sig.split(';'));changed=new Set(next.filter(o=>!old.has(keyOf(o))).map(o=>o.u));toast('Dispatch: the schedule just changed');setTimeout(()=>{changed.clear();renderMenu()},9000)}
     sig=nsig;SHOWS=next;feedState='live';feedAt=Date.parse(j.updated)||Date.now();
   }catch(e){feedState=feedState==='live'||feedState==='stale'?'stale':'backup'}
   busy=false;document.body.classList.remove('feed-loading');renderMenu();tickHero();status()}
-function status(){const ago=s=>s<45?'just now':s<90?'a minute ago':Math.round(s/60)+' minutes ago';
+function status(){const ago=s=>s<45?'just now':s<90?'a minute ago':s<3300?Math.round(s/60)+' minutes ago':s<5400?'an hour ago':s<86400?Math.round(s/3600)+' hours ago':Math.round(s/86400)===1?'yesterday':Math.round(s/86400)+' days ago';
   const html=feedState==='live'?'<i class="dot"></i>Live from Whatnot · updated '+ago((Date.now()-feedAt)/1e3)
     :feedState==='stale'?'<i class="dot off"></i>Couldn\'t reach Whatnot just now. Retrying.'
     :feedState==='backup'?'<i class="dot off"></i>Saved schedule. Whatnot has the final word on times.'
@@ -650,6 +654,7 @@ function status(){const ago=s=>s<45?'just now':s<90?'a minute ago':Math.round(s/
   $('#feedNote').innerHTML=html;$('#heroFeed').innerHTML=html}
 const fmtDay=d=>d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
 const fmtTime=d=>d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+const beatFor=o=>{let h=0;for(const c of o.u)h=(h*31+c.charCodeAt(0))>>>0;return CONFIG.beat[h%CONFIG.beat.length]};
 const who={dfc:{n:'donutsforcops',u:CONFIG.whatnot}};
 const gcal=o=>{const z=d=>d.toISOString().replace(/[-:]|\.\d+/g,'');const e=new Date(o.at.getTime()+CONFIG.showLengthHrs*36e5);
   return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(o.title+' ('+who[o.who].n+')')+'&dates='+z(o.at)+'/'+z(e)+'&details='+encodeURIComponent(o.note+'\n'+o.u)};
@@ -659,7 +664,7 @@ let filter='all',more=false;
 function renderMenu(){const now=Date.now();const all=upcoming(now).filter(o=>filter==='all'||o.who===filter);const list=more?all:all.slice(0,8);$('#more').hidden=more||all.length<=8;
   $('#menu').innerHTML=list.length?list.map(o=>{const isLive=liveNow(o,now);const r=isLive?'':rel(o.at,now);
     return `<li class="${changed.has(o.u)?'fresh':''}"><time>${isLive?'LIVE':esc(fmtDay(o.at))}<small>${esc(fmtTime(o.at))}</small>${r?`<span class="soon">${esc(r)}</span>`:''}</time>
-    <div>${o.thumb?`<img class="thumb" src="${esc(o.thumb)}" alt="" loading="lazy">`:''}<span class="tag ${o.who}">${esc(who[o.who].n)}</span>${changed.has(o.u)?'<span class="upd">Just updated</span>':''}<h3>${esc(o.title)}</h3><p>${esc(o.note)}</p></div>
+    <div>${o.thumb?`<img class="thumb" src="${esc(o.thumb)}" alt="" loading="lazy">`:''}<span class="tag ${o.who}">${esc(who[o.who].n)}</span>${changed.has(o.u)?'<span class="upd">Just updated</span>':''}<h3>${esc(o.title)}</h3><p>${esc(beatFor(o))}</p></div>
     <div class="row"><a class="btn ${isLive?'':'ghost'}" href="${esc(o.u)}">${isLive?'Watch now':'Show page'}</a>${isLive?'':`<a class="btn ghost" href="${esc(gcal(o))}">+ Calendar</a>`}</div></li>`}).join('')
     :'<li class="empty">Nothing scheduled here right now. Follow on Whatnot to hear about new shows.</li>'}
 $('#more').addEventListener('click',()=>{more=true;renderMenu()});
