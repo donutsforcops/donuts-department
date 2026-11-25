@@ -208,6 +208,17 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .badgebox svg{width:100%;filter:drop-shadow(0 20px 30px #000a)}
 /* footer box */
 .dbox{width:min(220px,70%);display:block;margin-bottom:10px}
+/* department records */
+.records{background:linear-gradient(180deg,var(--bg2),var(--bg))}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:14px}
+.stat{position:relative;background:#f3ead8;color:#1f1a14;border-radius:6px;padding:16px 16px 14px;box-shadow:0 10px 24px #0007;overflow:hidden}
+.stat::before{content:'';position:absolute;inset:0 0 auto 0;height:8px;background:repeating-linear-gradient(90deg,#24346f 0 14px,#3b4f9a 14px 28px)}
+.stat .no{font:700 11px ui-monospace,Menlo,Consolas,monospace;color:#8a7a62;letter-spacing:.06em;margin-top:4px}
+.stat b{display:block;font:400 clamp(34px,5vw,46px)/1 Bungee,Impact,sans-serif;color:#1d2a5c;margin:8px 0 4px;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-weight:800;font-size:15px}
+.stat small{display:block;color:#6b5d48;font-size:13px;margin-top:4px}
+.stat svg{position:absolute;right:12px;top:18px;width:34px;height:34px;opacity:.9}
+.stat.stamped{padding-bottom:40px}.stat .stamp{position:absolute;right:-6px;bottom:8px;transform:rotate(-12deg);border:3px solid #c1121f;color:#c1121f;font:400 12px Bungee,sans-serif;padding:2px 8px;border-radius:4px;opacity:.75}
 /* crew */
 .crew{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:16px}
 .mate{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px}
@@ -294,6 +305,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   .next .row .btn{flex:1 1 140px}
   .ticker{font-size:15px}
   .drop{min-height:0}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{padding:14px 12px 12px}.stat b{font-size:30px}.stat span{font-size:14px}.stat small{font-size:12px}.stat svg{width:26px;height:26px;right:8px}
   .crew{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mate{padding:14px}.mate .av{width:52px;height:52px;font-size:21px}.mate h3{font-size:17px}.mate p{font-size:14px}.mate .btn{padding:8px 10px;font-size:14px}
   .arcade{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cab{padding:8px}.cab h3{font-size:15px}.cab p{font-size:13px}
 }
@@ -369,6 +381,13 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   <ul class="menu" id="menu"></ul>
   <p style="margin-top:18px"><button class="btn ghost" id="more">Show the full schedule</button></p>
   <p class="fine feedchip" id="feedNote"></p>
+</div></section>
+
+<section class="band records" id="records" hidden><div class="wrap">
+  <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="8" y="4" width="32" height="40" rx="3" fill="#fff4e6"/><rect x="8" y="4" width="32" height="9" rx="3" fill="#24346f"/><path d="M14 22h20M14 29h20M14 36h12" stroke="#b9a58a" stroke-width="3"/><circle cx="34" cy="34" r="9" fill="#ff3d3d"/><path d="M30 34h8M34 30v8" stroke="#fff" stroke-width="2.5" transform="rotate(45 34 34)"/></svg></span>Department records</h2>
+  <p class="lede">Pulled straight from Whatnot's own records for every donutsforcops show. Dollar amounts withheld on advice of counsel.</p>
+  <div class="stats" id="statGrid"></div>
+  <p class="fine" id="statNote"></p>
 </div></section>
 
 <div class="tapewrap"><div class="tape tl" aria-hidden="true"><div>POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · POLICE LINE · DONUT CROSS · </div></div></div>
@@ -894,6 +913,36 @@ ui();
 {const cols=['#ff4f9a','#ffd9a8','#7a4a1c','#b04dff','#5ef2c6','#ffd23f'];
  $('#boxDonuts').innerHTML=cols.map((c,i)=>{const x=40+i*28;return `<circle cx="${x}" cy="52" r="13" fill="#c98a45"/><circle cx="${x}" cy="51" r="11" fill="${c}"/><circle cx="${x}" cy="52" r="4" fill="#ff86bb"/>`}).join('')}
 
+
+/* ===== Department records: totals from Whatnot analytics (/api/stats on the hosted site) ===== */
+{const SI={
+  shift:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="#24346f" stroke-width="5"/><path d="M24 13v12l8 5" stroke="#c1121f" stroke-width="4" fill="none" stroke-linecap="round"/></svg>',
+  hours:'<svg viewBox="0 0 48 48"><path d="M14 4h20v6l-8 10 8 10v14H14V30l8-10-8-10z" fill="none" stroke="#24346f" stroke-width="4"/><path d="M18 40h12l-6-8z" fill="#c98a45"/></svg>',
+  items:'<svg viewBox="0 0 48 48"><path d="M8 14h32v28H8z" fill="#c98a45"/><path d="M8 14l6-8h20l6 8" fill="#e0b07a"/><rect x="18" y="20" width="12" height="7" fill="#fff4e6"/></svg>',
+  gift:'<svg viewBox="0 0 48 48"><rect x="8" y="18" width="32" height="24" rx="2" fill="#ff4f9a"/><rect x="6" y="12" width="36" height="8" rx="2" fill="#ff86bb"/><rect x="21" y="12" width="6" height="30" fill="#24346f"/></svg>',
+  rookie:'<svg viewBox="0 0 48 48"><path d="M24 4l16 6v12c0 10-7 18-16 22C15 40 8 32 8 22V10z" fill="#24346f"/><path d="M24 14l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="#ffd23f"/></svg>',
+  crowd:'<svg viewBox="0 0 48 48"><circle cx="14" cy="18" r="6" fill="#24346f"/><circle cx="34" cy="18" r="6" fill="#24346f"/><circle cx="24" cy="14" r="7" fill="#c1121f"/><path d="M4 40c0-8 5-13 10-13s10 5 10 13zM24 40c0-8 5-13 10-13s10 5 10 13z" fill="#24346f"/><path d="M13 40c0-9 5-15 11-15s11 6 11 15z" fill="#c1121f"/></svg>',
+  star:'<svg viewBox="0 0 48 48"><path d="M24 4l6 13 14 2-10 10 3 14-13-7-13 7 3-14L4 19l14-2z" fill="#ffd23f" stroke="#b3800f" stroke-width="2"/></svg>'};
+ const fmt=n=>n>=10000?Math.round(n/1000)+'K':n.toLocaleString();
+ const card=(i,ico,val,label,note,stamp)=>`<div class="stat${stamp?' stamped':''}">${SI[ico]}<div class="no">CASE FILE #${String(i).padStart(3,'0')}</div><b data-to="${val}">0</b><span>${esc(label)}</span><small>${esc(note)}</small>${stamp?`<i class="stamp">${esc(stamp)}</i>`:''}</div>`;
+ let shown=false;
+ async function loadStats(){try{const r=await fetch('/api/stats',{cache:'no-store'});if(!r.ok)return;const s=await r.json();if(!s||typeof s.shows!=='number'||!s.shows)return;
+   const cards=[card(1,'shift',s.shows,'Shifts on the record','Every finished show, counted.'),
+     card(2,'hours',s.hours,'Hours on patrol','Live, on camera, on the clock.'),
+     card(3,'items',s.items,'Items released into custody','Sold and shipped. Giveaways not included.'),
+     card(4,'gift',s.giveaways,'Giveaways dispensed','Free, as in free.','Verified'),
+     card(5,'rookie',s.newBuyers,'First-time customers processed','Welcome to the department.'),
+     card(6,'crowd',s.peakViewers,'Largest crowd on scene','Peak viewers at one time.')];
+   if(s.rating)cards.push(card(7,'star',s.rating,'Citizen satisfaction','Average show rating, out of 5.','Five-star beat'));
+   $('#statGrid').innerHTML=cards.join('');$('#records').hidden=false;
+   const since=s.since?new Date(s.since).toLocaleDateString(undefined,{month:'long',year:'numeric'}):'';
+   $('#statNote').textContent=(since?'On the record since '+since+'. ':'')+(s.complete?'Updated every half hour.':'Still pulling files from the archive. Numbers climb as older cases come in.');
+   const nums=[...document.querySelectorAll('.stat b')];
+   const run=()=>{if(shown)return;shown=true;nums.forEach(el=>{const to=parseFloat(el.dataset.to),dec=to%1?1:0;if(still){el.textContent=dec?to.toFixed(1):fmt(to);return}
+     const t0=performance.now(),d=1400;const step=now=>{const k=Math.min(1,(now-t0)/d),e=1-Math.pow(1-k,3),v=to*e;el.textContent=dec?v.toFixed(1):fmt(Math.round(v));if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)})};
+   const io2=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){run();io2.disconnect()}},{threshold:.25});io2.observe($('#statGrid'));
+ }catch(e){}}
+ loadStats()}
 $('#yr').textContent=new Date().getFullYear();
 {const M=['To protect and sprinkle. Mostly sprinkle.','Anything you bid can and will be used against you in a court of glaze.','Open late. No warrant required.','Patrolling the streetwear beat since the first dozen.','Off duty on paper. Live on Whatnot.','Every steal gets a full investigation. Most of them start at a dollar.'];let i=0;const el=$('#motto');
  if(!still)setInterval(()=>{el.style.opacity=0;setTimeout(()=>{i=(i+1)%M.length;el.textContent=M[i];el.style.opacity=1},400)},4500)}
