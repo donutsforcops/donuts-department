@@ -188,16 +188,16 @@
     <canvas id="game" aria-label="Best In The Game play area"></canvas>
 
     <div class="overlay" id="titleScreen">
-      <h2>The Bootleg Invasion</h2>
-      <p><b>The Counterfeiter</b> and his bootleg army are flooding in from deep space with fake merch. Only the <b>Best In The Game</b> can keep it real.</p>
+      <h2>The Goblins Want a Giveaway</h2>
+      <p><b>Big Givy</b> and the Givy Goblins are pouring in from deep space, phones out, screaming for giveaways. Only the <b>Best In The Game</b> can hold them off.</p>
       <div class="legend">
-        <div><canvas data-sprite="bootleg"></canvas><span><b>Bootleg</b> 50</span></div>
-        <div><canvas data-sprite="grunt"></canvas><span><b>Knockoff</b> 80</span></div>
-        <div><canvas data-sprite="drone"></canvas><span><b>Fake Drone</b> 80</span></div>
-        <div><canvas data-sprite="lt"></canvas><span><b>Counterfeit Lieutenant</b> 150</span></div>
+        <div><canvas data-sprite="goblin"></canvas><span><b>Givy Goblin</b> 50</span></div>
+        <div><canvas data-sprite="grunt"></canvas><span><b>Bathtub Goblin</b> 80</span></div>
+        <div><canvas data-sprite="drone"></canvas><span><b>Joyride Goblin</b> 80</span></div>
+        <div><canvas data-sprite="lt"></canvas><span><b>Night Shift Goblin</b> 150</span></div>
         <div><canvas data-sprite="trophy"></canvas><span><b>Trophy</b> double shot</span></div>
         <div><canvas data-sprite="ship"></canvas><span><b>You</b> the champ</span></div>
-        <div class="boss"><canvas data-sprite="boss"></canvas><span><b>The Counterfeiter</b> himself, every third wave · 5,000</span></div>
+        <div class="boss"><canvas data-sprite="boss"></canvas><span><b>Big Givy</b> himself, every third wave · 5,000</span></div>
       </div>
       <p class="stats" id="recordLine"></p>
       <button id="startBtn" type="button">Prove it</button>
@@ -213,7 +213,7 @@
       <div class="sorry">Sorry,</div>
       <p class="verdict">you are <span class="best">BEST</span> <span class="worst">WORST</span> in the game.</p>
       <p class="stats" id="finalLine"></p>
-      <p class="ruling">The Counterfeiter wins this round. The ruling is final.</p>
+      <p class="ruling">The goblins got their giveaway. The ruling is final.</p>
       <button id="againBtn" type="button">Run it back</button>
     </div>
   </div>
@@ -236,17 +236,17 @@
     ship: ['......Y......', '.....YWY.....', '..Y..YYY..Y..', '..YY.YBY.YY..', '..YYYYYYYYY..',
            '.YYYBYYYBYYY.', 'YYYYYYYYYYYYY', 'YY.YYSSSYY.YY', 'Y...YY.YY...Y'],
     crown: ['Y....Y....Y', 'YY..YYY..YY', 'YYY.YYY.YYY', 'YYYYYRYYYYY', 'YYYYYYYYYYY', 'SSSSSSSSSSS', 'YYYYYYYYYYY'],
-    bootleg: [['..RRRRRR.', '.RRRRRRRW', 'RRWKRRWKR', 'RRRRRRRRR', 'RWWWWWWWR', 'RRRKKKRRR', '.RRRRRRR.', '..R...R..'],
-              ['..RRRRRR.', '.RRRRRRWW', 'RRWKRRWKR', 'RRRRRRRRR', 'RWWWWWWWR', 'RRRKKKRRR', '.RRRRRRR.', '.R.....R.']],
-    grunt: [['.K.......K.', '..K.....K..', '..MMMMMMM..', '.MMWKMWKMM.', 'MMMMMMMMMMM', 'M.MKWKWKM.M', 'M.MMMMMMM.M', '...MM.MM...'],
-            ['.K.......K.', '..K.....K..', '..MMMMMMM..', '.MMWKMWKMM.', 'MMMMMMMMMMM', '..MKWKWKM..', '..MMMMMMM..', '.MM.....MM.']],
-    drone: [['....C.C....', '.....C.....', '.VVVVVVVVV.', 'VVWWVVVWWVV', 'VVWKVVVKWVV', 'VVVVVVVVVVV', '.VV.VVV.VV.', 'V.........V'],
-            ['...C...C...', '.....C.....', '.VVVVVVVVV.', 'VVWWVVVWWVV', 'VVKWVVVWKVV', 'VVVVVVVVVVV', '.VV.VVV.VV.', '.V.......V.']],
-    lt: [['....S.S.S....', '....SSSSS....', '...MMMMMMM...', '..MMMMMMMMM..', '.MKKMMMMMKKM.', '.MMWKMMMKWMM.',
-          'MMMMRMMMRMMMM', 'MMMMMRMRMMMMM', 'MMMMMMRMMMMMM', 'MMMMMMRMMMMMM', '.MMMMMMMMMMM.', '..M.M...M.M..'],
-         ['....S.S.S....', '....SSSSS....', '...MMMMMMM...', '..MMMMMMMMM..', '.MKKMMMMMKKM.', '.MMWKMMMKWMM.',
-          'MMMMRMMMRMMMM', 'MMMMMRMRMMMMM', 'MMMMMMRMMMMMM', 'MMMMMMRMMMMMM', '.MMMMMMMMMMM.', '.M..M...M..M.']],
-    boss: ['......KKKKKKKKK......', '.....KKKKKKKKKKK.....', '..KKKKKKKKKKKKKKKKK..', '.....MMMMMMMMMMM.....', '....MKKKKKMKKKKKM....', '....MKCKKKMKKCKKM....', '....MMMMMMMMMMMMM....', '.....MMMWWWWWMMM.....', '......MMMMMMMMM......', '...SSSSSSSRSSSSSSS...', '..SSSSSSYYSYYSSSSSS..', '.SSSSSSSYYSYYSSSSSSS.', 'SSSSSSSSSSSSSSSSSSSSS', 'SSS.SSSSSSSSSSSSS.SSS', '....BBBBBBBBBBBBB....', '....B.B.B.B.B.B.B....'],
+    goblin: [['G.......G', 'GG.GGG.GG', '.GGGGGGG.', '.GWKGWKG.', '.GGGGGGG.', '..GKWKG..', '.GGGGGGMC', '.G.....G.'],
+             ['G.......G', 'GG.GGG.GG', '.GGGGGGG.', '.GKWGKWG.', '.GGGGGGG.', '..GKWKG..', 'CMGGGGGG.', '..G...G..']],
+    grunt: [['..W.....W..', '.W...W...W.', '.GGGGGGGGG.', 'GGWKGGGWKGG', 'GGGGGGGGGGG', 'GGGKWKWKGGG', 'CCCCCCCCCCC', '.CWCCWCCWC.'],
+             ['.W.....W...', '..W...W..W.', '.GGGGGGGGG.', 'GGKWGGGKWGG', 'GGGGGGGGGGG', 'GGGKWKWKGGG', 'CCCCCCCCCCC', '.CCWCCWCCC.']],
+    drone: [['G..GGGGG..G', '.GGWKGWKGG.', '.VVVVVVVVV.', 'VVWWVVVWWVV', 'VVWWVVVWWVV', 'VVVVVVVVVVV', '.KK.....KK.', '.KK.....KK.'],
+            ['G..GGGGG..G', '.GGKWGKWGG.', '.VVVVVVVVV.', 'VVWWVVVWWVV', 'VVWWVVVWWVV', 'VVVVVVVVVVV', '..KK...KK..', '..KK...KK..']],
+    lt: [['....S.S.S....', '....SSSSS....', '...GGGGGGG...', '..GGGGGGGGG..', '.GKKGGGGGKKG.', '.GGWKGGGKWGG.',
+          'GGGGRGGGRGGGG', 'GGGGGRGRGGGGG', 'GGGGGGRGGGGGG', 'GGGGGGRGGGGGG', '.GGGGGGGGGGG.', '..G.G...G.G..'],
+         ['....S.S.S....', '....SSSSS....', '...GGGGGGG...', '..GGGGGGGGG..', '.GKKGGGGGKKG.', '.GGWKGGGKWGG.',
+          'GGGGRGGGRGGGG', 'GGGGGRGRGGGGG', 'GGGGGGRGGGGGG', 'GGGGGGRGGGGGG', '.GGGGGGGGGGG.', '.G..G...G..G.']],
+    boss: ['.......Y..Y..Y.......', '.......YYYYYYY.......', '.GGG..GGGGGGGGG..GGG.', 'GGGGGGGGGGGGGGGGGGGGG', '.GGGWWWGGGGGGGWWWGGG.', '..GGWKKGGGGGGGKKWGG..', '...GGGGGGGKGGGGGGG...', '..GGKWKWKWKWKWKWKGG..', '...GGKKKKKKKKKKKGG...', '....GGGGGGGGGGGGG....', '..MMMM.........MMMM..', '..MCCM.........MCCM..', '..MCCM.........MCCM..', '..MMMM.........MMMM..'],
     trophy: ['Y.YYYYY.Y', 'Y.YYWYY.Y', '.YYYYYYY.', '..YYYYY..', '...YYY...', '....Y....', '..SSSSS..', '.SSSSSSS.']
   };
 
@@ -262,9 +262,9 @@
   }
   const SPR = {
     ship: build(ART.ship), crown: build(ART.crown), trophy: build(ART.trophy),
-    boss: build(ART.boss), bossHit: build(ART.boss, { M: 'W', S: 'W' }),
-    bootleg: ART.bootleg.map(r => build(r)), grunt: ART.grunt.map(r => build(r)),
-    drone: ART.drone.map(r => build(r)), lt: ART.lt.map(r => build(r)), ltHurt: ART.lt.map(r => build(r, { M: 'O' }))
+    boss: build(ART.boss), bossHit: build(ART.boss, { G: 'W' }),
+    goblin: ART.goblin.map(r => build(r)), grunt: ART.grunt.map(r => build(r)),
+    drone: ART.drone.map(r => build(r)), lt: ART.lt.map(r => build(r)), ltHurt: ART.lt.map(r => build(r, { G: 'O' }))
   };
 
   function paintIcon(cv, img) {
@@ -293,9 +293,9 @@
 
   /* ---------- game state ---------- */
   const HYPE = ['Clean.', 'Too smooth.', 'Undisputed.', 'Best in the game!', 'GOAT behavior.', 'Cooking.', 'Easy work.', 'Different level.'];
-  const WAVE_NAMES = ['The Bootlegs', 'Knockoff Squad', 'The Counterfeiter Arrives', 'Fake Drone Swarm', 'The Lieutenants', 'The Counterfeiter Returns', 'Flea Market Rush', 'Misprint Storm', 'The Counterfeiter Unleashed'];
-  const BOSS_LINES = ['The Counterfeiter has arrived.', '100% authentic. Trust me.', 'Same quality, half the price!', 'The Counterfeiter wants a rematch!'];
-  const POINTS = { bootleg: [50, 100], grunt: [80, 160], drone: [80, 160], lt: [150, 400] };
+  const WAVE_NAMES = ['The Givy Goblins', 'Bathtub Brigade', 'Big Givy Arrives', 'Joyride Rush', 'The Night Shift', 'Big Givy Returns', 'Bedtime Mob', 'Bathroom Break Swarm', 'Big Givy Unleashed'];
+  const BOSS_LINES = ['DO A GIVEAWAY!', 'Start a box logo at a dollar!', 'Come on! Where is he at!', 'Big Givy wants a giveaway!'];
+  const POINTS = { goblin: [50, 100], grunt: [80, 160], drone: [80, 160], lt: [150, 400] };
 
   let record = 0;
   try { record = parseInt(localStorage.getItem('bitgRecord') || '0', 10) || 0; } catch (e) {}
@@ -329,14 +329,14 @@
     if (w % 3 === 0) {
       S.boss = { x: LW / 2, y: -60, hp: 40 + w * 6, max: 40 + w * 6, t: 0, fire: 2, spawn: 3, hit: 0, entering: true };
       setTimeout(() => S.mode === 'play' && pop(LW / 2, 150, BOSS_LINES[(Math.random() * BOSS_LINES.length) | 0], PAL.M, 2.2), 900);
-      for (let c = 1; c < 7; c++) addEnemy('bootleg', c, 4, 0, c);
+      for (let c = 1; c < 7; c++) addEnemy('goblin', c, 4, 0, c);
     } else {
       const ltCols = w >= 4 ? [1, 2, 3, 4, 5, 6] : [2, 3, 4, 5];
       ltCols.forEach((c, i) => addEnemy('lt', c, 0, 1, i));
       for (let c = 0; c < 8; c++) addEnemy('grunt', c, 1, 0, c);
       for (let c = 0; c < 8; c++) addEnemy(w % 2 ? 'grunt' : 'drone', c, 2, 0, c + 8);
-      for (let c = 0; c < 8; c++) addEnemy(w >= 2 ? 'drone' : 'bootleg', c, 3, 1, c + 6);
-      for (let c = 0; c < 8; c++) addEnemy('bootleg', c, 4, 2, c);
+      for (let c = 0; c < 8; c++) addEnemy(w >= 2 ? 'drone' : 'goblin', c, 3, 1, c + 6);
+      for (let c = 0; c < 8; c++) addEnemy('goblin', c, 4, 2, c);
     }
     S.diveTimer = 3.2;
   }
@@ -447,7 +447,7 @@
           S.score += 5000; S.boss = null;
           for (let k = 0; k < 5; k++) boom(b.x + (Math.random() - .5) * 50, b.y + (Math.random() - .5) * 30, [PAL.M, PAL.O, PAL.Y, PAL.W, PAL.B], 24);
           pop(b.x, b.y - 10, '5000', PAL.Y, 1.6);
-          pop(b.x, b.y + 16, 'Counterfeiter busted... for now.', PAL.C, 2.2);
+          pop(b.x, b.y + 16, 'Big Givy logged off... for now.', PAL.C, 2.2);
           S.drops.push({ x: b.x, y: b.y });
         }
       }
@@ -536,7 +536,7 @@
           form.slice(0, 2).forEach(e => { e.state = 'dive'; e.diveT = 0; e.vy = 40; e.fired = 0; e.dir = e.x < LW / 2 ? -1 : 1; });
           if (S.enemies.length < 4) for (let k = 0; k < 2; k++) {
             const col = 1 + ((Math.random() * 6) | 0);
-            S.enemies.push({ type: 'bootleg', col, row: 4, hp: 1, x: b.x, y: b.y, state: 'return', delay: 0, t: 1, fromLeft: true, diveT: 0, vx: 0, vy: 0, dir: 1, fired: 0 });
+            S.enemies.push({ type: 'goblin', col, row: 4, hp: 1, x: b.x, y: b.y, state: 'return', delay: 0, t: 1, fromLeft: true, diveT: 0, vx: 0, vy: 0, dir: 1, fired: 0 });
           }
           b.spawn = 4;
         }
@@ -608,7 +608,7 @@
       ctx.fillStyle = 'rgba(13,7,24,.8)'; ctx.fillRect(60, 40, LW - 120, 12);
       ctx.fillStyle = PAL.M; ctx.fillRect(62, 42, (LW - 124) * Math.max(0, b.hp / b.max), 8);
       ctx.font = '9px Bungee, "Arial Black", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillStyle = PAL.W; ctx.fillText('THE COUNTERFEITER', LW / 2, 47);
+      ctx.fillStyle = PAL.W; ctx.fillText('BIG GIVY', LW / 2, 47);
     }
     for (const d of S.drops) spr(SPR.trophy, d.x, d.y + Math.sin(S.t * 6) * 2);
     ctx.fillStyle = PAL.Y;
@@ -726,7 +726,7 @@
   // attract mode: a parked formation behind the title screen so the first frame isn't empty
   (function attract() {
     for (let c = 0; c < 8; c++) for (let r = 1; r < 5; r++) {
-      const type = r === 1 ? 'grunt' : r === 2 ? 'drone' : 'bootleg';
+      const type = r === 1 ? 'grunt' : r === 2 ? 'drone' : 'goblin';
       S.enemies.push({ type, col: c, row: r, hp: 1, x: 0, y: 0, state: 'form' });
     }
     [2, 3, 4, 5].forEach(c => S.enemies.push({ type: 'lt', col: c, row: 0, hp: 2, x: 0, y: 0, state: 'form' }));
