@@ -208,7 +208,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 footer{border-top:1px solid var(--line);color:var(--mute);font-size:14px}
 footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 
-.toast{position:fixed;left:50%;bottom:calc(90px + var(--safe-b));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:50}
+.toast{position:fixed;left:50%;bottom:calc(140px + var(--safe-b));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none;z-index:50}
 .toast.on{opacity:1}
 @media(max-width:860px){.hero .wrap{grid-template-columns:1fr}.fig{min-height:300px;order:-1;margin:-10px -10px -30px}}
 @media(max-width:700px){
@@ -216,11 +216,11 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   .foot{grid-template-columns:1fr 1fr}.foot .fbrand{grid-column:1/-1}
   #nextPoster{width:64px}
   .links{display:none}.radio{margin-left:auto}
-  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 4px calc(6px + var(--safe-b))}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:10px;right:10px;bottom:calc(58px + var(--safe-b));z-index:40;background:color-mix(in srgb,var(--bg2) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:22px;padding:4px;box-shadow:0 10px 30px #0008}
   .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;font-size:11px;font-weight:700;color:var(--mute);min-height:48px;justify-content:center;border-radius:12px}
   .tabbar a.cur{color:var(--pink)}
   .tabbar svg{width:22px;height:22px}
-  body{padding-bottom:calc(72px + var(--safe-b))}
+  body{padding-bottom:calc(132px + var(--safe-b))}
   .menu li{grid-template-columns:1fr;gap:8px;padding:16px 0}
   .menu time{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:20px}
   .menu time small{margin:0}.menu time .soon{margin:0}
