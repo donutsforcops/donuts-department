@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#171717">
+<title>DD-TV 22: Confiscated Tapes · Donuts Department</title>
+<link rel="icon" href="../icon-180.png">
+<link rel="stylesheet" href="room.css">
+<script defer src="tv.js"></script>
+</head>
+<body>
+<header><a href="../">← Donuts Department</a><span>DD-TV 22</span></header>
+<main>
+<h1>Confiscated Tapes</h1>
+<p class="intro">Thirty years of seized skate tapes. The night shift found the key.</p>
+<section class="cabinet" aria-label="Break-room television">
+<div class="antennas" aria-hidden="true"></div>
+<div class="set">
+<div class="glass">
+<video playsinline muted loop preload="none" aria-label="Skate Tape station preview"></video>
+<div id="card" hidden><b></b></div>
+<canvas width="160" height="120" hidden aria-hidden="true"></canvas>
+</div>
+<div class="hardware"><span class="plate">DONUTS DEPT.</span><div class="grille"></div><div class="dial" aria-hidden="true"></div></div>
+</div>
+<div class="vcr"><span class="slot">VIDEO CASSETTE RECORDER</span><output id="display" aria-live="polite">12:00</output></div>
+</section>
+<section class="remote" aria-label="Television controls">
+<button id="power" aria-pressed="false">Power</button>
+<button id="previous" aria-label="Previous channel">CH ▼</button>
+<button id="next" aria-label="Next channel">CH ▲</button>
+<label>Tracking <input type="range" min="0" max="10" value="3"></label>
+</section>
+<p class="note">Station preview · CH 22 Skate Tape / CH 00 Test Pattern</p>
+</main>
+</body>
+</html>
