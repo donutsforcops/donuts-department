@@ -1113,7 +1113,7 @@ async function loadPast(){try{const j=await api('/api/past');const L=(j.shows||[
   catch(err){b.disabled=false;b.textContent='File the report';const x=$('#apbErr');x.textContent='Dispatch didn\'t pick up. Try again in a minute, or message donutsforcops on Whatnot.';x.hidden=false}})}
 
 /* ===== Donuts Department TV: channel surfing beside the donut ===== */
-{const TVC=[{n:'03',t:'Glaze & Order',v:'tv/ch03'},{n:'07',t:'Donut Shopping Network',v:'tv/ch07'},{n:'12',t:'Goblin Cam',v:'tv/ch12',rec:1},{n:'22',t:'Skate Tape',v:'tv/ch22'},{n:'30',t:'Sprinkle Forecast',v:'tv/ch30'},{n:'64',t:'Pixel Patrol',v:'tv/ch64'},{n:'99',t:'Dispatch',page:1}];
+{const TVC=[{n:'03',t:'Glaze & Order',v:'tv/ch03'},{n:'07',t:'Donut Shopping Network',v:'tv/ch07'},{n:'12',t:'Goblin Cam',v:'tv/ch12',rec:1},{n:'22',t:'Skate Tape',v:'tv/ch22'},{n:'30',t:'Sprinkle Forecast',v:'tv/ch30'},{n:'64',t:'Mall Food Court',v:'tv/ch64'},{n:'99',t:'Dispatch',page:1}];
  const box=$('#tv'),btn=$('#tvBtn'),vid=$('#tvVid'),page=$('#tvPage'),osd=$('#tvOsd'),rec=$('#tvRec'),cv=$('#tvStatic'),g=cv.getContext('2d');
  const lite=still||(navigator.connection&&navigator.connection.saveData);
  let ch=0,on=false,vis=false,pageT=0,osdT=0,recT=0,liveShow=null,busy=false;
