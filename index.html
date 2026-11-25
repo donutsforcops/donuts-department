@@ -35,7 +35,7 @@
    PICTURE: a giant glazed neon donut with falling sprinkles beside the live countdown
    COLOUR/TYPE: chocolate-night ground, strawberry frosting pink, glaze cream, sprinkle accents; Bungee + Rubik
    LAYOUT: phone first — sign, countdown, menu board, goblins, arcade, drops, FAQ; bottom tab bar on phones */
-:root{color-scheme:dark;--bg:#170b12;--bg2:#22111b;--card:#2c1623;--ink:#fff4e6;--mute:#d8bfcb;--pink:#ff4f9a;--glaze:#ffd9a8;--mint:#5ef2c6;--sky:#59b8ff;--sun:#ffd23f;--line:#4a2a3b;--safe-b:env(safe-area-inset-bottom,0px)}
+:root{color-scheme:dark;--pinkbtn:#d62a76;--bg:#170b12;--bg2:#22111b;--card:#2c1623;--ink:#fff4e6;--mute:#d8bfcb;--pink:#ff4f9a;--glaze:#ffd9a8;--mint:#5ef2c6;--sky:#59b8ff;--sun:#ffd23f;--line:#4a2a3b;--safe-b:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;min-width:0}
 html{scroll-behavior:smooth;scroll-padding-top:70px;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Rubik,system-ui,sans-serif;overflow-x:clip;padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
@@ -45,7 +45,7 @@ h2{font-size:clamp(28px,5vw,48px)}
 .band{padding:clamp(40px,6vw,80px) max(5vw,16px)}
 .wrap{max-width:1240px;margin:0 auto}
 .lede{color:var(--mute);max-width:62ch;margin:10px 0 26px;font-size:17px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 18px;border-radius:999px;border:2px solid var(--pink);background:var(--pink);color:#fff;text-decoration:none;cursor:pointer;font:800 15px Rubik,sans-serif;-webkit-tap-highlight-color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 18px;border-radius:999px;border:2px solid var(--pinkbtn);background:var(--pinkbtn);color:#fff;text-decoration:none;cursor:pointer;font:800 15px Rubik,sans-serif;-webkit-tap-highlight-color:transparent}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
 .btn:active{transform:scale(.97)}
 .btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
@@ -77,7 +77,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .sub{font-family:Bungee;font-size:clamp(15px,2vw,20px);color:var(--glaze);margin:14px 0 0}
 .next{margin-top:22px;background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px}
 .next .lbl{font-weight:600;color:var(--mute);font-size:14px}
-.next h3{font-size:clamp(19px,2.6vw,26px);margin:6px 0 4px}
+.next h3,.next h2.nt{font-size:clamp(19px,2.6vw,26px);margin:6px 0 4px}
 .clock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:14px 0;max-width:380px}
 .clock div{background:var(--bg2);border-radius:14px;padding:10px 4px;text-align:center}
 .clock b{display:block;font-family:Bungee;font-size:clamp(24px,4vw,36px);line-height:1;font-variant-numeric:tabular-nums}
@@ -108,7 +108,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .menu h3{font-size:18px;font-family:Rubik;font-weight:800}
 .menu p{margin:4px 0 0;color:var(--mute);font-size:15px}
 .tag{display:inline-block;font-size:13px;font-weight:800;padding:3px 10px;border-radius:999px;margin-bottom:4px;color:#1a0b12}
-.tag.dfc{background:var(--pink);color:#fff}
+.tag.dfc{background:var(--pinkbtn);color:#fff}
 @keyframes hue{to{filter:hue-rotate(360deg)}}
 .empty{padding:22px;border:2px dashed var(--line);border-radius:16px;color:var(--mute)}
 .fine{font-size:14px;color:var(--mute);margin-top:14px}
@@ -151,7 +151,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .btn.big{min-height:54px;padding:12px 24px;font-size:17px;background:var(--mint);border-color:var(--mint);color:#10241d}
 .foot{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:24px;align-items:start}
 .foot .fbrand b{font-family:Bungee;font-size:22px;color:var(--pink);display:block;margin-bottom:6px;font-weight:400}
-.foot h4{margin:0 0 8px;color:var(--ink);font-size:15px}
+.foot h2.fh{margin:0 0 8px;color:var(--ink);font-size:15px}
 .foot nav{display:flex;flex-direction:column;gap:2px}
 .foot nav a{text-decoration:none;padding:6px 0;min-height:44px;display:flex;align-items:center}
 .foot nav a:hover{color:var(--pink)}
@@ -248,7 +248,7 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 .drop li{margin:2px 0}
 .drop .btn{background:#fff;color:#111;border-color:#fff}
 .drop .btn.alt{background:transparent;color:inherit;border-color:currentColor}
-.drop.sup{background:#e10600}
+.drop.sup{background:#e10600}.drop.sup p,.drop.sup small{color:#fff;opacity:1}
 .drop.ftp{background:#0d0d0d;border:2px solid #f2f2f2;font-family:Rubik}.drop.ftp h3{font-family:Rubik,sans-serif;font-weight:800;font-size:48px;letter-spacing:-.02em;line-height:.9;font-style:italic}
 .drop.sl{background:linear-gradient(135deg,#1c1c1c,#3a2a5a);border:2px solid #7a5cff}
 .drop.dfc{background:linear-gradient(135deg,#ff4f9a,#c41f66)}
@@ -326,7 +326,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 .board h3{font-family:Bungee;font-weight:400;font-size:22px;margin:0 0 4px}
 .board .tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0 12px;scrollbar-width:none}.board .tabs::-webkit-scrollbar{display:none}
 .board .tabs button{flex:none;min-height:40px;border-radius:999px;border:2px solid var(--line);background:var(--bg2);color:var(--ink);font:800 13px Rubik;padding:6px 12px;cursor:pointer}
-.board .tabs button[aria-selected=true]{background:var(--pink);border-color:var(--pink);color:#fff}
+.board .tabs button[aria-selected=true]{background:var(--pinkbtn);border-color:var(--pinkbtn);color:#fff}
 .board ol{list-style:none;margin:0;padding:0;counter-reset:r}
 .board li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 4px;border-top:1px dashed var(--line);counter-increment:r}
 .board li::before{content:counter(r);font:400 16px Bungee;color:var(--mute);text-align:center}
@@ -374,7 +374,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 <nav class="top"><div class="wrap">
   <a class="brand" href="#top">Donuts Department</a>
   <div class="links"><a href="#streams">Streams</a><a href="#crew">Streamers</a><a class="opt" href="#dispatch">Dispatch</a><a class="opt" href="#goblins">Suspects</a><a href="#arcade">Arcade</a><a class="opt" href="#drops">Brands</a><a href="#join">Join</a><a class="opt" href="#cop">How to cop</a></div>
-  <button class="radio" id="radio" aria-expanded="false" aria-controls="radioPanel" aria-label="Open Donuts Department radio"><span class="eq"><i></i><i></i><i></i></span><span id="radioTxt">Play music</span></button>
+  <button class="radio" id="radio" aria-expanded="false" aria-controls="radioPanel" title="Donuts Department radio"><span class="eq"><i></i><i></i><i></i></span><span id="radioTxt">Play music</span></button>
 </div></nav>
 
 <header class="hero band" id="top"><div class="wrap">
@@ -385,7 +385,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
     <p class="motto" id="motto">To protect and sprinkle. Mostly sprinkle.</p>
     <div class="next" id="nextCard" aria-live="polite">
       <div class="lbl" id="nextLbl">Next shift</div>
-      <div class="nexthead"><img id="nextPoster" alt="Show poster" hidden><div><h3 id="nextTitle">Loading the glaze…</h3>
+      <div class="nexthead"><img id="nextPoster" alt="Show poster" hidden><div><h2 id="nextTitle" class="nt">Loading the glaze…</h2>
       <div id="nextWhen" class="lbl"></div>
       <div class="feedchip" id="heroFeed"></div></div></div>
       <div class="live" id="liveBar"><i></i><span>LIVE NOW on Whatnot</span></div>
@@ -429,6 +429,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
     </svg>
   </div>
 </div></header>
+<main id="main">
 
 <div class="ticker" aria-hidden="true"><div><span>TO PROTECT AND SPRINKLE</span><span>GLAZE AND ORDER</span><span>ANYTHING YOU BID CAN AND WILL BE USED AGAINST YOU</span><span>PROBABLE CAUSE FOR A DOZEN</span><span>NO LOITERING · UNLESS THERE'S A $1 START</span><span>BOOK 'EM, DANISH</span><span>OPEN LATE · NO WARRANT REQUIRED</span></div></div>
 
@@ -603,11 +604,12 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
   </div>
 </div></section>
 
+</main>
 <footer class="band"><div class="wrap foot">
   <div class="fbrand"><svg class="dbox" viewBox="0 0 220 110" aria-hidden="true"><path d="M10 40h200l-12 64H22z" fill="#ff86bb"/><path d="M10 40L40 6h140l30 34z" fill="#ffd0e3"/><path d="M10 40h200" stroke="#c41f66" stroke-width="3"/><g id="boxDonuts"></g><text x="110" y="92" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="13" fill="#7a1a40">DONUTS DEPT · EST. TODAY</text></svg><b><span class="flk">Do</span>nuts Department</b><span>To protect and sprinkle. Streetwear, skate and sugar from donutsforcops.</span></div>
-  <nav aria-label="Watch"><h4>Watch</h4><a href="#streams">Upcoming streams</a><a href="#apb">Put out an APB</a><a href="custody/index.html">Shipping &amp; authenticity</a><a href="#crew">Recommended streamers</a><a href="https://www.whatnot.com/user/donutsforcops">donutsforcops on Whatnot</a></nav>
-  <nav aria-label="Play"><h4>Play</h4><a href="#arcade">Arcade</a><a href="#goblins">Usual suspects</a><a href="#board">Leaderboard</a><a href="#faq">Questions</a></nav>
-  <nav aria-label="Shop"><h4>Shop</h4><a href="https://www.whatnot.com/invite/donutsforcops">Join Whatnot</a><a href="https://strangeloveskateboards.com">Strangelove</a><a href="https://www.supremecommunity.com">Supreme Community</a></nav>
+  <nav aria-label="Watch"><h2 class="fh">Watch</h2><a href="#streams">Upcoming streams</a><a href="#apb">Put out an APB</a><a href="custody/index.html">Shipping &amp; authenticity</a><a href="#crew">Recommended streamers</a><a href="https://www.whatnot.com/user/donutsforcops">donutsforcops on Whatnot</a></nav>
+  <nav aria-label="Play"><h2 class="fh">Play</h2><a href="#arcade">Arcade</a><a href="#goblins">Usual suspects</a><a href="#board">Leaderboard</a><a href="#faq">Questions</a></nav>
+  <nav aria-label="Shop"><h2 class="fh">Shop</h2><a href="https://www.whatnot.com/invite/donutsforcops">Join Whatnot</a><a href="https://strangeloveskateboards.com">Strangelove</a><a href="https://www.supremecommunity.com">Supreme Community</a></nav>
   <p class="legal">© <span id="yr">2026</span> Donuts Department. Independent reseller, not affiliated with Supreme, Strangelove or FTP.</p>
 </div></footer>
 
