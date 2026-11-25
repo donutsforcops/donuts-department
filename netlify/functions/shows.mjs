@@ -11,7 +11,7 @@ const publicUrl = (id) =>
 const json = (body, status = 200, extra = {}) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=60', ...extra },
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=0, must-revalidate', ...extra },
   });
 
 export default async () => {
@@ -49,7 +49,8 @@ export default async () => {
         u: publicUrl(s.id),
       }));
     return json({ updated: new Date().toISOString(), shows }, 200, {
-      'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=300, stale-while-revalidate=3600',
+      // One shared copy for every visitor, refreshed from Whatnot at most about once a minute.
+      'Netlify-CDN-Cache-Control': 'public, durable, s-maxage=45, stale-while-revalidate=30',
     });
   } catch (e) {
     console.error('shows feed failed', e.message);

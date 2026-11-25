@@ -96,6 +96,17 @@ nav.top .wrap{display:flex;align-items:center;gap:12px;padding:8px max(5vw,16px)
 @keyframes hue{to{filter:hue-rotate(360deg)}}
 .empty{padding:22px;border:2px dashed var(--line);border-radius:16px;color:var(--mute)}
 .fine{font-size:14px;color:var(--mute);margin-top:14px}
+.feedchip{display:flex;align-items:center;gap:0;font-size:13px;font-weight:600;color:var(--mute);margin-top:8px;min-height:18px}
+.dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--mint);margin-right:8px;box-shadow:0 0 8px var(--mint);animation:blink 2s infinite}
+.dot.off{background:#ff8a3d;box-shadow:none;animation:none}.dot.wait{background:var(--sun);box-shadow:none}
+.feed-loading #menu,.feed-loading #nextTitle,.feed-loading #nextWhen,.feed-loading #clock{opacity:.35;filter:blur(1.5px)}
+#menu,#nextTitle,#nextWhen,#clock{transition:opacity .4s,filter .4s}
+.menu li.fresh{animation:fresh 3s ease-out 2;border-radius:12px}
+@keyframes fresh{0%{background:color-mix(in srgb,var(--mint) 24%,transparent)}100%{background:transparent}}
+.upd{display:inline-block;font-size:12px;font-weight:800;padding:3px 9px;border-radius:999px;margin:0 0 4px 6px;background:var(--mint);color:#10241d}
+.next.swap{animation:swap .9s ease-out}
+@keyframes swap{0%{transform:scale(.96);box-shadow:0 0 0 0 #5ef2c6aa}40%{box-shadow:0 0 0 8px #5ef2c644}100%{transform:none;box-shadow:0 0 0 0 transparent}}
+.clock .any{grid-column:1/-1;font-family:Bungee;font-size:22px;color:var(--mint);background:transparent;text-align:left;padding:4px 0}
 /* crew: equal cards, shuffled each visit */
 {const list=CONFIG.crew.slice();for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]]}
  $('#crewList').innerHTML=list.map(m=>`<article class="mate"><div class="av" style="background:linear-gradient(135deg,${esc(m.c[0])},${esc(m.c[1])})">${esc(m.name[0])}</div>
@@ -190,7 +201,7 @@ footer a{margin-right:10px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
-<body>
+<body class="feed-loading">
 <nav class="top"><div class="wrap">
   <a class="brand" href="#top">Donuts Department</a>
   <div class="links"><a href="#streams">Streams</a><a href="#crew">Streamers</a><a href="#goblins">Goblins</a><a href="#arcade">Arcade</a><a href="#drops">Brands</a><a href="#cop">How to cop</a></div>
@@ -202,10 +213,11 @@ footer a{margin-right:10px}
     <div class="open">● OPEN LATE</div>
     <h1 class="sign" aria-label="Donuts Department"><span class="flk">Do</span>nuts<br>Department</h1>
     <p class="sub">Supreme · Strangelove · FTP · $1 starts</p>
-    <div class="next" aria-live="polite">
+    <div class="next" id="nextCard" aria-live="polite">
       <div class="lbl" id="nextLbl">Next stream</div>
       <h3 id="nextTitle">Loading the glaze…</h3>
       <div id="nextWhen" class="lbl"></div>
+      <div class="feedchip" id="heroFeed"></div>
       <div class="live" id="liveBar"><i></i><span>LIVE NOW on Whatnot</span></div>
       <div class="clock" id="clock"></div>
       <div class="row">
@@ -243,7 +255,7 @@ footer a{margin-right:10px}
   <p class="lede">Upcoming donutsforcops streams. Times are in your time zone. Tap a show to set a reminder on Whatnot.</p>
   <ul class="menu" id="menu"></ul>
   <p style="margin-top:18px"><button class="btn ghost" id="more">Show the full schedule</button></p>
-  <p class="fine" id="feedNote">Whatnot always has the final word on show times.</p>
+  <p class="fine feedchip" id="feedNote"></p>
 </div></section>
 
 <section class="band" id="crew" style="background:var(--bg2)"><div class="wrap">
@@ -401,10 +413,25 @@ function nextWeekly(w,from){const p=etParts(from);const base=Date.UTC(+p.year,+p
 let SHOWS=CONFIG.streams.map(x=>{const [d,t]=x.at.split(' ');const [y,mo,da]=d.split('-').map(Number);const [h,mi]=t.split(':').map(Number);return {...x,note:CONFIG.notes[x.who],at:etDate(y,mo,da,h,mi)}}).sort((a,b)=>a.at-b.at);
 const upcoming=now=>SHOWS.filter(o=>o.live||o.at.getTime()+CONFIG.showLengthHrs*36e5>now);
 const liveNow=(o,now)=>o.live!==undefined?o.live:o.at<=now;
-/* live schedule from Whatnot (via /api/shows on the hosted site); the list above is the backup */
-async function loadFeed(){try{const r=await fetch('/api/shows',{cache:'no-store'});if(!r.ok)return;const j=await r.json();if(!j||!Array.isArray(j.shows))return;
-  SHOWS=j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
-  renderMenu();tickHero();const f=$('#feedNote');if(f)f.textContent='Live from Whatnot. Updated '+new Date(j.updated).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+'.'}catch(e){}}
+/* ===== live schedule from Whatnot (/api/shows on the hosted site); the list above is only the backup ===== */
+let feedState='loading',feedAt=0,lastCheck=0,sig='',changed=new Set(),busy=false;
+const keyOf=o=>o.u+'|'+o.at.getTime()+'|'+o.title+'|'+(o.live?1:0);
+async function loadFeed(){if(busy)return;busy=true;lastCheck=Date.now();
+  try{const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),8000);
+    const r=await fetch('/api/shows',{cache:'no-store',signal:ctl.signal});clearTimeout(to);if(!r.ok)throw 0;
+    const j=await r.json();if(!j||!Array.isArray(j.shows))throw 0;
+    const next=j.shows.filter(s=>s&&s.at&&s.title).map(s=>({who:'dfc',title:String(s.title),u:/^https:\/\/www\.whatnot\.com\//.test(s.u)?s.u:CONFIG.whatnot,live:!!s.live,note:CONFIG.notes.dfc,at:new Date(s.at)})).filter(s=>!isNaN(s.at)).sort((a,b)=>a.at-b.at);
+    const nsig=next.map(keyOf).join(';');
+    if(sig&&nsig!==sig){const old=new Set(sig.split(';'));changed=new Set(next.filter(o=>!old.has(keyOf(o))).map(o=>o.u));toast('Schedule updated from Whatnot');setTimeout(()=>{changed.clear();renderMenu()},9000)}
+    sig=nsig;SHOWS=next;feedState='live';feedAt=Date.parse(j.updated)||Date.now();
+  }catch(e){feedState=feedState==='live'||feedState==='stale'?'stale':'backup'}
+  busy=false;document.body.classList.remove('feed-loading');renderMenu();tickHero();status()}
+function status(){const ago=s=>s<45?'just now':s<90?'a minute ago':Math.round(s/60)+' minutes ago';
+  const html=feedState==='live'?'<i class="dot"></i>Live from Whatnot · updated '+ago((Date.now()-feedAt)/1e3)
+    :feedState==='stale'?'<i class="dot off"></i>Couldn\'t reach Whatnot just now. Retrying.'
+    :feedState==='backup'?'<i class="dot off"></i>Saved schedule. Whatnot has the final word on times.'
+    :'<i class="dot wait"></i>Checking Whatnot for the latest schedule…';
+  $('#feedNote').innerHTML=html;$('#heroFeed').innerHTML=html}
 const fmtDay=d=>d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
 const fmtTime=d=>d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'});
 const who={dfc:{n:'donutsforcops',u:CONFIG.whatnot}};
@@ -415,15 +442,17 @@ const rel=(d,now)=>{const h=(d-now)/36e5;if(h<0)return '';if(h<1)return 'Starts 
 let filter='all',more=false;
 function renderMenu(){const now=Date.now();const all=upcoming(now).filter(o=>filter==='all'||o.who===filter);const list=more?all:all.slice(0,8);$('#more').hidden=more||all.length<=8;
   $('#menu').innerHTML=list.length?list.map(o=>{const isLive=liveNow(o,now);const r=isLive?'':rel(o.at,now);
-    return `<li><time>${isLive?'LIVE':esc(fmtDay(o.at))}<small>${esc(fmtTime(o.at))}</small>${r?`<span class="soon">${esc(r)}</span>`:''}</time>
-    <div><span class="tag ${o.who}">${esc(who[o.who].n)}</span><h3>${esc(o.title)}</h3><p>${esc(o.note)}</p></div>
+    return `<li class="${changed.has(o.u)?'fresh':''}"><time>${isLive?'LIVE':esc(fmtDay(o.at))}<small>${esc(fmtTime(o.at))}</small>${r?`<span class="soon">${esc(r)}</span>`:''}</time>
+    <div><span class="tag ${o.who}">${esc(who[o.who].n)}</span>${changed.has(o.u)?'<span class="upd">Just updated</span>':''}<h3>${esc(o.title)}</h3><p>${esc(o.note)}</p></div>
     <div class="row"><a class="btn ${isLive?'':'ghost'}" href="${esc(o.u)}">${isLive?'Watch now':'Show page'}</a>${isLive?'':`<a class="btn ghost" href="${esc(gcal(o))}">+ Calendar</a>`}</div></li>`}).join('')
     :'<li class="empty">Nothing scheduled here right now. Follow on Whatnot to hear about new shows.</li>'}
 $('#more').addEventListener('click',()=>{more=true;renderMenu()});
 
 const pad=n=>String(n).padStart(2,'0');
+let heroKey='';
 function tickHero(){const now=Date.now();const n=upcoming(now)[0];
-  if(!n){$('#nextTitle').textContent='New shows coming soon';$('#clock').innerHTML='';return}
+  if(!n){$('#nextTitle').textContent='New shows coming soon';$('#nextWhen').textContent='Follow on Whatnot to hear first.';$('#clock').innerHTML='';$('#liveBar').classList.remove('on');heroKey='';return}
+  const k=keyOf(n);if(heroKey&&k!==heroKey){const c=$('#nextCard');c.classList.remove('swap');void c.offsetWidth;c.classList.add('swap')}heroKey=k;
   const live=liveNow(n,now);$('#liveBar').classList.toggle('on',live);
   $('#nextLbl').textContent=live?'Happening right now · '+who[n.who].n:'Next stream · '+who[n.who].n;
   $('#nextTitle').textContent=n.title;
@@ -431,7 +460,7 @@ function tickHero(){const now=Date.now();const n=upcoming(now)[0];
   $('#nextGo').textContent=live?'Join the show':'Open the show';$('#nextGo').href=n.u;
   const cal=$('#nextCal');cal.style.display=live?'none':'';cal.href=gcal(n);
   const s=Math.max(0,Math.floor((n.at-now)/1e3));const v=[[Math.floor(s/86400),'days'],[Math.floor(s%86400/3600),'hrs'],[Math.floor(s%3600/60),'min'],[s%60,'sec']];
-  $('#clock').innerHTML=live?'':v.map(([a,b])=>`<div><b>${pad(a)}</b><span>${b}</span></div>`).join('');
+  $('#clock').innerHTML=live?'':s===0?'<div class="any">Starting any minute</div>':v.map(([a,b])=>`<div><b>${pad(a)}</b><span>${b}</span></div>`).join('');
   const sup=nextWeekly({day:4,h:11,m:0},new Date(now));const t=Math.floor((sup-now)/1e3);
   $('#supClock').textContent=`${Math.floor(t/86400)}d ${pad(Math.floor(t%86400/3600))}h ${pad(Math.floor(t%3600/60))}m ${pad(t%60)}s`}
 
@@ -531,7 +560,12 @@ $('#radio').addEventListener('click',()=>{try{if(!on){station=0;start();toast('N
 document.addEventListener('visibilitychange',()=>{if(!ac)return;if(document.hidden)ac.suspend();else if(on)ac.resume()});
 }
 
-renderMenu();tickHero();setInterval(tickHero,1000);setInterval(renderMenu,60000);loadFeed();setInterval(loadFeed,5*60e3);
+renderMenu();tickHero();status();loadFeed();
+setInterval(tickHero,1000);setInterval(()=>{renderMenu();status()},30e3);
+/* check Whatnot every minute while the page is on screen, and right away when someone comes back to it */
+setInterval(()=>{if(!document.hidden)loadFeed()},60e3);
+const back=()=>{if(!document.hidden&&Date.now()-lastCheck>20e3)loadFeed()};
+document.addEventListener('visibilitychange',back);addEventListener('pageshow',back);addEventListener('focus',back);addEventListener('online',()=>loadFeed());
 }
 </script>
 </body>
