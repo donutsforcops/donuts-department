@@ -21,7 +21,11 @@ function clearScreen() {
   clearTimeout(transition);
   skip.hidden = true;
   source.hidden = true;
+  $('#checkout').hidden = true;
+  $('#standby').hidden = powered;
   canvas.hidden = true;
+  $('#card').hidden = true;
+  document.body.classList.remove('inserting');
   screen.replaceChildren();
   return generation;
 }
@@ -40,7 +44,7 @@ function loadSdk() {
 }
 
 function markShelf() {
-  [...shelf.children].forEach((button, index) => {
+  [...shelf.querySelectorAll("button")].forEach((button, index) => {
     button.setAttribute('aria-pressed', String(powered && index === selected));
   });
   power.setAttribute('aria-pressed', String(powered));
@@ -66,12 +70,20 @@ function insertTape(index) {
   const token = clearScreen();
   const tape = catalog[selected];
   markShelf();
-  display.textContent = 'CH 22 · ' + tape.title;
+  display.textContent = 'Checking out · ' + tape.title;
+  document.body.classList.add('inserting');
+  $('#card').hidden = false;
+  $('#checkout-title').textContent = tape.title;
+  $('#checkout-details').textContent = tape.uploader + ' · ' + Math.round(tape.durationSec / 60) + ' min';
+  $('#checkout').hidden = false;
   source.href = tape.sourceUrl;
   source.hidden = false;
   noise();
   transition = setTimeout(() => {
     canvas.hidden = true;
+    $('#card').hidden = true;
+    document.body.classList.remove('inserting');
+    display.textContent = 'CH 22 · ' + tape.title;
     const frame = document.createElement('iframe');
     frame.title = tape.title + ' (Vimeo)';
     frame.allow = 'autoplay; fullscreen; picture-in-picture';
@@ -96,7 +108,7 @@ function insertTape(index) {
     }).catch(() => {
       if (token === generation) display.textContent = 'Manual tuning · choose the next tape when ready';
     });
-  }, 180);
+  }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 520);
 }
 
 function commercial() {
@@ -137,10 +149,40 @@ async function stockShelf() {
     details.textContent = 'DD-22 / ' + String(index + 1).padStart(3, '0') +
       ' · ' + tape.uploader + ' · ' + Math.round(tape.durationSec / 60) + ' min';
     button.append(label, details);
-    button.onclick = () => insertTape(index);
-    shelf.append(button);
+    button.onclick = () => {
+      insertTape(index);
+      if (matchMedia('(max-width:840px)').matches) {
+        power.focus({preventScroll:true});
+        $('.cabinet').scrollIntoView({block:'start', behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+      }
+    };
+    const row = document.createElement('div');
+    row.className = 'tape-row';
+    const link = document.createElement('a');
+    link.href = tape.sourceUrl;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = 'Vimeo ↗';
+    link.setAttribute('aria-label', 'Open ' + tape.title + ' on Vimeo');
+    row.append(button, link);
+    shelf.append(row);
   }
   markShelf();
   power.disabled = !catalog.length;
+  const requested = new URLSearchParams(location.search).get('tape');
+  const match = catalog.findIndex(tape => tape.id === requested);
+  if (match >= 0) insertTape(match);
 }
 stockShelf().catch(() => { display.textContent = 'Tape shelf unavailable · reload to retry'; });
+
+$('#drawer').onclick = () => {
+  setDrawer(shelf.hidden);
+};
+
+function setDrawer(open) {
+  shelf.hidden = !open;
+  $('#drawer').setAttribute('aria-expanded', String(!shelf.hidden));
+  $('#drawer-state').textContent = open ? 'Close drawer' : 'Open drawer';
+}
+
+$('#standby a').addEventListener('click', () => setDrawer(true));

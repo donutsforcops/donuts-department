@@ -50,3 +50,79 @@ label{display:flex;align-items:center;gap:8px;font: .85rem monospace}input{width
   @keyframes open-locker{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
   main{animation:open-locker .32s ease-out}
 }
+main{max-width:1280px}
+.casehead{position:relative;isolation:isolate;overflow:hidden;padding:clamp(26px,5vw,60px) clamp(18px,4vw,48px);color:#fff0d9;background:#262e29;border-block:5px solid #171917}
+.casehead:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#16211efa 8%,#17221dda 40%,#1b211656 90%),url(img/987594534.webp) center 46%/cover}
+.casehead h1{font-size:clamp(2rem,5.6vw,4.6rem);letter-spacing:-.04em;max-width:12ch}
+.casehead .intro{max-width:36ch;color:#f1e2cc}
+.room-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(20px,3vw,44px);align-items:start;padding-top:26px}
+.station{min-width:0}.cabinet{margin-top:45px}
+.locker{background:repeating-linear-gradient(0deg,#ffffff05 0 1px,transparent 1px 4px),linear-gradient(110deg,#434c43,#252c28);box-shadow:inset 0 0 0 4px #2e352e,0 16px 30px #0005}
+.locker h2{background:#ded3b7;color:#302c25;padding:8px 12px;width:fit-content;box-shadow:1px 2px 3px #101510}
+.tape-row{display:grid;grid-template-columns:1fr auto;align-items:stretch;border-bottom:2px solid #1d201d}
+.tape-row a{align-self:stretch;display:grid;align-content:center;color:#eee3ce;font:700 .78rem monospace;padding:8px;min-height:44px}
+#shelf{padding:5px;gap:4px}
+#shelf button{padding:5px 7px 5px 12px;background:repeating-linear-gradient(90deg,#151916 0 2px,#363a33 2px 4px)}
+#shelf strong{font-size:1rem;line-height:1.16}
+#shelf small{font-size:.75rem;line-height:1.25}
+#shelf button[aria-pressed=true] strong{background:#bed3b9}
+@media(max-width:840px){.room-layout{display:block;padding-top:5px}.locker{margin-top:18px}}
+/* Storage bays, overhead tube lighting and a wood counter. */
+body{background-color:#232824;background-image:radial-gradient(ellipse at 48% -5%,#d6ddbe41,transparent 53%),linear-gradient(90deg,#101510c9,#1920194d 46%,#101610ac),repeating-linear-gradient(90deg,transparent 0 182px,#121811 183px 185px,#727867 186px,transparent 188px),url(img/painted-steel.webp)}
+header{border-bottom:3px double #707568;background:#161c18dd;color:#dfdac6}
+.casehead{border:5px solid #343b33;border-left:10px solid #a38445;box-shadow:0 0 0 1px #777965,0 4px 8px #121710}
+.casehead:after{content:"";position:absolute;right:13px;bottom:12px;width:70px;height:14px;background:repeating-linear-gradient(90deg,#e4ddc6 0 2px,transparent 2px 4px,#e4ddc6 5px 6px,transparent 6px 10px);opacity:.6}
+.station{position:relative;padding:14px clamp(8px,2vw,22px);background:linear-gradient(145deg,#131913a8,#22292240),url(img/painted-steel.webp);border:4px ridge #51594c;border-radius:3px;box-shadow:inset 0 5px 20px #0f150fc9,0 10px 18px #12161290}
+.station:before{content:"";position:absolute;top:7px;left:18%;right:18%;height:3px;border-radius:3px;background:#e0e4c4;box-shadow:0 0 9px 2px #d4e8b966}
+.cabinet{scroll-margin-top:18px}.vcr{border-bottom:7px ridge #6f5644}.slot{position:relative;text-transform:uppercase;overflow:hidden;background:#151a15;letter-spacing:.08em;color:#c8c5af}
+.slot:after{content:"";position:absolute;inset:0;background:linear-gradient(#232521 12%,#c4ba9a 14% 65%,#282b26 68%);transform:translateY(110%)}.inserting .slot:after{animation:feed .5s ease-in both}
+@keyframes feed{0%{transform:translateY(100%)}45%{transform:translateY(0)}100%{transform:translateY(-105%)}}
+#card{z-index:1;background:radial-gradient(ellipse,#203123,#0b110c);color:#afe19e}
+#card b{background:transparent;color:inherit;text-transform:uppercase;letter-spacing:.1em}
+.remote{border-radius:5px;background:linear-gradient(#434a3e,#222820);box-shadow:0 4px 0 #161c17}
+.locker{border:5px ridge #697363;background:linear-gradient(120deg,#ffffff12,#151c1659),url(img/painted-steel.webp);padding:clamp(10px,2vw,20px);box-shadow:inset 0 0 0 3px #31382e,0 10px 20px #131713aa}
+.locker h2{background:#dbd1b5;color:#332e23;border:2px ridge #a49d85;border-left:7px solid #96544a;padding:8px 14px;letter-spacing:.05em}
+.drawer-face{display:flex;width:100%;align-items:center;gap:10px;text-align:left;padding:9px 12px;background:linear-gradient(#59625255,#2b342b99),url(img/painted-steel.webp);border:3px outset #666f5f;border-radius:2px;box-shadow:0 4px 0 #171c17}
+.drawer-paper{background:#e0d5b6;color:#312d22;line-height:1.1;border:2px inset #908c76;padding:5px 9px;font:bold 14px monospace}.drawer-paper small{display:block;font-size:12px;font-weight:normal}
+.locker-handle{flex:1;max-width:90px;min-width:27px;height:14px;border:4px outset #a4a696;border-radius:5px;background:#242922;box-shadow:0 2px 3px #171a17}
+#drawer-state{margin-left:auto;font:700 12px monospace;color:#e7e1cc}
+#shelf{border:4px inset #565e4e;background:#1d231c;padding:8px 5px 5px;box-shadow:inset 0 5px 8px #0f140f}
+#shelf button{border-left-width:6px;border-radius:2px}
+#shelf small{border-top-color:#986359}#shelf .tape-row:nth-child(3n+2) small{border-color:#698e89}#shelf .tape-row:nth-child(3n) small{border-color:#a78d51}
+#shelf button[aria-pressed=true]{border-left-color:#c0dc9e}
+@media(prefers-reduced-motion:no-preference){#shelf:not([hidden]){animation:drawer-open .28s ease-out;transform-origin:top}#shelf button{transition:transform .16s ease}#shelf button:is(:hover,:focus-visible){transform:translateX(3px)}@keyframes drawer-open{from{opacity:.3;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}}
+@media(prefers-reduced-motion:reduce){.inserting .slot:after{animation:none}}
+@media(max-width:600px){.station{padding-inline:2px}.cabinet{margin-top:42px}.vcr{padding:8px 5px}.vcr output{overflow-wrap:anywhere}.room-layout{padding-top:14px}}
+/* Intake folder pinned to the front of the cabinet. */
+.casehead{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,27%);align-items:center;gap:10px 25px;padding:clamp(20px,3vw,38px) clamp(18px,4vw,50px);background:repeating-linear-gradient(0deg,transparent 0 27px,#78674624 28px 29px),linear-gradient(105deg,#e1d4ae,#c6b68f);color:#282c25;border:1px solid #8e876f;border-left:10px solid #9b5646;box-shadow:2px 4px 0 #857d65,4px 8px 0 #151b16}
+.casehead:before{inset:0;background:linear-gradient(95deg,transparent 49.7%,#6a604a22 49.9%,#fff5d444 50.1%,transparent 50.4%);pointer-events:none}
+.casehead:after{background:repeating-linear-gradient(90deg,#413e32 0 2px,transparent 2px 4px,#413e32 5px 6px,transparent 6px 10px);left:12px;right:auto;bottom:6px;height:6px}
+.casehead h1{grid-column:1;font-size:clamp(1.9rem,5.2vw,4.4rem);color:#58392e;text-shadow:1px 1px #e7d9b8}
+.casehead .intro{grid-column:1;margin:0;color:#39392e}
+.intake-photo{position:relative;grid-column:2;grid-row:1/3;display:block;align-self:center;justify-self:center;width:min(100%,230px);padding:6px 6px 3px;color:#282a23;background:#ede6d4;text-decoration:none;transform:rotate(3deg);box-shadow:2px 3px 5px #473b2866}
+.intake-photo:before{content:"";position:absolute;width:26%;height:14px;background:#c5b47ccf;left:35%;top:-5px;transform:rotate(-6deg)}
+.intake-photo img{display:block;width:100%;aspect-ratio:2/1;object-fit:cover;filter:saturate(.6)}
+.intake-photo span{font:italic bold .85rem Georgia,serif}
+@media(max-width:590px){.casehead{grid-template-columns:1fr 88px;gap:8px;padding:20px 10px}.casehead h1,.casehead .intro{margin:0}.casehead .intro{grid-column:1/-1}.intake-photo{grid-row:1}.intake-photo span{font-size:.67rem}.casehead h1{font-size:clamp(1.45rem,6vw,2rem)}}
+
+.standby {
+  position:absolute;inset:0;display:grid;align-content:center;justify-items:center;gap:8px;
+  background:repeating-linear-gradient(0deg,#10180d55 0 1px,transparent 1px 4px),radial-gradient(ellipse,#314633,#131b14 70%);
+  color:#c6e8a6;font:700 clamp(.9rem,3vw,1.3rem) monospace;text-align:center;padding:12px;
+}
+.standby span { font:clamp(1.5rem,5vw,2.7rem) Bungee,system-ui; }
+.checkout {
+  display:grid;gap:4px;margin:18px 0 0;padding:12px 16px;color:#2f3127;background:#dfd4b7;
+  border-left:6px solid #95564b;box-shadow:3px 4px #141914;
+}
+.checkout b { font:bold italic 1.1rem Georgia,serif; }
+.checkout span { font:.84rem monospace; }
+.checkout #source { color:#253f32;width:fit-content;padding:5px 0; }
+#shelf button[aria-pressed=true] { box-shadow:inset 0 0 0 2px #aaba96; }
+#shelf button[aria-pressed=true] small { background:#bed3b9; }
+.drawer-face[aria-expanded=false] { box-shadow:0 4px 0 #171c17,inset 0 -3px 0 #363f34; }
+@media(prefers-reduced-motion:no-preference) {
+  #shelf{animation-duration:.35s}
+  #shelf button[aria-pressed=true] { transform:translateX(2px); }
+  .checkout:not([hidden]) { animation:drawer-open .24s ease-out; }
+}

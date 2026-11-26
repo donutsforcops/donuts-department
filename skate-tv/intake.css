@@ -1,0 +1,40 @@
+/* The VHS opens the same drawer on the skate page. */
+.broadcast-shelf .parole-tapes {
+  min-height: 112px;
+  padding: 10px;
+  background: linear-gradient(145deg, #35382f, #1b201b);
+}
+.cassette-window {
+  display: block;
+  height: clamp(22px, 4vw, 35px);
+  margin-bottom: 7px;
+  border: 3px inset #66685c;
+  border-radius: 3px;
+  background:
+    radial-gradient(circle at 24% 50%, #c8bc99 0 5px, #343b30 6px 10px, transparent 11px),
+    radial-gradient(circle at 76% 50%, #c8bc99 0 5px, #343b30 6px 10px, transparent 11px),
+    linear-gradient(165deg, #6d785655, #171c17 52%);
+}
+#tape-room .contact-strip {
+  padding: 14px 10px 20px;
+  border: 6px ridge #62665a;
+  background: linear-gradient(#111510, #272e26);
+  gap: clamp(5px, 1.3vw, 14px);
+}
+.contact-strip a {
+  border: 4px outset #4f5147;
+  border-radius: 3px;
+  padding: 5px;
+  box-shadow: 0 7px 0 #151914;
+}
+.contact-strip a:nth-child(2) { background: #bed1c5; }
+.contact-strip a:nth-child(3) { background: #d9bc98; }
+@media (prefers-reduced-motion: no-preference) {
+  .contact-strip a { transition: transform .22s ease, box-shadow .22s ease; }
+  .contact-strip a:is(:hover, :focus-visible) {
+    transform: translateY(-7px) rotate(-2deg);
+    box-shadow: 0 14px 0 #151914;
+  }
+  .broadcast-shelf .parole-tapes { transition: transform .23s ease, box-shadow .23s ease; }
+  .broadcast-shelf .parole-tapes:is(:hover, :focus-visible) { transform: translateY(-5px) rotate(-2deg); }
+}

@@ -393,7 +393,31 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 .parole-tapes:focus-visible{outline:3px solid var(--sun);outline-offset:4px}
 @media(prefers-reduced-motion:no-preference){.parole-tapes{transition:transform .18s}.parole-tapes:hover{transform:translateY(-4px) rotate(-3deg)}}
 @media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}.parole-tapes{view-transition-name:evidence-locker}}
+/* The broadcast counter is in document flow, beneath the sign. */
+.broadcast-shelf{display:flex;align-items:flex-end;gap:clamp(12px,3vw,30px);padding:40px 12px 15px;margin:0 0 24px;border-bottom:7px ridge #72573d;background:linear-gradient(0deg,#50362977,transparent 45%)}
+.broadcast-shelf .tv{position:relative;inset:auto;width:clamp(115px,38%,192px);flex:none;order:-1;transform:rotate(-2deg)}
+.broadcast-shelf .parole-tapes{position:relative;inset:auto;width:min(48%,190px);margin-bottom:5px}
+@media(max-width:860px){.hero .fig{margin:0;min-height:clamp(170px,42vw,235px)}}
+#tape-room{background:linear-gradient(115deg,#2d332d,#191f1c);color:#f5ead4;border-block:4px solid #797769}
+#tape-room .wrap{display:grid;grid-template-columns:minmax(220px,.8fr) 1.3fr;gap:30px;align-items:center}
+.contact-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:13px 7px;background:repeating-linear-gradient(90deg,#817864 0 5px,#211f1d 5px 17px) top/100% 5px no-repeat,#211f1d;box-shadow:3px 5px 0 #0d100d}
+.contact-strip a{background:#e0d3b4;color:#25251f;text-decoration:none;font:bold italic clamp(12px,1.4vw,18px) Georgia,serif;padding:4px;overflow-wrap:anywhere}
+.contact-strip img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:5px;filter:saturate(.75)}
+@media(max-width:720px){#tape-room .wrap{grid-template-columns:1fr;gap:20px}}
+/* A portable monitor bolted into the same chassis as the video drawer. */
+.broadcast-shelf{--rivets:radial-gradient(circle,#625e51 0 1px,#191c19 1.5px 3px,#999783 3.5px,transparent 5px);position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:clamp(10px,3vw,22px);max-width:465px;margin:18px 0 26px;padding:16px;background:var(--rivets) left top/14px 14px no-repeat,var(--rivets) right bottom/14px 14px no-repeat,linear-gradient(120deg,#7e82742b,#15191677),url(skate-tv/img/painted-steel.webp);border:3px ridge #596056;border-radius:8px;box-shadow:inset 0 0 0 3px #222820,0 6px 0 #171a17,0 14px 22px #0005}
+.broadcast-shelf .tv{width:100%;max-width:none;transform:none;filter:none;grid-column:1;grid-row:1}
+.broadcast-shelf .ant{display:none}
+.broadcast-shelf .tvset{background:linear-gradient(155deg,#53584c,#262c27 58%,#373b30);border:2px outset #737668;border-radius:8px;padding:8% 9% 17%;box-shadow:inset 0 -3px 0 #151914,0 2px 5px #090c09}
+.broadcast-shelf .scr{box-shadow:0 0 0 4px #161a16,0 0 0 6px #454b3f}
+.broadcast-shelf .ctl{color:#dedac5;justify-content:flex-start}.broadcast-shelf .ctl b{font:bold 10px monospace;letter-spacing:.05em;margin-right:auto}.broadcast-shelf .ctl .led{order:0;margin:0;background:#abea90;box-shadow:0 0 6px #9ee69d}
+.broadcast-shelf .parole-tapes{align-self:stretch;display:flex;flex-direction:column;justify-content:center;width:auto;margin:0;inset:auto;transform:none;border:2px outset #74766b;border-radius:3px;padding:10px 6px;background:linear-gradient(#ffffff0d,#10141055),url(skate-tv/img/painted-steel.webp);box-shadow:0 0 0 4px #181b17,0 5px 0 3px #101310}
+.broadcast-shelf .parole-tapes strong,.broadcast-shelf .parole-tapes span{background:#e4d6b3;box-shadow:inset 2px 0 #ab4c51;padding-inline:7px}.broadcast-shelf .parole-tapes strong{font-size:clamp(16px,2vw,24px)}.broadcast-shelf .parole-tapes span{font-size:12px}
+.drawer-grip,.locker-handle{display:block;width:55%;height:12px;margin:10px auto 0;border:3px outset #919385;border-bottom-color:#262d25;border-radius:4px;background:#202720;box-shadow:0 2px 2px #111a11}
+.drawer-lip{display:block;height:9px;margin-bottom:7px;background:repeating-linear-gradient(0deg,#181b16 0 2px,#777568 2px 3px);border-inline:4px solid #232821}
+@media(prefers-reduced-motion:no-preference){.broadcast-shelf .parole-tapes:is(:hover,:focus-visible){transform:translateY(-3px);box-shadow:0 0 0 4px #181b17,0 9px 0 3px #101310}}
 </style>
+<link rel="stylesheet" href="skate-tv/intake.css">
 </head>
 <body class="feed-loading">
 <a class="skip" href="#streams">Skip to the schedule</a>
@@ -409,6 +433,21 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
     <h1 class="sign" aria-label="Donuts Department"><span class="flk">Do</span>nuts<br>Department</h1>
     <p class="sub">Supreme · Strangelove · FTP · $1 starts</p>
     <p class="motto" id="motto">To protect and sprinkle. Mostly sprinkle.</p>
+<div class="broadcast-shelf"><a class="parole-tapes" href="skate-tv/"><i class="cassette-window" aria-hidden="true"></i><strong>Play on parole</strong><span>Watch skate videos</span><i class="drawer-grip" aria-hidden="true"></i></a>
+    <div class="tv" id="tv">
+      <span class="ant" aria-hidden="true"><i></i><i></i></span>
+      <button class="tvset" id="tvBtn" type="button" aria-label="DD-TV: Donuts Department TV. Tap to change the channel.">
+        <span class="scr">
+          <video id="tvVid" muted playsinline preload="none" poster="tv/ch03.jpg" aria-hidden="true"></video>
+          <span class="tvpage" id="tvPage" hidden></span>
+          <canvas class="tvstatic" id="tvStatic" width="96" height="72" aria-hidden="true"></canvas>
+          <span class="osd" id="tvOsd" aria-hidden="true"></span>
+          <span class="rec" id="tvRec" hidden aria-hidden="true"></span>
+          <span class="lines" aria-hidden="true"></span><span class="glare" aria-hidden="true"></span>
+        </span>
+        <span class="ctl" aria-hidden="true"><b>DD-TV</b><i class="k"></i><i class="k"></i><i class="led"></i></span>
+      </button>
+    </div></div>
     <div class="next" id="nextCard" aria-live="polite">
       <div class="lbl" id="nextLbl">Next shift</div>
       <div class="nexthead"><img id="nextPoster" alt="Show poster" hidden><div><h2 id="nextTitle" class="nt">Loading the glaze…</h2>
@@ -453,21 +492,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
         <circle cx="0" cy="-16" r="5" fill="#ff4f9a"/>
       </g>
     </svg>
-    <a class="parole-tapes" href="skate-tv/"><strong>Play on parole</strong><span>Watch skate videos ▸</span></a>
-    <div class="tv" id="tv">
-      <span class="ant" aria-hidden="true"><i></i><i></i></span>
-      <button class="tvset" id="tvBtn" type="button" aria-label="Donuts Department TV. Tap to change the channel.">
-        <span class="scr">
-          <video id="tvVid" muted playsinline preload="none" poster="tv/ch03.jpg" aria-hidden="true"></video>
-          <span class="tvpage" id="tvPage" hidden></span>
-          <canvas class="tvstatic" id="tvStatic" width="96" height="72" aria-hidden="true"></canvas>
-          <span class="osd" id="tvOsd" aria-hidden="true"></span>
-          <span class="rec" id="tvRec" hidden aria-hidden="true"></span>
-          <span class="lines" aria-hidden="true"></span><span class="glare" aria-hidden="true"></span>
-        </span>
-        <span class="ctl" aria-hidden="true"><i class="k"></i><i class="k"></i><i class="led"></i></span>
-      </button>
-    </div>
+
   </div>
 </div></header>
 <main id="main">
@@ -531,9 +556,9 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 <div class="tapewrap"><div class="tape tl" aria-hidden="true"><div>EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · EVIDENCE · DO NOT EAT · </div></div></div>
 
 <section class="band" id="tape-room"><div class="wrap">
-  <h2><span class="hico" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="4" y="12" width="40" height="24" rx="3" fill="#2a2a26" stroke="#e5d8b6" stroke-width="2"/><rect x="10" y="17" width="28" height="9" rx="2" fill="#e5d8b6"/><circle cx="17" cy="21.5" r="3" fill="#2a2a26"/><circle cx="31" cy="21.5" r="3" fill="#2a2a26"/><rect x="14" y="29" width="20" height="4" fill="#ff4f9a"/></svg></span>The tape room</h2>
-  <p>Full-length skate films on the break-room TV. Pull a tape from the evidence shelf.</p>
-  <a class="btn" href="skate-tv/">Tune in to DD-TV 22 →</a>
+  <div class="archive-copy"><h2>Confiscated tapes</h2>
+  <p>Full-length skate films, filed on VHS. Pick a tape or open the locker.</p>
+  <a class="btn" href="skate-tv/">Open the skate locker →</a></div><div class="contact-strip" aria-label="Featured skate tapes"><a href="skate-tv/?tape=987594534"><img src="skate-tv/img/987594534.webp" loading="lazy" alt="">POP</a><a href="skate-tv/?tape=100182265"><img src="skate-tv/img/100182265.webp" loading="lazy" alt="">UNION · DIY</a><a href="skate-tv/?tape=172955069"><img src="skate-tv/img/172955069.webp" loading="lazy" alt="">1.21 Gigawatts</a></div>
 </div></section>
 
 <section class="band" id="drops"><div class="wrap">
@@ -1087,7 +1112,7 @@ async function loadPast(){try{const j=await api('/api/past');const L=(j.shows||[
    const f=now=>{const d=img.data;for(let i=0;i<d.length;i+=4){const v=Math.random()*255|0;d[i]=d[i+1]=d[i+2]=v;d[i+3]=255}g.putImageData(img,0,0);
      const y=((now-t0)/ms*90)%72;g.fillStyle='#ffffff22';g.fillRect(0,y,96,8);
      if(now-t0<ms)requestAnimationFrame(f);else{cv.classList.remove('on');busy=false;done()}};requestAnimationFrame(f)};
- const showOsd=c=>{osd.innerHTML=`CH ${c.n} <small>${esc(c.t)}</small>`;btn.setAttribute('aria-label',`CH ${c.n} ${c.t}. Donuts Department TV, tap to change the channel.`);osd.classList.add('on');clearTimeout(osdT);osdT=setTimeout(()=>osd.classList.remove('on'),2600)};
+ const showOsd=c=>{osd.innerHTML=`CH ${c.n} <small>${esc(c.t)}</small>`;btn.setAttribute('aria-label',`CH ${c.n} ${c.t} DD-TV: Donuts Department TV, tap to change the channel.`);osd.classList.add('on');clearTimeout(osdT);osdT=setTimeout(()=>osd.classList.remove('on'),2600)};
  const pad2=n=>String(n).padStart(2,'0');
  const dispatch=()=>{const n=upcoming(Date.now()).find(o=>!liveNow(o,Date.now()));
    if(!n){page.innerHTML=`<span class="bar"><span>P99 DISPATCH</span><span>DD-TV</span></span><span class="c">NEXT SHIFT</span><span class="big">TO BE ANNOUNCED</span><span class="y">FOLLOW DONUTSFORCOPS</span>`;return}

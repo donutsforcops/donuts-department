@@ -12,19 +12,24 @@
 <body>
 <header><a href="../">← Donuts Department</a><span>DD-TV 22</span></header>
 <main>
-<h1>Confiscated Tapes</h1>
-<p class="intro">Thirty years of seized skate tapes. The night shift found the key.</p>
+<div class="casehead"><h1>Confiscated Tapes</h1>
+<p class="intro">Thirty years of seized skate tapes. The night shift found the key.</p><a class="intake-photo" href="?tape=100182265"><img src="img/100182265.webp" alt=""><span>Exhibit 007 · UNION DIY</span></a></div>
+<div class="room-layout"><div class="station">
 <section class="cabinet" aria-label="Break-room television">
 <div class="antennas" aria-hidden="true"></div>
 <div class="set">
 <div class="glass">
 <div id="screen"></div>
-<div id="card" hidden><b></b></div>
+<div class="standby" id="standby">
+  <span>DD-TV 22</span>
+  <a href="#shelf-heading">Choose a tape from Drawer 22</a>
+</div>
+<div id="card" hidden aria-hidden="true"><b>Checking out tape</b></div>
 <canvas width="160" height="120" hidden aria-hidden="true"></canvas>
 </div>
 <div class="hardware"><span class="plate">DONUTS DEPT.</span><div class="grille"></div><div class="dial" aria-hidden="true"></div></div>
 </div>
-<div class="vcr"><span class="slot">VIDEO CASSETTE RECORDER</span><output id="display" aria-live="polite">12:00</output></div>
+<div class="vcr"><span class="slot">Video cassette recorder</span><output id="display" aria-live="polite">12:00</output></div>
 </section>
 <section class="remote" aria-label="Television controls">
 <button disabled id="power" aria-pressed="false">Power</button>
@@ -33,9 +38,13 @@
 <label>Tracking <input type="range" min="0" max="10" value="3"></label>
 </section>
 <button id="skip" hidden>Skip commercial ▸</button>
-<p><a id="source" hidden target="_blank" rel="noopener">Watch this film on Vimeo ↗</a></p>
-<section class="locker" aria-labelledby="shelf-heading"><h2 id="shelf-heading">Skate evidence locker</h2><div id="shelf"></div></section>
-<p class="note">Films play through Vimeo. <a href="https://vimeo.com/terms">Terms</a> · <a href="https://vimeo.com/privacy">Privacy</a></p>
+<aside class="checkout" id="checkout" hidden aria-label="Checked-out film">
+  <b id="checkout-title"></b>
+  <span id="checkout-details"></span>
+  <a id="source" hidden target="_blank" rel="noopener">Watch this film on Vimeo ↗</a>
+</aside>
+</div><section class="locker" aria-labelledby="shelf-heading"><h2 id="shelf-heading">Skate evidence locker</h2><button class="drawer-face" id="drawer" aria-expanded="true" aria-controls="shelf"><span class="drawer-paper">Drawer 22 <small>Skate films</small></span><i class="locker-handle" aria-hidden="true"></i><span id="drawer-state">Close drawer</span></button><div id="shelf"></div></section>
+</div><p class="note">Films play through Vimeo. <a href="https://vimeo.com/terms">Terms</a> · <a href="https://vimeo.com/privacy">Privacy</a></p>
 </main>
 </body>
 </html>
