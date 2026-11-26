@@ -11,6 +11,7 @@ export const GAMES = {
   'best-in-the-game': 10_000_000,
   'road-rage-fighter': 1_000,
   'fare-game': 250_000,
+  'runaway-donut': 1_000_000,
 };
 const TOP = 10;
 const GAP_MS = 8000;

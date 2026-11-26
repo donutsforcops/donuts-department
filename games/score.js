@@ -1,7 +1,7 @@
 /* Donuts Department arcade: offer to file a score on the weekly leaderboard.
    Games call DDScore.offer('<game-id>', score) when a run ends. */
 (function () {
-  var NAMES = { 'city-beat': 'City Beat', 'donut-patrol': 'Donut Patrol', 'best-in-the-game': 'Best In The Game', 'road-rage-fighter': 'Road Rage Fighter', 'fare-game': 'Fare Game' };
+  var NAMES = { 'runaway-donut': 'Runaway Donut', 'city-beat': 'City Beat', 'donut-patrol': 'Donut Patrol', 'best-in-the-game': 'Best In The Game', 'road-rage-fighter': 'Road Rage Fighter', 'fare-game': 'Fare Game' };
   var UNITS = { 'road-rage-fighter': ' drivers', 'fare-game': '' };
   var css = '#ddsc{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,140%);width:min(92vw,380px);z-index:2147483000;' +
     'background:#22111b;color:#fff4e6;border:2px solid #ff4f9a;border-radius:20px;padding:14px 16px;font:400 15px/1.4 Rubik,system-ui,sans-serif;box-shadow:0 16px 50px #000a;transition:transform .35s cubic-bezier(.2,.9,.3,1.2)}' +
