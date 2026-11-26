@@ -28,13 +28,6 @@
 @font-face{font-family:Rubik;src:url(fonts/rubik-400.woff2) format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:Rubik;src:url(fonts/rubik-600.woff2) format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:Rubik;src:url(fonts/rubik-800.woff2) format('woff2');font-weight:800;font-display:swap}
-/* Two offset VHS spines beside the channel-surfing set. */
-.parole-tapes{position:absolute;z-index:4;right:40%;bottom:5%;width:clamp(138px,41%,204px);padding:5px 9px 6px;background:repeating-linear-gradient(90deg,#262622 0 2px,#393934 2px 3px);border:2px outset #5b5952;border-radius:3px;box-shadow:3px 5px 0 #151513,2px 8px 0 #6b6456,4px 11px 0 #242422;transform:rotate(-5deg);text-decoration:none}
-.parole-tapes strong,.parole-tapes span{display:block;background:#e5d8b6;color:#27241f;padding:3px 7px;line-height:1.1}
-.parole-tapes strong{font:bold italic clamp(15px,2vw,22px) Georgia,serif;border-bottom:2px solid #964b4b}.parole-tapes span{font:700 12px monospace}
-.parole-tapes:focus-visible{outline:3px solid var(--sun);outline-offset:4px}
-@media(prefers-reduced-motion:no-preference){.parole-tapes{transition:transform .18s}.parole-tapes:hover{transform:translateY(-4px) rotate(-3deg)}}
-@media(prefers-reduced-motion:no-preference){@view-transition{navigation:auto}.parole-tapes{view-transition-name:evidence-locker}}
 </style>
 <style>
 /* VOICE: loud, sugary, late-night streetwear shop — hype without clutter
@@ -344,7 +337,8 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
 .tv .ctl{position:absolute;left:9%;right:9%;bottom:4%;height:9%;display:flex;align-items:center;gap:7%;justify-content:flex-end}
 .tv .ctl .k{width:12%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7a6a52,#3b3327);box-shadow:0 1px 0 #fff6}
 .tv .ctl .led{width:5%;aspect-ratio:1;border-radius:50%;background:#ff3d3d;box-shadow:0 0 6px #ff3d3d;margin-right:auto;order:-1}
-.tv .tvpage{display:flex;flex-direction:column;justify-content:center;gap:2%;padding:10% 9%;background:#05051a;color:#fff;font:700 clamp(7px,1.9vw,12px)/1.2 ui-monospace,Menlo,Consolas,monospace;text-align:left;text-transform:uppercase}.tv .tvpage .big{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tv .tvpage{display:flex;flex-direction:column;justify-content:center;gap:2%;padding:10% 9%;background:#05051a;color:#fff;font:700 clamp(7px,1.9vw,12px)/1.2 ui-monospace,Menlo,Consolas,monospace;text-align:left;text-transform:uppercase}.tv .tvpage[hidden]{display:none}
+.tv .tvpage .big{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .tv .tvpage .bar{background:#1d3bd6;color:#ffd23f;padding:2px 4px;margin:-4% -4% 4%;display:flex;justify-content:space-between}
 .tv .tvpage .c{color:#5ef2c6}.tv .tvpage .y{color:#ffd23f}.tv .tvpage .big{font-size:1.35em;color:#fff}
 .tv .tvpage.breaking{background:#8a0012}.tv .tvpage.breaking .bar{background:#fff;color:#c1121f}
@@ -477,7 +471,7 @@ footer .wrap{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
     <div class="tv" id="tv">
       <span class="ant" aria-hidden="true"><i></i><i></i></span>
       <button class="tvset" id="tvBtn" type="button" aria-label="Donuts Department TV. Tap to change the channel.">
-        <span class="scr">
+        <span class="scr" aria-hidden="true">
           <video id="tvVid" muted playsinline preload="none" poster="tv/ch03.jpg" aria-hidden="true"></video>
           <span class="tvpage" id="tvPage" hidden></span>
           <canvas class="tvstatic" id="tvStatic" width="96" height="72" aria-hidden="true"></canvas>
